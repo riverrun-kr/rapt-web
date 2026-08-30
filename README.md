@@ -5,9 +5,12 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. 현재는 �
 ## 구조
 
 - `index.html` — 랜딩 페이지 (직접 수정)
+- `404.html` — GitHub Pages가 자동으로 서빙하는 404 페이지 (직접 수정)
 - `content/terms.md`, `content/privacy.md` — 이용약관·개인정보처리방침 **원본**. 내용을 바꿀 땐 이 파일만 수정한다.
-- `scripts/build.py`, `scripts/template.html` — `content/*.md` → `terms/index.html`, `privacy/index.html` 변환기
-- `assets/` — 파비콘, OG 이미지, 공용 CSS(`site.css`)
+- `scripts/build.py`, `scripts/template.html` — `content/*.md` → `terms/index.html`, `privacy/index.html` 변환기. 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
+- `assets/` — 파비콘(`favicon-32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지, 공용 CSS(`site.css`)
+- `manifest.json` — 웹 앱 매니페스트. `assets/site-icon-192.png`, `site-icon-512.png`를 참조해 Android/PWA 홈 화면 추가를 지원한다.
+- `robots.txt`, `sitemap.xml` — 크롤러용. 페이지를 추가/제거하면 `sitemap.xml`의 `<url>` 목록도 같이 갱신한다.
 - `CNAME` — GitHub Pages 커스텀 도메인 설정 파일 (내용: `rapt.kr`, 건드리지 말 것)
 
 ## 약관/방침 내용을 업데이트하는 방법
