@@ -127,13 +127,6 @@ main.doc blockquote.note p:last-child { margin-bottom: 0; }
   padding: 24px;
 }
 
-.hero .glyph {
-  font-family: Newsreader, serif;
-  font-size: 30px;
-  color: var(--accent);
-  margin-bottom: 12px;
-}
-
 .hero h1 {
   font-family: Newsreader, serif;
   font-weight: 400;
@@ -158,17 +151,4 @@ main.doc blockquote.note p:last-child { margin-bottom: 0; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--faint);
-  margin-bottom: 40px;
 }
-
-.hero nav a {
-  display: inline-block;
-  font-size: 14px;
-  text-decoration: none;
-  color: var(--muted);
-  margin-right: 20px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 2px;
-}
-
-.hero nav a:hover { color: var(--accent); border-color: var(--accent); }
