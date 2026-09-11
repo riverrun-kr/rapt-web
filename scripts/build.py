@@ -4,7 +4,7 @@
 content/terms.md, content/privacy.md 을 수정한 뒤 이 스크립트를 실행하면
 terms/index.html, privacy/index.html 이 다시 생성된다. 마크다운은 이 두
 문서에서 실제로 쓰는 부분집합만 지원한다: '# ', '## ', '> ' (블록인용),
-빈 줄로 구분된 문단, 인라인 **굵게**.
+빈 줄로 구분된 문단, 인라인 **굵게**, 인라인 [링크](주소).
 """
 import re
 import sys
@@ -20,6 +20,10 @@ DOCS = [
 
 
 def inline(text: str) -> str:
+    # 링크를 굵게보다 먼저 — 링크 라벨 안에 **굵게**가 들어와도 순서가 꼬이지 않는다.
+    # (이 지원이 없어서 terms.md 3조의 [개인정보처리방침](/privacy/)이 실제 사이트에
+    # 마크다운 원문 그대로 노출되고 있었다. 2026-09-11 발견.)
+    text = re.sub(r"\[([^\]]+?)\]\(([^)]+?)\)", r'<a href="\2">\1</a>', text)
     return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
 
 

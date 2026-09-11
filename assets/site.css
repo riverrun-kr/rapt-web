@@ -1,24 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Nanum+Myeongjo:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Rapt 웹사이트 공용 스타일
+ *
+ * 토큰 이름과 값은 앱의 디자인 언어를 그대로 따라온다
+ * (Rapt/Rapt/Assets.xcassets/*.colorset, Rapt/Rapt/DesignTokens.swift).
+ * 여기서 값을 새로 정하지 않는다 — 앱이 바뀌면 앱을 보고 여기를 맞춘다.
+ */
 
+/* ── 색 (앱 컬러셋의 sRGB 값을 16진수로) ───────────────────────────────
+ *
+ * 2026-09-08에 앱이 브랜드 컬러(태운 오렌지)를 걷어내고 "종이와 잉크"
+ * 단색으로 통일했다. 강조는 색이 아니라 잉크의 굵기·채움으로 말한다.
+ * 남은 유일한 색은 500자 초과 경고(--overflow-*)뿐이다.
+ */
 :root {
-  --bg: oklch(0.981 0.005 85);
-  --card-bg: oklch(0.96 0.007 80);
-  --text: oklch(0.24 0.012 60);
-  --muted: oklch(0.45 0.012 60);
-  --faint: oklch(0.66 0.008 60);
-  --accent: oklch(0.55 0.13 40);
-  --border: oklch(0.89 0.008 60);
+  --canvas: #F6F3EE;   /* RaptCanvas — 종이 */
+  --recess: #F2F0EC;   /* RaptRecess */
+  --sunken: #E9E6E2;   /* RaptSurfaceSunken — 한 단 가라앉은 면 */
+  --rule:   #DDDAD6;   /* RaptRule — 구분선 */
+  --ink:    #2D2823;   /* RaptInk — 본문 잉크 (= AccentColor) */
+  --ink-2:  #625C58;   /* RaptInk2 */
+  --ink-3:  #96918D;   /* RaptInk3 */
+  --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg */
+  --overflow-border: rgba(226, 73, 71, 0.30);   /* RaptOverflowBorder */
+
+  /* 조판 */
+  --measure: 680px;
+  --gutter: 24px;
+
+  /* 형태 (RaptRadius) */
+  --radius-control: 6px;
+  --radius-card: 8px;
+
+  /* 서체
+   * 산세리프 = UI·본문. 앱이 시스템 산세리프를 쓰는 이유와 같다 —
+   * 사용자의 글에 특정 목소리를 부여하지 않기 위해서.
+   * 명조 = "앱이 말하는 자리"(히어로·설명 문장·문서 제목).
+   * Bodoni Moda = 라틴 워드마크 전용. 앱 아이콘 글리프와 같은 활자.
+   *
+   * 앱의 네 번째 서체인 IBM Plex Mono(숫자·날짜 메타)는 이 사이트에 없다.
+   * 모노에는 한글 글리프가 없어서 한글을 넣으면 그 부분만 시스템 폰트로
+   * 조용히 대체되고 모노 metric만 남아 자간이 뜨는데(앱이 2026-09-11
+   * 전수 점검에서 고친 문제), 이 사이트의 메타 자리는 "출시 준비 중",
+   * "이용약관"처럼 전부 한글이라 모노를 쓸 수 있는 자리가 없다.
+   */
+  --sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          "Segoe UI", "Malgun Gothic", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Nanum Myeongjo", "Apple SD Gothic Neo", serif;
+  --wordmark: "Bodoni Moda", "Times New Roman", serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: oklch(0.2 0.012 60);
-    --card-bg: oklch(0.26 0.013 60);
-    --text: oklch(0.94 0.006 80);
-    --muted: oklch(0.75 0.01 70);
-    --faint: oklch(0.58 0.01 60);
-    --accent: oklch(0.74 0.12 45);
-    --border: oklch(0.34 0.014 60);
+    --canvas: #1A1713;
+    --recess: #110E0B;
+    --sunken: #221F1C;
+    --rule:   #2B2825;
+    --ink:    #CFCDC9;
+    --ink-2:  #9A9894;
+    --ink-3:  #767471;
+    --overflow-bg:     rgba(189, 65, 63, 0.22);
+    --overflow-border: rgba(189, 65, 63, 0.40);
   }
 }
 
@@ -26,129 +66,244 @@
 
 html, body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--canvas);
+  color: var(--ink);
 }
 
 body {
-  font-family: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
+  font-size: 16px;              /* RaptType.body */
+  line-height: 1.75;            /* body + bodyLineSpacing 6 ≈ ×1.75 */
 }
 
 a { color: inherit; }
 
-.site-header {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 48px 24px 0;
+/* ── 워드마크 ─────────────────────────────────────────────────────────
+ * Bodoni Moda 500 · opsz 11 · 트래킹 −0.005em. 앱 아이콘 글리프("R.")와
+ * 같은 규격이다. 14px 이하에서는 트래킹을 0으로 연다(디도네는 사이드베어링이
+ * 좁아 작은 크기에서 그대로 조이면 글자가 붙어 보인다).
+ */
+.wordmark {
+  font-family: var(--wordmark);
+  font-weight: 500;
+  font-variation-settings: "opsz" 11;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  color: var(--ink);
 }
 
-.wordmark {
-  font-family: Newsreader, serif;
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  color: var(--text);
+.site-header {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 48px var(--gutter) 0;
 }
+
+.site-header .wordmark { font-size: 22px; }
+
+/* ── 푸터 ─────────────────────────────────────────────────────────────
+ * 한글 링크가 들어가는 자리다 — 서체 블록의 모노 관련 주석 참고.
+ * 앱의 메타 규격(12px)만 따른다.
+ */
+.site-footer {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 32px var(--gutter) 64px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;              /* RaptType.meta */
+  line-height: 2;
+  color: var(--ink-3);
+}
+
+.site-footer a {
+  text-decoration: none;
+  color: var(--ink-3);
+  transition: color 0.16s ease-in-out;   /* RaptMotion.dim */
+}
+
+.site-footer a:hover { color: var(--ink-2); }
+.site-footer .wordmark { font-size: 12px; letter-spacing: 0; }
+
+/* ── 랜딩 ─────────────────────────────────────────────────────────── */
+
+.hero {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 18vh var(--gutter) 0;
+}
+
+.hero h1 {
+  margin: 0 0 28px;
+  font-weight: 400;
+}
+
+.hero .wordmark {
+  display: block;
+  font-size: 56px;
+  line-height: 1;
+}
+
+.hero p.lede {
+  font-family: var(--serif);
+  font-size: 19px;              /* RaptType.emptyState — 앱이 말하는 목소리 */
+  line-height: 1.9;
+  color: var(--ink-2);
+  max-width: 30ch;
+  margin: 0 0 36px;
+  text-wrap: pretty;
+}
+
+/* 출시 상태 배지. 채움 없는 잉크 테두리 — 앱의 "상태는 색이 아니라
+ * 형태로 말한다"(빈 원 / 꽉 찬 원)를 그대로 따른 것. */
+.status {
+  display: inline-block;
+  font-size: 12px;              /* RaptType.uiLabel */
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  border: 1px solid var(--ink-3);
+  border-radius: var(--radius-control);
+  padding: 5px 12px;
+  line-height: 1.5;
+}
+
+/* 기능 목록 — 라벨과 문장 두 칸. 좁은 화면에서는 세로로 쌓인다. */
+.features {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 96px var(--gutter) 24px;
+}
+
+.features dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+}
+
+.features dt {
+  font-size: 12px;              /* RaptType.uiLabel */
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  padding: 18px 28px 0 0;   /* 오른쪽 여백 = 두 칸 사이 간격 */
+  border-top: 1px solid var(--rule);
+}
+
+.features dd {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--ink-2);
+  margin: 0;
+  padding: 18px 0 26px;
+  border-top: 1px solid var(--rule);
+  text-wrap: pretty;
+}
+
+.features dt + dd { border-top: 1px solid var(--rule); }
+
+/* 500자 초과 강조 — 앱에 남아 있는 단 하나의 색. 여기서는 그 처리를
+ * 문장 안에서 그대로 보여준다. */
+mark.overflow {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background: var(--overflow-bg);
+  box-shadow: inset 0 0 0 1px var(--overflow-border);
+  border-radius: 3px;
+  color: inherit;
+  padding: 0 2px;
+}
+
+/* 닫는 말 — 페이지에서 유일하게 제품이 아니라 태도를 말하는 자리 */
+.coda {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 96px;
+}
+
+.coda p {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.9;
+  color: var(--ink-2);
+  margin: 0 0 20px;
+  text-wrap: pretty;
+}
+
+.coda .platforms {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+/* ── 법률 문서 ───────────────────────────────────────────────────── */
 
 main.doc {
-  max-width: 680px;
+  max-width: var(--measure);
   margin: 0 auto;
-  padding: 32px 24px 96px;
+  padding: 32px var(--gutter) 64px;
 }
 
 main.doc h1 {
-  font-family: Newsreader, serif;
+  font-family: var(--serif);
   font-weight: 400;
-  font-size: 40px;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-size: 32px;
+  line-height: 1.4;
   margin: 8px 0 32px;
 }
 
 main.doc h2 {
-  font-family: Newsreader, serif;
-  font-weight: 500;
-  font-size: 22px;
-  letter-spacing: -0.005em;
-  margin: 40px 0 12px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.6;
+  margin: 44px 0 12px;
+  color: var(--ink);
 }
 
 main.doc p {
   font-size: 16px;
-  color: var(--muted);
-  margin: 0 0 8px;
+  color: var(--ink-2);
+  margin: 0 0 10px;
   text-wrap: pretty;
 }
 
+main.doc strong { color: var(--ink); font-weight: 600; }
+
+main.doc a {
+  color: var(--ink);
+  text-decoration-color: var(--ink-3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.16s ease-in-out;   /* RaptMotion.dim */
+}
+
+main.doc a:hover { text-decoration-color: var(--ink); }
+
+/* 문서 머리의 시행일 안내. --recess는 캔버스와 성분 차가 1.5%뿐이라
+ * 면으로 안 읽힌다 — 앱이 같은 이유로 만든 --sunken을 쓴다. */
 main.doc blockquote.note {
   margin: 20px 0 0;
-  padding: 14px 18px;
-  background: var(--card-bg);
-  border-left: 2px solid var(--accent);
-  border-radius: 4px;
+  padding: 16px 20px;
+  background: var(--sunken);
+  border-radius: var(--radius-card);
 }
 
 main.doc blockquote.note p {
-  font-size: 14px;
-  color: var(--faint);
+  font-size: 13.5px;            /* RaptType.listPreview */
+  line-height: 1.8;
+  color: var(--ink-3);
   margin: 0 0 8px;
 }
 
 main.doc blockquote.note p:last-child { margin-bottom: 0; }
 
-.site-footer {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 24px 24px 64px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  color: var(--faint);
-}
-
-.site-footer a {
-  text-decoration: none;
-  color: var(--faint);
-}
-
-.site-footer a:hover { color: var(--muted); }
-
-/* landing page */
-.hero {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.hero h1 {
-  font-family: Newsreader, serif;
-  font-weight: 400;
-  font-size: 48px;
-  letter-spacing: -0.01em;
-  margin: 0 0 16px;
-}
-
-.hero p.lede {
-  font-family: 'Nanum Myeongjo', serif;
-  font-size: 20px;
-  line-height: 1.8;
-  color: var(--muted);
-  max-width: 480px;
-  margin: 0 0 32px;
-  text-wrap: pretty;
-}
-
-.hero .status {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--faint);
+@media (max-width: 560px) {
+  .hero { padding-top: 14vh; }
+  .hero .wordmark { font-size: 44px; }
+  .site-header { padding-top: 32px; }
+  .features dl { grid-template-columns: 1fr; }
+  .features dt { padding-bottom: 0; }
+  .features dd { border-top: 0; padding-top: 6px; }
 }
