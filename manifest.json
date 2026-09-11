@@ -1,11 +1,11 @@
 {
   "name": "Rapt",
   "short_name": "Rapt",
-  "description": "Threads에 최적화된 미니멀 글쓰기 앱",
+  "description": "떠오른 순간은 글감으로 적어두고, 때가 된 것만 글로 옮겨 씁니다.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#faf9f5",
-  "theme_color": "#faf9f5",
+  "background_color": "#f6f3ee",
+  "theme_color": "#f6f3ee",
   "icons": [
     { "src": "/assets/site-icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/assets/site-icon-512.png", "sizes": "512x512", "type": "image/png" }
