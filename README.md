@@ -17,7 +17,7 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 - `404.html` — GitHub Pages가 자동으로 서빙하는 404 페이지 (직접 수정)
 - `content/terms.md`, `content/privacy.md` — 이용약관·개인정보처리방침 **원본**. 내용을 바꿀 땐 이 파일만 수정한다.
 - `scripts/build.py`, `scripts/template.html` — `content/*.md` → `terms/index.html`, `privacy/index.html` 변환기. 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
-- `assets/` — 파비콘(`favicon-32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지, 공용 CSS(`site.css`)
+- `assets/` — 파비콘(`favicon-32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-1200x630.png`), 공용 CSS(`site.css`), 자체 호스팅 워드마크 폰트(`fonts/`)
 - `manifest.json` — 웹 앱 매니페스트. `assets/site-icon-192.png`, `site-icon-512.png`를 참조해 Android/PWA 홈 화면 추가를 지원한다.
 - `threads-callback/index.html` — Meta OAuth 리디렉션 중계. Meta는 HTTPS `redirect_uri`만 허용해서 여기로 먼저 돌아온 뒤 쿼리스트링을 `rapt://threads-auth`로 넘긴다(앱 쪽 `Rapt/ThreadsAuth.swift`). `noindex`라 sitemap에 넣지 않는다.
 - `robots.txt`, `sitemap.xml` — 크롤러용. 페이지를 추가/제거하면 `sitemap.xml`의 `<url>` 목록도 같이 갱신하고, 약관·방침을 고치면 해당 `lastmod`도 같이 올린다.
@@ -36,7 +36,21 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 앱 아이콘이 바뀌면 웹 에셋도 같이 갱신해야 한다(2026-09-11 이전엔 두 세대 뒤처져 있었다 — 어두운 사각형 + Newsreader "Rapt" 전체 워드마크였고, OG 이미지엔 이미 제거된 태운 오렌지 점이 남아 있었다).
 
 - **파비콘 4종** — 원본은 `rapt-brand-assets/layers-bodoni/icon-light-1024.png`(opsz 11)와 `icon-light-small-1024.png`(opsz 6). 32px 이하 슬롯은 헤어라인이 사라지므로 반드시 opsz 6 판을 쓴다. `apple-touch-icon-180.png`는 iOS가 스스로 마스킹하므로 **미리 라운딩하지 않는다**(이중 라운딩 문제). 나머지는 22.37% 라운딩.
-- **OG 이미지** — `assets/social-preview-1200x630.png`. 종이 배경(`#F6F3EE`) 위에 Bodoni 워드마크 + 명조 리드 문장. 폰트 실물은 `Rapt/Rapt/Fonts/`에 있다.
+- **OG 이미지** — `assets/og-1200x630.png`. 종이 배경(`#F6F3EE`) 위에 Bodoni 워드마크 + 명조 리드 문장. 폰트 실물은 `Rapt/Rapt/Fonts/`에 있다. **내용을 바꾸면 파일 이름도 바꾼다** — 스크래퍼(Threads·카카오톡 등)는 URL 기준으로 오래 캐시하고 쿼리스트링을 떼고 보는 곳도 있어서, 이름을 그대로 두면 옛 이미지가 계속 나간다.
+- **워드마크 폰트** — `assets/fonts/BodoniModa11pt-Medium-latin.woff2`. 앱이 번들하는 `Rapt/Rapt/Fonts/BodoniModa11pt-Medium.ttf`를 라틴만 남겨 줄인 것(12KB)이라 글자꼴이 앱 아이콘 글리프와 정확히 같다. 이건 정적 인스턴스라 opsz·weight가 이미 구워져 있다 — CSS에서 `font-variation-settings`를 걸지 말 것. **OFL 폰트를 웹에서 직접 배포하는 것이므로 `assets/fonts/OFL.txt`(라이선스 원문)를 같이 올려둬야 한다** — 폰트 파일만 빼고 올리면 라이선스 위반이다.
+
+## 캐시 무효화 — 에셋을 고쳤으면 반드시
+
+GitHub Pages는 모든 파일에 `Cache-Control: max-age=600`을 붙인다. CSS를 고쳐 배포해도 직전 10분 안에 그 파일을 받아간 브라우저는 재검증 없이 옛 CSS를 쓰기 때문에, **새 HTML + 옛 CSS** 조합으로 레이아웃이 통째로 깨져 보인다(2026-09-11에 실제로 겪음).
+
+`assets/` 안의 무언가를 고쳤으면 순서대로:
+
+```
+python3 scripts/stamp_assets.py   # 에셋 URL에 내용 해시를 붙인다
+python3 scripts/build.py          # 그 template으로 terms/privacy 재생성
+```
+
+`stamp_assets.py`를 **먼저** 돌려야 한다 — 이 스크립트가 `template.html`을 고치고 `build.py`가 그 template을 쓴다.
 
 ## 배포 (최초 1회 설정)
 

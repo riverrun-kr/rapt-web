@@ -1,3 +1,24 @@
+/* Rapt 웹사이트 공용 스타일 */
+
+/* ── 워드마크 서체 ────────────────────────────────────────────────────
+ * 앱이 번들하는 바로 그 파일(Rapt/Rapt/Fonts/BodoniModa11pt-Medium.ttf)을
+ * 라틴만 남겨 woff2로 줄인 것(12KB). Google Fonts의 가변 Bodoni Moda에
+ * font-variation-settings로 opsz 11을 거는 방식도 되지만, 이 파일은 앱이
+ * 쓰는 것과 **같은 정적 인스턴스**라 글자꼴이 앱 아이콘 글리프와 정확히
+ * 일치한다 — 가변축 적용이 브라우저·폰트 로딩 상태에 따라 어긋날 여지가
+ * 아예 없어진다. opsz 11 · wght 500은 파일에 이미 구워져 있으므로
+ * font-variation-settings를 걸지 않는다.
+ *
+ * 재생성: fontTools로 U+0020-007E 등 라틴만 서브셋 → woff2.
+ */
+@font-face {
+  font-family: "Rapt Wordmark";
+  src: url("/assets/fonts/BodoniModa11pt-Medium-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Rapt 웹사이트 공용 스타일
  *
  * 토큰 이름과 값은 앱의 디자인 언어를 그대로 따라온다
@@ -34,7 +55,7 @@
    * 산세리프 = UI·본문. 앱이 시스템 산세리프를 쓰는 이유와 같다 —
    * 사용자의 글에 특정 목소리를 부여하지 않기 위해서.
    * 명조 = "앱이 말하는 자리"(히어로·설명 문장·문서 제목).
-   * Bodoni Moda = 라틴 워드마크 전용. 앱 아이콘 글리프와 같은 활자.
+   * 워드마크 = 자체 호스팅한 Bodoni Moda 11pt Medium(위 @font-face).
    *
    * 앱의 네 번째 서체인 IBM Plex Mono(숫자·날짜 메타)는 이 사이트에 없다.
    * 모노에는 한글 글리프가 없어서 한글을 넣으면 그 부분만 시스템 폰트로
@@ -45,7 +66,7 @@
   --sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
           "Segoe UI", "Malgun Gothic", "Helvetica Neue", Arial, sans-serif;
   --serif: "Nanum Myeongjo", "Apple SD Gothic Neo", serif;
-  --wordmark: "Bodoni Moda", "Times New Roman", serif;
+  --wordmark: "Rapt Wordmark", "Times New Roman", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -81,13 +102,13 @@ a { color: inherit; }
 
 /* ── 워드마크 ─────────────────────────────────────────────────────────
  * Bodoni Moda 500 · opsz 11 · 트래킹 −0.005em. 앱 아이콘 글리프("R.")와
- * 같은 규격이다. 14px 이하에서는 트래킹을 0으로 연다(디도네는 사이드베어링이
- * 좁아 작은 크기에서 그대로 조이면 글자가 붙어 보인다).
+ * 같은 규격이다(opsz·weight는 폰트 파일에 구워져 있다 — @font-face 주석 참고).
+ * 14px 이하에서는 트래킹을 0으로 연다(디도네는 사이드베어링이 좁아 작은
+ * 크기에서 그대로 조이면 글자가 붙어 보인다).
  */
 .wordmark {
   font-family: var(--wordmark);
   font-weight: 500;
-  font-variation-settings: "opsz" 11;
   letter-spacing: -0.005em;
   text-decoration: none;
   color: var(--ink);
@@ -231,6 +252,7 @@ mark.overflow {
 }
 
 .coda .platforms {
+  font-family: var(--sans);
   font-size: 12px;
   letter-spacing: 0.02em;
   color: var(--ink-3);
