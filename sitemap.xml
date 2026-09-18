@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 페이지를 추가/제거하면 여기도 같이 고친다. stamp_assets.py는 이 파일을 안 건드린다.
+     /threads-callback/ 은 noindex(OAuth 중계)라 일부러 뺀다. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rapt.kr/</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rapt.kr/support/</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://rapt.kr/terms/</loc>
@@ -11,5 +17,13 @@
   <url>
     <loc>https://rapt.kr/privacy/</loc>
     <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://rapt.kr/data-deletion/</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://rapt.kr/licenses/</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
 </urlset>
