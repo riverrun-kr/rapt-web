@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # 해시를 붙일 대상. HTML 안에서 쓰이는 경로 그대로.
 ASSETS = [
     "/assets/site.css",
+    "/assets/favicon-16.png",
     "/assets/favicon-32.png",
     "/assets/apple-touch-icon-180.png",
 ]

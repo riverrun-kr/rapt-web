@@ -4,7 +4,7 @@
 content/terms.md, content/privacy.md 을 수정한 뒤 이 스크립트를 실행하면
 terms/index.html, privacy/index.html 이 다시 생성된다. 마크다운은 이 두
 문서에서 실제로 쓰는 부분집합만 지원한다: '# ', '## ', '> ' (블록인용),
-빈 줄로 구분된 문단, 인라인 **굵게**, 인라인 [링크](주소).
+빈 줄로 구분된 문단, '- ' 목록, 인라인 **굵게**, 인라인 [링크](주소).
 """
 import re
 import sys
@@ -13,9 +13,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = (ROOT / "scripts" / "template.html").read_text(encoding="utf-8")
 
+# slug가 곧 배포 경로다 — {slug}/index.html 로 나간다.
+#
+# 영문판을 붙일 때는 slug에 "en/" 을 앞세운다(`en/terms` → /en/terms/).
+# 언어를 하위 경로로 가르는 이유: GitHub Pages는 정적이라 Accept-Language
+# 협상도 서버 리디렉션도 못 한다. 서브도메인은 DNS·인증서가 따로 붙고,
+# 쿼리스트링은 검색엔진이 같은 페이지로 본다 — 하위 경로만 남는다.
+# 한국어가 루트(/terms/)를 계속 차지하고 영문이 /en/ 아래로 들어간다.
 DOCS = [
     {"slug": "terms", "title": "이용약관", "source": "terms.md"},
     {"slug": "privacy", "title": "개인정보처리방침", "source": "privacy.md"},
+    {"slug": "support", "title": "지원", "source": "support.md"},
+    {"slug": "data-deletion", "title": "데이터 삭제", "source": "data-deletion.md"},
+    {"slug": "licenses", "title": "오픈소스 라이선스", "source": "licenses.md"},
 ]
 
 
@@ -62,6 +72,16 @@ def render_body(md_text: str) -> str:
                 quote_paras.append(" ".join(cur))
             inner = "".join(f"<p>{inline(p)}</p>" for p in quote_paras)
             html.append(f'<blockquote class="note">{inner}</blockquote>')
+            continue
+        elif line.startswith("- "):
+            # 목록. 이 지원이 없어서 support.md의 항목들이 '-'를 글자로 달고
+            # 한 문단으로 뭉쳐 나왔다(2026-09-18 발견, 인라인 링크와 같은 누락).
+            flush_para()
+            items = []
+            while i < len(lines) and lines[i].startswith("- "):
+                items.append(inline(lines[i][2:].strip()))
+                i += 1
+            html.append("<ul>" + "".join(f"<li>{it}</li>" for it in items) + "</ul>")
             continue
         elif line.strip() == "":
             flush_para()

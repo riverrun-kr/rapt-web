@@ -143,7 +143,26 @@ a { color: inherit; }
 }
 
 .site-footer a:hover { color: var(--ink-2); }
-.site-footer .wordmark { font-size: 12px; letter-spacing: 0; }
+
+/* 워드마크는 14px 이하에서 트래킹을 0으로 연다(위 .wordmark 주석). */
+.site-footer .wordmark {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin-bottom: 10px;
+}
+
+/* 문서가 다섯 개로 늘면서 한 줄 나열이 한계에 왔다 — 좁은 화면에서
+ * 가운뎃점으로 이어붙인 줄은 어디서 끊길지 통제가 안 된다. 링크마다
+ * 제 영역을 갖는 flex로 바꾸고, 구분자는 글자가 아니라 여백이 맡는다. */
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-bottom: 10px;
+}
+
+.footer-mail { display: block; }
 
 /* ── 랜딩 ─────────────────────────────────────────────────────────── */
 
@@ -292,6 +311,32 @@ main.doc p {
 }
 
 main.doc strong { color: var(--ink); font-weight: 600; }
+
+main.doc ul {
+  margin: 0 0 10px;
+  padding-left: 1.1em;
+  list-style: none;
+}
+
+main.doc li {
+  font-size: 16px;
+  color: var(--ink-2);
+  margin: 0 0 4px;
+  position: relative;
+  text-wrap: pretty;
+}
+
+/* 글머리는 디스크 대신 짧은 선 — 앱이 타래를 왼쪽 세로선으로 잇는 조형과
+ * 같은 어휘다. 점을 쓰면 상태 마커(원)와 의미가 겹쳐 보인다. */
+main.doc li::before {
+  content: "";
+  position: absolute;
+  left: -1.1em;
+  top: 0.82em;
+  width: 0.5em;
+  height: 1px;
+  background: var(--ink-3);
+}
 
 main.doc a {
   color: var(--ink);

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1713" />
+<title>데이터 삭제 · Rapt</title>
+<meta name="description" content="Rapt 데이터 삭제" />
+<link rel="canonical" href="https://rapt.kr/data-deletion/" />
+<meta property="og:site_name" content="Rapt" />
+<meta property="og:title" content="데이터 삭제 · Rapt" />
+<meta property="og:description" content="Rapt 데이터 삭제" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://rapt.kr/data-deletion/" />
+<meta property="og:image" content="https://rapt.kr/assets/og-1200x630.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/assets/favicon-16.png?v=d7651005b3" sizes="16x16" />
+<link rel="icon" href="/assets/favicon-32.png?v=58ad18c546" sizes="32x32" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png?v=3f5dd816bf" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
+<link rel="stylesheet" href="/assets/site.css?v=553dda82d4" />
+</head>
+<body>
+<header class="site-header">
+  <a class="wordmark" href="/">Rapt</a>
+</header>
+<main class="doc">
+<h1>데이터 삭제</h1>
+<blockquote class="note"><p>Rapt를 쓰면서 남은 것을 지우는 방법을 한곳에 모았습니다. 무엇이 어디에 저장되는지는 <a href="/privacy/">개인정보처리방침</a>에 적어두었습니다.</p></blockquote>
+<h2>먼저, 운영자가 가진 것은 없습니다</h2>
+<p>Rapt는 회원가입도 로그인도 없고, 이용자의 글을 보관하는 운영자 서버도 없습니다. 그래서 <strong>운영자에게 삭제를 요청할 데이터 자체가 존재하지 않습니다.</strong> 아래는 이용자 본인의 기기와 계정에서 직접 지우는 방법입니다.</p>
+<h2>글 — 앱에서 지우기</h2>
+<p>앱에서 글을 지우면 <strong>휴지통</strong>으로 갑니다. 휴지통에서 완전히 삭제하면 기기와 iCloud 양쪽에서 사라지고, 같은 계정의 다른 기기에서도 사라집니다.</p>
+<h2>기기와 iCloud에 남은 것 전부 지우기</h2>
+<p>앱을 삭제하면 그 기기에 저장된 내용은 함께 지워집니다. 다만 <strong>iCloud에 동기화된 내용은 앱을 지워도 iCloud에 남아</strong>, 같은 계정의 다른 기기에서 계속 보이고 앱을 다시 설치하면 복원됩니다.</p>
+<p>iCloud에 있는 것까지 지우시려면 기기 설정에서:</p>
+<p><strong>설정 → Apple 계정 → iCloud → 저장 공간 관리 → Rapt → 삭제</strong></p>
+<h2>Threads 연결 끊기</h2>
+<p>앱 안에서 <strong>계정 연결 해제</strong>를 누르면 기기에 저장된 접근 토큰이 삭제됩니다. 이 토큰은 처음부터 이용자 기기의 키체인에만 있었고 운영자가 보관한 적이 없습니다.</p>
+<p>Threads 쪽에서도 권한을 회수하시려면 Threads(또는 Instagram) 계정 설정의 연결된 앱 목록에서 Rapt를 제거하시면 됩니다.</p>
+<p><strong>이미 Threads에 발행된 게시물은 Rapt가 지울 수 없습니다</strong> — Threads에서 직접 삭제하셔야 합니다.</p>
+<h2>맞춤법 검사·발행을 거치는 중계 서버</h2>
+<p>두 기능은 이용자가 직접 실행할 때만 해당 글을 외부로 내보냅니다. 중계 서버는 전달만 할 뿐 내용을 저장하거나 기록하지 않으므로, 그곳에 지울 것이 남지 않습니다.</p>
+<h2>그 밖의 문의</h2>
+<p><strong>stockyrep@gmail.com</strong></p>
+</main>
+<footer class="site-footer">
+  <a class="wordmark" href="/">Rapt</a>
+  <nav class="footer-nav">
+    <a href="/support/">지원</a>
+    <a href="/terms/">이용약관</a>
+    <a href="/privacy/">개인정보처리방침</a>
+    <a href="/data-deletion/">데이터 삭제</a>
+    <a href="/licenses/">오픈소스 라이선스</a>
+  </nav>
+  <a class="footer-mail" href="mailto:stockyrep@gmail.com">stockyrep@gmail.com</a>
+</footer>
+</body>
+</html>
