@@ -15,17 +15,33 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 | `/data-deletion/` | **Meta 앱 Basic Settings가 "데이터 삭제 콜백 URL" 또는 "데이터 삭제 안내 URL" 중 하나를 요구**한다. Rapt는 운영자 서버에 아무것도 저장하지 않아 콜백을 만들 이유가 없어서 안내 URL로 간다 |
 | `/licenses/` | 번들 서체 4종이 전부 SIL OFL이라 고지가 의무. 이 웹사이트도 Bodoni를 직접 서빙하므로 웹 자신에게도 필요하다 |
 | `/threads-callback/` | Meta OAuth 중계. `noindex` |
+| `/en/*` | 위 문서 5종의 영문판. **Meta App Review 제출용이 1차 목적** — 소명문은 영문인데 제출하는 URL이 한국어 전용이면, 심사관이 권한 요청의 근거를 읽지 못한다 |
 
-**앱에서 이 문서들로 나가는 링크는 아직 없다** — 앱 안에 약관·방침·라이선스 화면이 전무하고, 앱 전체에서 `rapt.kr`을 참조하는 곳은 OAuth redirect URI 한 줄뿐이다. 웹 쪽 페이지가 선 지금, 앱은 링크만 걸면 된다.
+### ⚠️ 이 경로들은 이제 앱이 하드코딩한 계약이다
+
+**출시된 앱이 아래 네 경로를 문자열로 들고 있다. 옮기거나 지우기 전에 앱을 먼저 볼 것** — 웹에서 경로만 바꾸면 이미 사용자 기기에 설치된 앱의 링크가 조용히 깨지고, 그건 앱 업데이트로만 고쳐진다.
+
+| 경로 | 앱에서 참조하는 곳 |
+| --- | --- |
+| `/terms/` | `Rapt/AboutView.swift` (설정 → 정보) |
+| `/privacy/` | `Rapt/AboutView.swift` |
+| `/support/` | `Rapt/AboutView.swift`, `Rapt/RaptApp.swift` (mac 도움말 메뉴) |
+| `/threads-callback/` | `Rapt/ThreadsAuth.swift` (OAuth redirect URI, Meta 콘솔에도 등록돼 있다) |
+
+방향이 2026-09-18 기록과 반대로 뒤집혔다. 그때는 "웹이 섰으니 앱이 링크를 걸면 된다"였고, 지금은 걸렸다 — 이제 **웹이 앱에 대해 하위 호환을 진다.**
 
 ## 언어 — 한국어가 루트, 영문은 `/en/`
 
-영문 로컬라이제이션이 "출시 직후 착수"로 확정돼 있다(앱 `HANDOFF.md` §5). 경로 규칙을 **미리** 못박아둔다:
+**문서 5종은 2026-09-23에 영문판이 올라갔다**(`/en/terms/` 등). 한국어가 루트를 계속 차지하고 영문이 `/en/` 아래로 들어간다.
 
-- 한국어가 루트를 계속 차지한다 (`/terms/`)
-- 영문은 하위 경로로 들어간다 (`/en/terms/`)
+서브도메인·쿼리스트링이 아니라 하위 경로인 이유: GitHub Pages는 정적이라 `Accept-Language` 협상도 서버 리디렉션도 못 한다. 서브도메인은 DNS·인증서가 따로 붙고, 쿼리스트링은 검색엔진이 같은 페이지로 본다.
 
-서브도메인·쿼리스트링이 아니라 하위 경로인 이유: GitHub Pages는 정적이라 `Accept-Language` 협상도 서버 리디렉션도 못 한다. 서브도메인은 DNS·인증서가 따로 붙고, 쿼리스트링은 검색엔진이 같은 페이지로 본다. 실제 작업은 `build.py`의 `DOCS`에 `en/` 접두사를 단 항목을 더하는 것으로 시작한다.
+- **원문은 한국어다.** 영문 각 페이지 머리말에 "한국어판이 정본"을 명시해뒀다 — 약관 10조의 준거법이 대한민국 법령이라, 번역본이 정본 행세를 하면 안 된다. **한국어를 고치면 영문도 같이 고친다.**
+- `build.py`의 `DOCS`가 `lang`·`alt`를 들고 있고, 템플릿은 그걸로 `<html lang>`·`hreflang`·푸터·언어 전환 링크를 찍는다. 템플릿은 **한 벌뿐이다** — 언어별로 복제하지 말 것(복제하면 반드시 한쪽만 고쳐진다).
+- 푸터 문서 목록은 **같은 언어 안에서만** 이동한다. 언어를 건너는 이동은 푸터 맨 아래 전환 링크 하나가 맡는다.
+- `hreflang`의 `x-default`는 한국어(루트)를 가리킨다.
+
+**랜딩(`/`)과 `404.html`은 아직 한국어 전용이다** — `/en/` 랜딩은 만들지 않았다. 영문 페이지의 워드마크를 누르면 한국어 랜딩으로 간다. 영문 진입점은 제출된 URL 자체라 지금은 문제가 아니지만, 영문 마켓을 열면 그때 다시 볼 자리다.
 
 ## 출시 시점에 갈아끼울 것
 
@@ -35,7 +51,7 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 - ② 스크린샷 자리 — 지원 기기 범위 확정(앱 `HANDOFF.md` §7 2단계) 이후
 - ③ `content/terms.md`·`content/privacy.md` 머리말의 "최종 개정 · 앱 출시 전" → 정식 시행일
 - ④ `index.html`의 `description`·`og:description` 출시 후 문구
-- ⑤ `/support/`에 노출할 연락 수단 범위 확정 — 지금은 사이트 전체와 같은 이메일 하나
+- ~~⑤ `/support/`에 노출할 연락 수단 범위~~ — **닫힘(2026-09-23).** `support@rapt.kr` 하나로 확정, 사이트 전체가 이 주소를 쓴다
 
 ## 디자인 언어 — 앱을 따라간다
 
@@ -50,12 +66,13 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 
 - `index.html` — 랜딩 페이지 (직접 수정). 기능 설명 문구는 **최신 빌드에 실제로 있는 것만** 적는다 — 앱 쪽 `HANDOFF.md`는 일부 절이 낡아 있으므로, 애매하면 코드(`Rapt/Rapt/Item.swift`, `DesignTokens.swift`)를 근거로 삼는다.
 - `404.html` — GitHub Pages가 자동으로 서빙하는 404 페이지 (직접 수정)
-- `content/*.md` — 문서 페이지 **원본**(약관·방침·지원·데이터 삭제·라이선스). 내용을 바꿀 땐 이 파일만 수정한다. 페이지를 추가하려면 `content/`에 md를 넣고 `build.py`의 `DOCS`에 한 줄 더한 뒤 `sitemap.xml`도 갱신한다.
-- `scripts/build.py`, `scripts/template.html` — `content/*.md` → `{slug}/index.html` 변환기. 지원하는 마크다운은 `# `/`## `/`> `/`- `/문단/`**굵게**`/`[링크](주소)`뿐이다 — 문서가 쓰는 문법을 넘어서면 **원문이 그대로 화면에 나간다**(링크·목록 둘 다 실제로 그렇게 새어 나간 적이 있다). 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
+- `content/*.md` — 문서 페이지 **원본**(약관·방침·지원·데이터 삭제·라이선스), `content/en/*.md`가 그 영문판. 내용을 바꿀 땐 이 파일만 수정한다. 페이지를 추가하려면 `content/`에 md를 넣고 `build.py`의 `DOCS`에 한 줄 더하면 된다 — **`sitemap.xml`은 따라온다**(아래).
+- `scripts/build.py`, `scripts/template.html` — `content/*.md` → `{slug}/index.html` 변환기 + `sitemap.xml` 생성기. 지원하는 마크다운은 `# `/`## `/`> `/`- `/문단/`**굵게**`/`[링크](주소)`뿐이다 — 문서가 쓰는 문법을 넘어서면 **원문이 그대로 화면에 나간다**(링크·목록 둘 다 실제로 그렇게 새어 나간 적이 있다). 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
 - `assets/` — 파비콘(`favicon-16/32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-1200x630.png`), 공용 CSS(`site.css`), 자체 호스팅 워드마크 폰트(`fonts/`)
 - `manifest.json` — 웹 앱 매니페스트. `assets/site-icon-192.png`, `site-icon-512.png`를 참조해 Android/PWA 홈 화면 추가를 지원한다.
 - `threads-callback/index.html` — Meta OAuth 리디렉션 중계. Meta는 HTTPS `redirect_uri`만 허용해서 여기로 먼저 돌아온 뒤 쿼리스트링을 `rapt://threads-auth`로 넘긴다(앱 쪽 `Rapt/ThreadsAuth.swift`). `noindex`라 sitemap에 넣지 않는다.
-- `robots.txt`, `sitemap.xml` — 크롤러용. 페이지를 추가/제거하면 `sitemap.xml`의 `<url>` 목록도 같이 갱신하고, 문서를 고치면 해당 `lastmod`도 같이 올린다. **`stamp_assets.py`는 sitemap을 안 건드린다 — 손으로 고칠 것.**
+- `robots.txt` — 크롤러용. 손으로 관리한다.
+- `sitemap.xml` — **`build.py`가 생성한다. 직접 고치지 말 것.** 목록은 `DOCS`에서 뽑고, `lastmod`는 원본 파일의 마지막 커밋 날짜(아직 안 올린 수정이 있으면 오늘)를 git에서 읽는다. 손으로 관리하던 2026-09-18~23 사이에 실제로 값이 틀어져 있었다(9/22 변경이 9/18 날짜를 달고 있었다) — 사람이 기억해야 하는 값이라 빠진 것이라, 기억을 없애는 쪽으로 고쳤다. 파일 mtime이 아니라 git을 근거로 삼는 이유는 clone하면 mtime이 체크아웃 시각으로 뭉개지기 때문이다.
 - `CNAME` — GitHub Pages 커스텀 도메인 설정 파일 (내용: `rapt.kr`, 건드리지 말 것)
 
 ## 약관/방침 내용을 업데이트하는 방법
