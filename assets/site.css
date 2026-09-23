@@ -30,7 +30,19 @@
  *
  * 2026-09-08에 앱이 브랜드 컬러(태운 오렌지)를 걷어내고 "종이와 잉크"
  * 단색으로 통일했다. 강조는 색이 아니라 잉크의 굵기·채움으로 말한다.
- * 남은 유일한 색은 500자 초과 경고(--overflow-*)뿐이다.
+ * 남은 유일한 색은 500자 초과 밑칠(--overflow-bg)뿐이다.
+ *
+ * 2026-09-19에 앱은 붉은 톤을 **밑칠과 잉크로 갈랐다**. 호출부를 전수로 보니
+ * `RaptOverflowBorder`(α0.30)를 테두리로 쓴 곳이 한 군데도 없었고 — 전부
+ * 글자·아이콘이었는데 종이 위 실효 대비가 1.46:1이라 읽히지 않았다 — 그래서
+ * 불투명한 경고 잉크 `RaptWarning`을 새로 만들고 그 컬러셋은 삭제했다.
+ * 이 사이트는 2026-09-23까지 그 **삭제된 토큰을 참조하고 있었고**, 하필
+ * 앱이 "쓰는 곳이 없다"고 판단한 바로 그 용도(테두리)로 쓰고 있었다.
+ * 지금은 앱과 같이 밑칠만 남는다.
+ *
+ * `RaptWarning`(#C0403A / #E4645F)은 일부러 안 들여온다 — 이 사이트에는
+ * 경고를 띄울 자리가 없다. 규칙은 "앱을 베낀다"이지 "앱 토큰을 다 갖는다"가
+ * 아니다. 쓸 자리가 생기면 그때 위 값을 그대로 가져올 것.
  */
 :root {
   --canvas: #F6F3EE;   /* RaptCanvas — 종이 */
@@ -40,8 +52,7 @@
   --ink:    #2D2823;   /* RaptInk — 본문 잉크 (= AccentColor) */
   --ink-2:  #625C58;   /* RaptInk2 */
   --ink-3:  #96918D;   /* RaptInk3 */
-  --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg */
-  --overflow-border: rgba(226, 73, 71, 0.30);   /* RaptOverflowBorder */
+  --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg — 밑칠 */
 
   /* 조판 */
   --measure: 680px;
@@ -79,7 +90,6 @@
     --ink-2:  #9A9894;
     --ink-3:  #767471;
     --overflow-bg:     rgba(189, 65, 63, 0.22);
-    --overflow-border: rgba(189, 65, 63, 0.40);
   }
 }
 
@@ -95,10 +105,27 @@ body {
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
   font-size: 16px;              /* RaptType.body */
-  line-height: 1.75;            /* body + bodyLineSpacing 6 ≈ ×1.75 */
+  /* 행간 1.75는 **웹이 정한 값**이다 — 앱을 그대로 옮긴 게 아니다.
+   * 앱은 16pt + lineSpacing 6인데, SwiftUI의 lineSpacing은 폰트 고유
+   * 행간(16pt SF ≈ 19~20pt) 위에 6을 더하는 것이라 실효 배수는 ≈1.6이다.
+   * 웹에서 1.6은 680px 폭의 한글 본문에 빡빡해서 1.75로 연다. 값이 다른
+   * 것 자체는 괜찮지만, 앱에서 온 값인 척하면 안 된다(원래 주석이
+   * "≈ ×1.75"라고 적어 그렇게 읽혔다). */
+  line-height: 1.75;
 }
 
 a { color: inherit; }
+
+/* 포커스 링. 이게 없으면 브라우저 기본값이 뜨는데, 그건 대개 파란 링이라
+ * 종이와 잉크뿐인 화면에 사이트에 없는 색이 들어온다. 키보드로 짚어가는
+ * 사람에게만 보이도록 :focus-visible 을 쓴다(마우스 클릭엔 안 뜬다).
+ * 잉크 2px에 3px 띄움 — 앱이 선택 상태를 색이 아니라 형태로 말하는 것과
+ * 같은 방식이다. */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 
 /* ── 워드마크 ─────────────────────────────────────────────────────────
  * Bodoni Moda 500 · opsz 11 · 트래킹 −0.005em. 앱 아이콘 글리프("R.")와
@@ -132,17 +159,22 @@ a { color: inherit; }
   padding: 32px var(--gutter) 64px;
   border-top: 1px solid var(--rule);
   font-size: 12px;              /* RaptType.meta */
-  line-height: 2;
+  line-height: 1.75;            /* 본문과 같은 "읽는 글" 행간 */
   color: var(--ink-3);
 }
 
+/* 푸터 링크는 ink-3(2.82:1)이라 AA(4.5:1)에 못 미쳤다. 앱이 2026-09-19에
+ * "못 읽는 색은 쓰지 않는다"를 기준으로 삼고 경고 잉크를 4.70:1로 눌러
+ * 만든 것과 같은 기준을 여기에도 적용한다 — ink-2는 5.95:1.
+ * 누를 수 있는 것과 장식성 라벨(.features dt, .coda .platforms)을 가르는
+ * 선이기도 하다: 저쪽은 조용한 채로 둔다. */
 .site-footer a {
   text-decoration: none;
-  color: var(--ink-3);
+  color: var(--ink-2);
   transition: color 0.16s ease-in-out;   /* RaptMotion.dim */
 }
 
-.site-footer a:hover { color: var(--ink-2); }
+.site-footer a:hover { color: var(--ink); }
 
 /* 워드마크는 14px 이하에서 트래킹을 0으로 연다(위 .wordmark 주석). */
 .site-footer .wordmark {
@@ -158,7 +190,7 @@ a { color: inherit; }
 .footer-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 20px;
+  gap: 10px 20px;   /* 행간을 2 → 1.75로 조인 만큼 세로 간격으로 돌려준다 */
   margin-bottom: 10px;
 }
 
@@ -240,7 +272,7 @@ a { color: inherit; }
 .features dd {
   font-family: var(--serif);
   font-size: 16px;
-  line-height: 1.95;
+  line-height: 1.9;             /* .lede·.coda 와 같은 "말하는 자리" 행간 */
   color: var(--ink-2);
   margin: 0;
   padding: 18px 0 26px;
@@ -248,15 +280,25 @@ a { color: inherit; }
   text-wrap: pretty;
 }
 
-.features dt + dd { border-top: 1px solid var(--rule); }
+/* `.features dt + dd { border-top }` 규칙이 여기 있었다 — .features dd 와
+ * 똑같은 선언이라 중복인데다, 특이도(0,1,2)가 아래 미디어쿼리의
+ * `.features dd { border-top: 0 }`(0,1,1)를 **이겨서** 좁은 화면에서
+ * 구분선이 사라지지 않았다. 세로로 쌓이는 모바일에서는 라벨과 그 설명
+ * 사이에 선이 그어져 둘이 남남처럼 보였다. 지우면 둘 다 해결된다.
+ * (특이도는 순서와 무관하게 이긴다 — 미디어쿼리를 뒤에 둔 것으로는 못 막는다.)
+ */
 
 /* 500자 초과 강조 — 앱에 남아 있는 단 하나의 색. 여기서는 그 처리를
- * 문장 안에서 그대로 보여준다. */
+ * 문장 안에서 그대로 보여준다.
+ *
+ * 테두리(box-shadow)가 있었는데 걷어냈다: 앱에서 초과분은 **글자 뒤에 까는
+ * 밑칠 하나**이고 테두리가 없다. 웹에만 있던 1px 붉은 실선은 앱이 2026-09-19에
+ * "테두리로 쓴 곳이 0"이라며 삭제한 컬러셋을 참조하던 것이라, 앱에 없는
+ * 조형이 웹에만 있는 상태였다. 실선이 빠지니 문장도 조용해진다. */
 mark.overflow {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background: var(--overflow-bg);
-  box-shadow: inset 0 0 0 1px var(--overflow-border);
   border-radius: 3px;
   color: inherit;
   padding: 0 2px;
@@ -294,12 +336,15 @@ main.doc {
   padding: 32px var(--gutter) 64px;
 }
 
+/* 한글 제목은 마지막 한 글자만 다음 줄로 떨어지기 쉽다(조사가 붙어 어절이
+ * 길어지는 탓). balance는 줄을 고르게 나눠 그 외톨이를 없앤다. */
 main.doc h1 {
   font-family: var(--serif);
   font-weight: 400;
   font-size: 32px;
   line-height: 1.4;
   margin: 8px 0 32px;
+  text-wrap: balance;
 }
 
 main.doc h2 {
@@ -309,19 +354,25 @@ main.doc h2 {
   line-height: 1.6;
   margin: 44px 0 12px;
   color: var(--ink);
+  text-wrap: balance;
 }
 
+/* 문단 간격은 앱에 대응 토큰이 없다 — 앱은 글쓰기 화면이라 문단을 나누는
+ * 주체가 사용자다. 그래서 여기서 정해야 하는 값인데, 정해지지 않은 채
+ * 10px로 남아 있었다: 한 줄 높이가 28px(16 × 1.75)이니 문단이 바뀌어도
+ * 28 → 38px, 겨우 36% 더 벌어졌다. 문단이 서로 붙어 약관이 한 덩어리
+ * 벽으로 읽히던 원인이다. 20px면 48px가 되어 71% 더 벌어진다. */
 main.doc p {
   font-size: 16px;
   color: var(--ink-2);
-  margin: 0 0 10px;
+  margin: 0 0 20px;
   text-wrap: pretty;
 }
 
 main.doc strong { color: var(--ink); font-weight: 600; }
 
 main.doc ul {
-  margin: 0 0 10px;
+  margin: 0 0 20px;
   padding-left: 1.1em;
   list-style: none;
 }
@@ -329,7 +380,7 @@ main.doc ul {
 main.doc li {
   font-size: 16px;
   color: var(--ink-2);
-  margin: 0 0 4px;
+  margin: 0 0 10px;
   position: relative;
   text-wrap: pretty;
 }
@@ -348,7 +399,7 @@ main.doc li::before {
 
 main.doc a {
   color: var(--ink);
-  text-decoration-color: var(--ink-3);
+  text-decoration-color: var(--ink-2);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   transition: text-decoration-color 0.16s ease-in-out;   /* RaptMotion.dim */
@@ -365,10 +416,13 @@ main.doc blockquote.note {
   border-radius: var(--radius-card);
 }
 
+/* 이 안내문이 담는 건 최종 개정일과 "한국어판이 정본" — 문서에서 법적으로
+ * 가장 중요한 문장이다. 그런데 sunken 면 위의 ink-3는 2.51:1로 사이트에서
+ * 대비가 가장 낮았다(가장 중요한 문장이 가장 안 보였다). ink-2로 올린다. */
 main.doc blockquote.note p {
   font-size: 13.5px;            /* RaptType.listPreview */
-  line-height: 1.8;
-  color: var(--ink-3);
+  line-height: 1.75;
+  color: var(--ink-2);
   margin: 0 0 8px;
 }
 
