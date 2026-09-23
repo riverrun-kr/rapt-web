@@ -18,7 +18,7 @@ Copyright 2017–2024 Adobe.
 **IBM Plex Mono** — 글자 수와 날짜 등 숫자 표기.
 Copyright 2017 IBM Corp.
 
-이 웹사이트는 그중 Bodoni Moda를 직접 서빙합니다. 그 폰트 파일 옆에 라이선스 원문을 함께 두고 있습니다 — [OFL.txt](/assets/fonts/OFL.txt)
+이 웹사이트는 그중 **Bodoni Moda**(워드마크)와 **나눔명조 볼드**(섹션 라벨) 두 가지를 직접 서빙합니다. 각 폰트 파일 옆에 라이선스 원문을 함께 두고 있습니다 — [Bodoni Moda](/assets/fonts/OFL.txt) · [나눔명조](/assets/fonts/OFL-NanumMyeongjo.txt)
 
 ## 맞춤법 검사
 

@@ -22,7 +22,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# 해시를 붙일 대상. HTML 안에서 쓰이는 경로 그대로.
+# 폰트는 **CSS 안에서** 참조된다(@font-face). 그래서 두 단계로 나눠 찍는다 —
+# 아래 main() 주석 참고.
+FONT_ASSETS = [
+    "/assets/fonts/BodoniModa11pt-Medium-latin.woff2",
+    "/assets/fonts/NanumMyeongjo-Bold-labels.woff2",
+]
+FONT_HOSTS = ["assets/site.css"]
+
+# HTML 안에서 참조되는 것들.
 ASSETS = [
     "/assets/site.css",
     "/assets/favicon-16.png",
@@ -44,7 +52,34 @@ def digest(asset_path: str) -> str:
     return hashlib.sha256(data).hexdigest()[:10]
 
 
+def stamp_into(files, assets) -> None:
+    stamps = {a: digest(a) for a in assets}
+    for f in files:
+        path = ROOT / f
+        text = original = path.read_text(encoding="utf-8")
+        for asset, stamp in stamps.items():
+            text = re.sub(
+                re.escape(asset) + r"(\?v=[0-9a-f]+)?",
+                asset + "?v=" + stamp,
+                text,
+            )
+        if text != original:
+            path.write_text(text, encoding="utf-8")
+            print(f"stamped {f}")
+    for asset, stamp in stamps.items():
+        print(f"  {asset} -> ?v={stamp}")
+
+
 def main() -> None:
+    # 1단계: 폰트 해시를 site.css 안에 먼저 찍는다.
+    #
+    # 순서가 중요하다. 폰트 URL은 CSS 안에 있으므로 CSS를 고쳐야 하는데, 그러면
+    # CSS 자체의 내용이 바뀌어 해시도 달라진다. 폰트를 먼저 찍고 **그 다음에**
+    # CSS 해시를 계산해야 HTML이 가리키는 값이 실제 파일과 맞는다. 반대로 하면
+    # HTML은 옛 CSS 해시를 가리키고, 그게 바로 이 스크립트가 막으려던 상황이다.
+    stamp_into(FONT_HOSTS, FONT_ASSETS)
+
+    # 2단계: (이제 확정된) CSS와 파비콘 해시를 HTML에 찍는다.
     stamps = {a: digest(a) for a in ASSETS}
     for page in PAGES:
         path = ROOT / page

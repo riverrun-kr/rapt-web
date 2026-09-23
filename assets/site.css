@@ -13,8 +13,29 @@
  */
 @font-face {
   font-family: "Rapt Wordmark";
-  src: url("/assets/fonts/BodoniModa11pt-Medium-latin.woff2") format("woff2");
+  src: url("/assets/fonts/BodoniModa11pt-Medium-latin.woff2?v=e632832146") format("woff2");
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── 섹션 라벨용 명조 볼드 ──────────────────────────────────────────────
+ * Google Fonts에서 Nanum Myeongjo 700을 통째로 받으면 라벨 하나 굵히자고
+ * **179KB**가 더 나간다(실측: 92개 조각 중 라벨 글자가 걸치는 12개). 라벨이
+ * 쓰는 글자는 200자도 안 되므로 그 글자만 남긴 woff2를 직접 서빙한다 — 35KB로
+ * 5분의 1이다. 워드마크(Bodoni)에 이미 쓰는 방식과 같다.
+ *
+ * **라벨 문구를 고치면 `python3 scripts/subset_label_font.py`를 다시 돌릴 것.**
+ * 서브셋에 없는 글자는 이 폰트가 못 그려 다음 폰트로 떨어지고, 거기서
+ * 브라우저가 가짜 굵기를 만들어낸다 — 그 글자만 굵기와 모양이 튄다.
+ *
+ * 가족 이름을 "Nanum Myeongjo"로 겹치지 않게 따로 둔 건, 겹쳐 두면 글자가
+ * 빠졌을 때 어느 face로 떨어졌는지 눈으로 구분이 안 되기 때문이다.
+ */
+@font-face {
+  font-family: "Rapt Label";
+  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=54cff330d3") format("woff2");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -93,10 +114,9 @@
   --wordmark: "Rapt Wordmark", "Times New Roman", serif;
 }
 
-/* 영문 페이지는 줄을 더 짧게 잡는다. 디도네(Bodoni)는 획 대비가 커서 한 줄이
- * 길면 눈이 굵은 세로획만 따라가다 행을 놓친다 — 한글 명조가 견디는 길이를
- * 그대로 쓰면 안 된다. 560px ≈ 65자로 고전적인 본문 길이에 맞춘다. */
-html[lang="en"] { --measure: 560px; }
+/* 한때 영문 페이지만 측정 폭을 560px로 좁혔다. 본문 라틴이 Bodoni였을 때
+ * 디도네가 긴 줄을 못 견뎌 넣은 규칙인데, 본문에서 Bodoni를 걷어내면서
+ * 근거가 사라졌다 — 한국어·영문이 같은 폭을 쓴다(2026-09-23). */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -298,8 +318,9 @@ a { color: inherit; }
  * 본문이 ink-2이므로 라벨이 ink면 크기가 작아도 먼저 눈에 걸린다 —
  * 앱이 "강조는 색이 아니라 잉크의 굵기·채움으로 말한다"고 한 것과 같은 지렛대다. */
 .features dt {
+  font-family: "Rapt Label", var(--serif);
   font-size: 13px;              /* 앱 RaptType.meta(12)에서 한 칸 — 위 주석 참고 */
-  font-weight: 400;             /* 명조는 400 하나만 받는다 */
+  font-weight: 700;             /* 진짜 볼드 — 위 @font-face 참고 */
   letter-spacing: 0.04em;       /* 작은 크기의 한글 라벨은 조금 열어준다 */
   color: var(--ink);
   margin-top: 56px;
@@ -396,8 +417,9 @@ main.doc h1 {
  * 그 일을 대신 하기 때문에 오히려 조항 경계가 더 선명하다 — 예전엔 조항
  * 사이에 선이 없었다. */
 main.doc h2 {
+  font-family: "Rapt Label", var(--serif);
   font-size: 13px;              /* 위 .features dt 의 크기·잉크 주석 참고 */
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.6;
   color: var(--ink);

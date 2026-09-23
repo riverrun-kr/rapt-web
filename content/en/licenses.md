@@ -20,7 +20,7 @@ Copyright 2017–2024 Adobe.
 **IBM Plex Mono** — numerals such as character counts and dates.
 Copyright 2017 IBM Corp.
 
-This website serves one of them, Bodoni Moda, directly. The full license text sits beside the font file — [OFL.txt](/assets/fonts/OFL.txt)
+This website serves two of them directly: **Bodoni Moda** (the wordmark) and **Nanum Myeongjo Bold** (section labels). The full license text sits beside each font file — [Bodoni Moda](/assets/fonts/OFL.txt) · [Nanum Myeongjo](/assets/fonts/OFL-NanumMyeongjo.txt)
 
 ## Spell checking
 
