@@ -34,7 +34,7 @@
  */
 @font-face {
   font-family: "Rapt Label";
-  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=c5f51c812d") format("woff2");
+  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=bf347bfc43") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -187,9 +187,47 @@ a { color: inherit; }
   max-width: var(--measure);
   margin: 0 auto;
   padding: 48px var(--gutter) 0;
+  display: flex;
+  align-items: baseline;
 }
 
 .site-header .wordmark { font-size: 22px; }
+
+/* ── 언어 전환 ────────────────────────────────────────────────────────
+ * 푸터 맨 아래, 이메일과 사업자 정보 **뒤**에 있었다 — 페이지에서 가장 마지막에
+ * 보이는 자리였으니 안 보이는 게 당연했다(오너 지적, 2026-09-23). 위로 올리면서
+ * 형식도 바꿨다: 가려는 쪽 하나만 걸면 지금 무슨 언어를 보고 있는지가 안 보이므로
+ * **둘 다 적고 현재 언어를 잉크로** 둔다. 앱이 상태를 색이 아니라 형태·농도로
+ * 말하는 것과 같은 방식이고, 클릭할 수 있는 쪽이 어디인지도 분명해진다.
+ *
+ * margin-left:auto 로 오른쪽에 붙인다 — 랜딩에는 워드마크가 없어서(히어로에 큰
+ * 워드마크가 있다) space-between으로는 왼쪽에 붙어버린다.
+ */
+.site-header .lang {
+  margin: 0 0 0 auto;
+  font-size: 12px;              /* RaptType.meta */
+  line-height: 1.75;
+}
+
+.site-header .lang a,
+.site-header .lang .lang-on {
+  display: inline-block;
+  padding: 2px 8px;
+}
+
+/* 현재 언어 — 잉크. 누를 수 없다는 걸 형태로 말한다(링크가 아니다). */
+.site-header .lang .lang-on {
+  color: var(--ink);
+  border-right: 1px solid var(--rule);
+}
+
+.site-header .lang a {
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.16s ease-in-out;   /* RaptMotion.dim */
+}
+
+.site-header .lang a:hover { color: var(--ink); }
 
 /* ── 푸터 ─────────────────────────────────────────────────────────────
  * 한글 링크가 들어가는 자리다 — 서체 블록의 모노 관련 주석 참고.
@@ -238,13 +276,9 @@ a { color: inherit; }
 
 .footer-mail { display: block; }
 
-/* 언어 전환. 문서 목록(footer-nav)과 같은 줄에 섞으면 "또 하나의 문서"로
- * 읽힌다 — 이건 문서가 아니라 같은 문서를 다른 언어로 보는 스위치라서
- * 한 칸 떨어뜨려 마지막에 둔다. 라벨은 늘 가려는 쪽 언어로 적힌다. */
-.footer-lang {
-  display: block;
-  margin-top: 10px;
-}
+/* 푸터에 있던 .footer-lang 은 걷어냈다 — 언어 전환은 상단 바로 옮겼다
+ * (2026-09-23). 이메일과 사업자 정보 뒤에 놓여 있어서 페이지에서 가장 마지막에
+ * 보이는 자리였다. */
 
 /* ── 랜딩 ─────────────────────────────────────────────────────────── */
 

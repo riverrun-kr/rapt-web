@@ -26,13 +26,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=3eed43d7f8" />
+<link rel="stylesheet" href="/assets/site.css?v=03f355c6cd" />
 </head>
 <body>
 {{HEADER}}
-<main class="doc">
-{{BODY}}
-</main>
+<div class="hero">
+  <h1><span class="wordmark">Rapt</span></h1>
+  <p class="lede">{{LEDE}}</p>
+  <!-- 출시 교체 지점 ①: 이 배지를 App Store 링크로 바꾼다.
+       배지는 채움 없는 잉크 테두리(앱의 "상태는 형태로 말한다")라, 다운로드
+       버튼이 되는 순간 잉크로 꽉 찬 캡슐로 뒤집으면 같은 문법 안에서
+       "빈 원 → 꽉 찬 원"과 같은 전환이 된다. -->
+  <div class="status">{{BADGE}}</div>
+</div>
+
+<section class="features">
+  <dl>
+{{FEATURES}}
+  </dl>
+</section>
+
+<!-- 출시 교체 지점 ②: 이 위가 스크린샷이 들어갈 자리. 지원 기기 범위가
+     확정돼야 어떤 기기 프레임으로 찍을지 정해진다. -->
+<section class="coda">
+  <p class="platforms">{{PLATFORMS}}</p>
+</section>
+
 {{FOOTER}}
 </body>
 </html>
