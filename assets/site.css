@@ -487,9 +487,13 @@ main.doc blockquote.note p:last-child { margin-bottom: 0; }
 
 /* 사업자 정보 — 푸터에서 가장 낮은 층위라 한 단계 더 물러나 앉힌다.
  * 링크가 아니므로 ink-3를 그대로 쓴다(위 대비 주석은 링크에만 해당). */
+/* 사업자 정보. 잉크를 ink-3 → ink-2로 올렸다(2026-09-23): 이 블록은 Meta
+ * 비즈니스 인증이 **법적 상호를 찾으러 오는 자리**라 사이트에서 가장 기능적인
+ * 글자인데, ink-3는 2.82:1로 AA(4.5:1)에 못 미쳤다. 같은 푸터의 링크가 이미
+ * ink-2라 푸터 안에서도 어긋나 있었다. 크기 11px은 그대로 둔다. */
 .footer-business {
   margin: 16px 0 0;
   font-size: 11px;
   line-height: 1.7;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
