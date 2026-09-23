@@ -239,24 +239,40 @@ def parse_landing(md_text: str):
     그 아래는 문서와 같은 `## 라벨` + 문단. 앞의 일반 마크다운으로는 히어로
     리드·배지·플랫폼 표기를 표현할 방법이 없어서 머리만 따로 뒀다.
     """
+    def paragraphs(lines):
+        """빈 줄로 갈린 덩어리를 문단 목록으로. 설명이 길어지면 한 덩어리로
+        쏟아내는 대신 문단을 나눌 수 있어야 한다(오너 요청, 2026-09-23)."""
+        out, cur = [], []
+        for line in lines:
+            if line.strip():
+                cur.append(line.strip())
+            elif cur:
+                out.append(" ".join(cur))
+                cur = []
+        if cur:
+            out.append(" ".join(cur))
+        return out
+
     meta, items, label, buf = {"LEDE": []}, [], None, []
     for line in md_text.splitlines():
         if line.startswith("## "):
             if label is not None:
-                items.append((label, " ".join(buf).strip()))
+                items.append((label, paragraphs(buf)))
             label, buf = line[3:].strip(), []
         elif label is not None:
-            buf.append(line.strip())
+            buf.append(line)
         elif ":" in line and line.split(":", 1)[0].isupper():
             key, value = line.split(":", 1)
             (meta["LEDE"].append(value.strip()) if key == "LEDE"
              else meta.update({key: value.strip()}))
     if label is not None:
-        items.append((label, " ".join(buf).strip()))
+        items.append((label, paragraphs(buf)))
 
     features = "\n\n".join(
-        f"    <dt>{inline(name)}</dt>\n    <dd>{inline(text)}</dd>"
-        for name, text in items
+        f"    <dt>{inline(name)}</dt>\n    <dd>"
+        + "".join(f"<p>{inline(para)}</p>" for para in paras)
+        + "</dd>"
+        for name, paras in items
     )
     return meta, features
 

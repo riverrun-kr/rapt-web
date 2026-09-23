@@ -1,11 +1,13 @@
 LEDE: The less there is around it, the more the writing grows.
-LEDE: Built so you can give a sentence your whole attention.
+LEDE: Give the sentence your whole attention.
 BADGE: Coming soon
 PLATFORMS: iPhone · Mac
 
 ## Material
 
-Catch a thought the moment it arrives. When one has sat long enough in the list, carry it on into a piece of writing — and the original note stays above that writing, there whenever you want to look back at it.
+Catch a thought the moment it arrives. When one has sat long enough in the list, carry it on into a piece of writing.
+
+The note you started from stays above that writing, there whenever you want to look back at it.
 
 ## Writing
 

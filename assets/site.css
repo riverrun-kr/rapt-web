@@ -380,6 +380,11 @@ a { color: inherit; }
   text-wrap: pretty;
 }
 
+/* 설명이 길어지면 문단을 나눌 수 있다. 간격은 문서 본문과 같은 원리로 —
+ * 한 줄 높이(17 × 1.9 ≈ 32px)보다 작으면 문단이 안 갈린 것처럼 보인다. */
+.features dd p { margin: 0 0 20px; }
+.features dd p:last-child { margin-bottom: 0; }
+
 /* `.features dt + dd { border-top }` 규칙이 여기 있었다 — .features dd 와
  * 똑같은 선언이라 중복인데다, 특이도(0,1,2)가 아래 미디어쿼리의
  * `.features dd { border-top: 0 }`(0,1,1)를 **이겨서** 좁은 화면에서
