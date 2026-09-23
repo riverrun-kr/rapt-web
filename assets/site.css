@@ -436,3 +436,12 @@ main.doc blockquote.note p:last-child { margin-bottom: 0; }
   .features dt { padding-bottom: 0; }
   .features dd { border-top: 0; padding-top: 6px; }
 }
+
+/* 사업자 정보 — 푸터에서 가장 낮은 층위라 한 단계 더 물러나 앉힌다.
+ * 링크가 아니므로 ink-3를 그대로 쓴다(위 대비 주석은 링크에만 해당). */
+.footer-business {
+  margin: 16px 0 0;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
