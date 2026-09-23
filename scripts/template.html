@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="{{LANG}}">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,6 +9,7 @@
 <title>{{TITLE}}</title>
 <meta name="description" content="{{DESCRIPTION}}" />
 <link rel="canonical" href="https://rapt.kr/{{PATH}}" />
+{{ALTERNATES}}
 <meta property="og:site_name" content="Rapt" />
 <meta property="og:title" content="{{TITLE}}" />
 <meta property="og:description" content="{{DESCRIPTION}}" />
@@ -25,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=553dda82d4" />
+<link rel="stylesheet" href="/assets/site.css?v=792885ca20" />
 </head>
 <body>
 <header class="site-header">
@@ -37,13 +38,10 @@
 <footer class="site-footer">
   <a class="wordmark" href="/">Rapt</a>
   <nav class="footer-nav">
-    <a href="/support/">지원</a>
-    <a href="/terms/">이용약관</a>
-    <a href="/privacy/">개인정보처리방침</a>
-    <a href="/data-deletion/">데이터 삭제</a>
-    <a href="/licenses/">오픈소스 라이선스</a>
+{{FOOTER_NAV}}
   </nav>
   <a class="footer-mail" href="mailto:support@rapt.kr">support@rapt.kr</a>
+{{LANG_SWITCH}}
 </footer>
 </body>
 </html>
