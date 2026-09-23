@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f3ee" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1713" />
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}" />
+<link rel="canonical" href="https://rapt.kr/{{PATH}}" />
+{{ALTERNATES}}
+<meta property="og:site_name" content="Rapt" />
+<meta property="og:title" content="{{TITLE}}" />
+<meta property="og:description" content="{{DESCRIPTION}}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://rapt.kr/{{PATH}}" />
+<meta property="og:image" content="https://rapt.kr/assets/og-1200x630.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/assets/favicon-16.png?v=d7651005b3" sizes="16x16" />
+<link rel="icon" href="/assets/favicon-32.png?v=58ad18c546" sizes="32x32" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png?v=3f5dd816bf" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
+<link rel="stylesheet" href="/assets/site.css?v=03f355c6cd" />
+</head>
+<body>
+{{HEADER}}
+<div class="hero">
+  <h1><span class="wordmark">Rapt</span></h1>
+  <p class="lede">{{LEDE}}</p>
+  <!-- 출시 교체 지점 ①: 이 배지를 App Store 링크로 바꾼다.
+       배지는 채움 없는 잉크 테두리(앱의 "상태는 형태로 말한다")라, 다운로드
+       버튼이 되는 순간 잉크로 꽉 찬 캡슐로 뒤집으면 같은 문법 안에서
+       "빈 원 → 꽉 찬 원"과 같은 전환이 된다. -->
+  <div class="status">{{BADGE}}</div>
+</div>
+
+<section class="features">
+  <dl>
+{{FEATURES}}
+  </dl>
+</section>
+
+<!-- 출시 교체 지점 ②: 이 위가 스크린샷이 들어갈 자리. 지원 기기 범위가
+     확정돼야 어떤 기기 프레임으로 찍을지 정해진다. -->
+<section class="coda">
+  <p class="platforms">{{PLATFORMS}}</p>
+</section>
+
+{{FOOTER}}
+</body>
+</html>
