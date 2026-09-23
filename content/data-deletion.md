@@ -32,4 +32,4 @@ Threads 쪽에서도 권한을 회수하시려면 Threads(또는 Instagram) 계�
 
 ## 그 밖의 문의
 
-**stockyrep@gmail.com**
+**support@rapt.kr**

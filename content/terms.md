@@ -56,4 +56,4 @@ Rapt는 개인이 운영하는 프로젝트로, 사전 고지 없이 서비스 �
 
 ## 11. 문의
 
-stockyrep@gmail.com
+support@rapt.kr

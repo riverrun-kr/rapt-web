@@ -49,4 +49,4 @@ Rapt가 이용자에 대해 보유하는 개인정보가 없으므로 열람·�
 Rapt는 개인정보 관련 문의와 불만처리를 아래 연락처에서 접수합니다.
 
 - 운영자: Rapt 운영자
-- 이메일: stockyrep@gmail.com
+- 이메일: support@rapt.kr
