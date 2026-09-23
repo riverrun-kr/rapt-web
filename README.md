@@ -66,7 +66,7 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 
   **문서 문법도 `AboutView`에서 가져왔다**: 구분선(위 56 / 아래 36) → 라벨(12px) → 본문. 섹션 제목을 키우는 대신 **구분선이 구조를 진다.**
 
-  웹이 정한 값 3개(앱에 대응이 없거나 매체가 달라 조정한 것) — 본문 17px(명조는 x-height가 작아 16px로는 작게 읽힌다), **섹션 라벨 13px · ink**(앱은 12pt · ink-3인데 "너무 안 보인다"는 오너 지적으로 올렸다 — 폰의 3배 밀도·10cm와 데스크톱의 1~2배·60cm는 같게 읽히지 않고, 웹에선 이 라벨이 **유일한 섹션 제목**이라 안 읽히면 문서 뼈대가 통째로 흐려진다), 영문 페이지 측정 폭 560px.
+  웹이 정한 값 2개(앱에 대응이 없거나 매체가 달라 조정한 것) — 본문 17px(명조는 x-height가 작아 16px로는 작게 읽힌다), **섹션 라벨 13px · 볼드 · ink**(앱은 12pt · regular · ink-3). 라벨은 "너무 안 보인다"는 오너 지적으로 세 번에 걸쳐 올렸다(잉크 → 크기 → 굵기). 폰의 3배 밀도·10cm와 데스크톱의 1~2배·60cm는 같게 읽히지 않고, 무엇보다 **웹에선 이 라벨이 유일한 섹션 제목**이라 안 읽히면 문서 뼈대가 통째로 흐려진다. 측정 폭은 한국어·영문이 같다.
 - 강조(`<strong>`)는 **굵기가 아니라 잉크**다. 명조는 wght@400 하나만 받고 Bodoni는 Medium 단일이라 `font-weight`를 올리면 둘 다 브라우저 합성 굵기가 되고, 디도네 헤어라인은 거기서 특히 잘 뭉개진다. ink-2 → ink로 올리는 것이 앱의 "강조는 색이 아니라 잉크로 말한다"와도 같다.
 - 앱의 네 번째 서체인 IBM Plex Mono는 **일부러 쓰지 않는다**. 모노엔 한글 글리프가 없어 한글을 넣으면 그 부분만 시스템 폰트로 대체되고 모노 metric만 남아 자간이 뜬다(앱이 2026-09-11에 고친 문제). 이 사이트의 메타 자리는 전부 한글이다.
 - 아이콘·OG 이미지 — 원본은 `Rapt/Design_method/rapt-brand-assets/layers-bodoni/`. 재생성 방법은 아래 참고.
@@ -77,7 +77,8 @@ Rapt(Threads 특화 미니멀 글쓰기 앱)의 공개 웹사이트. GitHub Page
 - `404.html` — GitHub Pages가 자동으로 서빙하는 404 페이지 (직접 수정)
 - `content/*.md` — 문서 페이지 **원본**(약관·방침·지원·데이터 삭제·라이선스), `content/en/*.md`가 그 영문판. 내용을 바꿀 땐 이 파일만 수정한다. 페이지를 추가하려면 `content/`에 md를 넣고 `build.py`의 `DOCS`에 한 줄 더하면 된다 — **`sitemap.xml`은 따라온다**(아래).
 - `scripts/build.py`, `scripts/template.html` — `content/*.md` → `{slug}/index.html` 변환기 + `sitemap.xml` 생성기. 지원하는 마크다운은 `# `/`## `/`> `/`- `/문단/`**굵게**`/`[링크](주소)`뿐이다 — 문서가 쓰는 문법을 넘어서면 **원문이 그대로 화면에 나간다**(링크·목록 둘 다 실제로 그렇게 새어 나간 적이 있다). 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
-- `assets/` — 파비콘(`favicon-16/32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-1200x630.png`), 공용 CSS(`site.css`), 자체 호스팅 워드마크 폰트(`fonts/`)
+- `assets/` — 파비콘(`favicon-16/32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-1200x630.png`), 공용 CSS(`site.css`), 자체 호스팅 폰트 2종(`fonts/` — 워드마크용 Bodoni, 섹션 라벨용 명조 볼드)
+- `scripts/subset_label_font.py` — 섹션 라벨용 명조 볼드 서브셋 생성기. **라벨 문구를 고치거나 문서를 추가하면 다시 돌릴 것.** Google Fonts에서 Nanum Myeongjo 700을 통째로 받으면 라벨 하나 굵히자고 179KB가 더 나가는데(실측), 라벨이 쓰는 글자만 남기면 35KB다. 서브셋에 없는 글자는 다음 폰트로 떨어져 브라우저가 **가짜 굵기**를 만들어내므로 그 글자만 튄다 — 스크립트가 빠진 글자를 검사해 알려준다.
 - `manifest.json` — 웹 앱 매니페스트. `assets/site-icon-192.png`, `site-icon-512.png`를 참조해 Android/PWA 홈 화면 추가를 지원한다.
 - `threads-callback/index.html` — Meta OAuth 리디렉션 중계. Meta는 HTTPS `redirect_uri`만 허용해서 여기로 먼저 돌아온 뒤 쿼리스트링을 `rapt://threads-auth`로 넘긴다(앱 쪽 `Rapt/ThreadsAuth.swift`). `noindex`라 sitemap에 넣지 않는다.
 - `robots.txt` — 크롤러용. 손으로 관리한다.
