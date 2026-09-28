@@ -75,8 +75,20 @@
   --ink-3:  #96918D;   /* RaptInk3 */
   --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg — 밑칠 */
 
+  /* 기기 틀 — 랜딩 무대의 앱 화면(.phone)을 두르는 베젤. 앱에는 대응 컬러셋이 없다
+   * (앱 화면을 "보여줄" 때만 생기는 물건이라). 대신 스토어 스크린샷 목업
+   * (앱 저장소 tools/store_mockup.py의 BEZEL·EDGE)과 같은 값을 써서, 스토어와
+   * 사이트의 기기가 같은 물건으로 보이게 한다. */
+  --bezel:         #FAF8F5;
+  --bezel-edge:    #DEDAD3;
+  --screen-shadow: 0 26px 46px -28px rgba(45, 40, 35, 0.40);
+  /* 랜딩 무대 뒤 종이 띠. 라이트는 sunken — recess는 캔버스와 너무 붙어서
+   * 의도가 아니라 얼룩처럼 보였다(시안 비교, 2026-09-28). */
+  --stage-bg:      var(--sunken);
+
   /* 조판 */
   --measure: 680px;
+  --wide: 1040px;      /* 랜딩의 헤더·설명 격자·푸터 폭. 글 칼럼은 여전히 --measure */
   --gutter: 24px;
 
   /* 형태 (RaptRadius) */
@@ -128,6 +140,12 @@
     --ink-2:  #9A9894;
     --ink-3:  #767471;
     --overflow-bg:     rgba(189, 65, 63, 0.22);
+    --bezel:         #3E3A35;
+    --bezel-edge:    #605B54;
+    /* 다크에서 그림자는 검정 위 검정이라 안 보인다 — 대신 아래로 옅은 빛을
+     * 깐다(스토어 목업의 다크 처리와 같은 발상). */
+    --screen-shadow: 0 30px 64px -34px rgba(150, 138, 120, 0.26);
+    --stage-bg:      var(--recess);   /* 다크는 recess가 이미 캔버스보다 확실히 짙다 */
   }
 }
 
@@ -154,6 +172,12 @@ body {
    * 것 자체는 괜찮지만, 앱에서 온 값인 척하면 안 된다(원래 주석이
    * "≈ ×1.75"라고 적어 그렇게 읽혔다). */
   line-height: 1.75;
+  /* 한국어는 기본값이면 **음절마다** 줄을 끊을 수 있어서 "충 / 분히", "글
+   * 작성으 / 로"처럼 단어 한가운데서 갈라졌다(2026-09-28, 사이트 전체에서 발견).
+   * 어절 단위로만 끊는다. 한 어절이 한 줄보다 긴 예외(긴 URL 등)는
+   * overflow-wrap이 받는다. 라틴 문자에는 영향이 없다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 a { color: inherit; }
@@ -246,7 +270,7 @@ a { color: inherit; }
 /* 푸터 링크는 ink-3(2.82:1)이라 AA(4.5:1)에 못 미쳤다. 앱이 2026-09-19에
  * "못 읽는 색은 쓰지 않는다"를 기준으로 삼고 경고 잉크를 4.70:1로 눌러
  * 만든 것과 같은 기준을 여기에도 적용한다 — ink-2는 5.95:1.
- * 누를 수 있는 것과 장식성 라벨(.features dt, .coda .platforms)을 가르는
+ * 누를 수 있는 것과 장식성 라벨(.cell h2, .closing .platforms)을 가르는
  * 선이기도 하다: 저쪽은 조용한 채로 둔다. */
 .site-footer a {
   text-decoration: none;
@@ -281,39 +305,48 @@ a { color: inherit; }
  * 보이는 자리였다. */
 
 /* ── 랜딩 ─────────────────────────────────────────────────────────── */
+/*
+ * 2026-09-28 재설계 — 페이지 전체가 **가운데 축 하나**로 대칭이다.
+ *
+ *   머리(워드마크·리드·배지) → 무대(앱 화면 다섯 장) → 설명(2×2) → 맺음
+ *
+ * 그 전에는 문서 페이지와 같은 왼쪽 정렬 680px 칼럼이었고, 화면을 기능 설명마다
+ * 끼워 넣었다. 넓은 화면에서 칼럼 오른쪽이 스크롤 내내 비어 휑했다(오너 지적) —
+ * 화면이 글 칼럼의 곁다리인 한 어디에 끼워도 같은 문제가 났다(네 가지 배치를
+ * 같은 폭에서 비교했다). 그래서 화면을 첫 화면의 주인공으로 올리고 축을
+ * 가운데로 옮겼다. 문서 페이지(약관 등)는 여전히 왼쪽 정렬 칼럼이다 — 읽는
+ * 페이지와 보여주는 페이지의 조형이 다른 게 맞다.
+ */
 
-.hero {
-  max-width: var(--measure);
+body.landing .site-header,
+body.landing .site-footer { max-width: var(--wide); }
+
+/* ── 머리 ── */
+.intro {
+  max-width: 760px;
   margin: 0 auto;
-  padding: 18vh var(--gutter) 0;
+  padding: 72px var(--gutter) 0;
+  text-align: center;
 }
 
-.hero h1 {
-  margin: 0 0 28px;
+.intro h1 {
+  margin: 0 0 30px;
   font-weight: 400;
 }
 
-.hero .wordmark {
+.intro .wordmark {
   display: block;
-  font-size: 56px;
+  font-size: 88px;
   line-height: 1;
 }
 
-.hero p.lede {
+.intro p.lede {
   font-family: var(--serif);
-  font-size: 19px;              /* RaptType.emptyState — 앱이 말하는 목소리 */
+  font-size: 20px;
   line-height: 1.9;
   color: var(--ink-2);
-  /* 리드는 <br />로 줄을 직접 끊는다. 이 폭은 그 줄이 **다시 접히지 않게**
-   * 막아주는 안전선이다 — 30ch였을 때 "…만들었습니다"가 "만 / 들었습니다"로
-   * 단어 중간에서 갈라졌다(2026-09-23 원고 교체 때 실제로 발생). ch는 숫자 0의
-   * 폭이라 한글에 쓰면 실제 글자폭과 어긋난다. 한글 글리프는 대략 1em이므로
-   * em으로 잡는 게 맞고, 26em은 가장 긴 줄(약 22em)에 웹폰트가 늦게 올 때의
-   * 대체 서체 폭 차이까지 얹은 값이다.
-   * **리드 문구를 고치면 가장 긴 줄이 한 줄에 들어가는지 확인할 것.** */
-  max-width: 26em;
-  margin: 0 0 36px;
-  text-wrap: pretty;
+  margin: 0 0 30px;
+  text-wrap: balance;
 }
 
 /* 출시 상태 배지. 채움 없는 잉크 테두리 — 앱의 "상태는 색이 아니라
@@ -330,68 +363,120 @@ a { color: inherit; }
   line-height: 1.5;
 }
 
-/* 기능 목록 — AboutView의 구조를 그대로 가져왔다: 구분선 → 라벨 → 본문.
- * 예전엔 라벨과 문장이 좌우 두 칸(grid 7rem 1fr)이었는데, 그건 표의 조형이지
- * 문서의 조형이 아니다. 앱은 About 화면에서 라벨을 본문 **위에** 얹고 섹션을
- * 구분선으로 가른다. 쌓는 쪽으로 오면 좁은 화면과 넓은 화면의 구조가
- * 같아지는 덤도 있다(예전엔 미디어쿼리로 따로 조립했다).
+/* ── 무대 ──
+ * 화면 다섯 장이 가로로, 좌우대칭으로 선다. 가운데가 가장 크고 바깥으로 갈수록
+ * 작아지며(0.88 · 0.77), 아랫단을 맞춰 한 줄에 선 모양이 완만한 피라미드가 된다.
+ * 뒤에 한 톤 짙은 종이 띠를 깔아, 책상 위에 원고를 세운 것처럼 공간을 준다.
  *
- * 간격 56/36은 AboutView의 divider padding(.top 56 / .bottom 36) 그대로다. */
-.features {
-  max-width: var(--measure);
-  margin: 0 auto;
-  padding: 96px var(--gutter) 24px;
+ * 베젤·모서리는 화면 폭(--w)에 비례시킨다 — 크기가 다른 다섯 장이 같은 물건으로
+ * 보이려면 두께와 곡률이 같은 **비율**이어야 한다. 비율은 스토어 목업과 같다. */
+.stage {
+  position: relative;
+  isolation: isolate;           /* 아래 ::before의 z-index를 이 안에 가둔다 */
+  margin-top: 76px;
+  padding-bottom: 64px;
 }
 
-.features dl { margin: 0; }
+.stage::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 46%;
+  bottom: 0;
+  background: var(--stage-bg);
+  z-index: -1;
+}
 
+.spread {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.phone {
+  flex: 0 0 auto;
+  width: var(--w);
+  margin: 0;
+}
+
+.phone picture {
+  display: block;
+  padding: calc(var(--w) * 0.016);
+  border-radius: calc(var(--w) * 0.112);
+  background: var(--bezel);
+  box-shadow: inset 0 0 0 1px var(--bezel-edge), var(--screen-shadow);
+}
+
+.phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--w) * 0.096);
+}
+
+.phone figcaption {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.phone.center figcaption { color: var(--ink-2); }
+
+/* 크기 비율은 넓은 화면 조건 안에 둔다 — 밖에 두면 뒤에 오는 이 규칙이
+ * 좁은 화면의 64vw를 덮어써서, 모바일에서 다섯 장이 95px로 욱여들었다(시안에서 실제로). */
+@media (min-width: 900px) {
+  .spread {
+    --u: min(19vw, 300px);      /* 가운데 한 장의 폭. build.py PHONE_SIZES와 맞출 것 */
+    gap: calc(var(--u) * 0.10);
+  }
+  .phone.center { --w: var(--u); }
+  .phone.inner  { --w: calc(var(--u) * 0.88); }
+  .phone.outer  { --w: calc(var(--u) * 0.77); }
+}
+
+/* ── 설명 ──
+ * 2×2 격자. 칸마다 AboutView의 문법(구분선 → 라벨 → 본문)을 지킨다 — 한 칼럼
+ * 목록일 때 쓰던 문법을 칸 단위로 옮겨온 것이다. */
+.details {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 104px var(--gutter) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 80px;
+}
+
+.cell {
+  border-top: 1px solid var(--rule);
+  padding: 32px 0 56px;
+}
 
 /* 섹션 라벨의 크기와 잉크 — 앱은 12pt · ink-3인데 웹은 13px · ink다.
  *
  * "작은 라벨"이라는 성격은 그대로 두되(그게 이 제품의 문법이다) 잘 안 보인다는
- * 지적을 반영한 값이다(오너, 2026-09-23). 같은 토큰이 두 매체에서 같게 읽히지
- * 않는다: 폰에선 라벨이 눈앞 10cm에 3배 밀도로 찍히지만, 데스크톱에선 60cm 밖
- * 1~2배 밀도로 놓인다. 게다가 앱에서 이 라벨은 장식에 가깝지만 웹에서는
- * **유일한 섹션 제목**이다 — 제목을 키우지 않는 대신 구분선이 구조를 지는
- * 문법이라, 라벨이 안 읽히면 문서의 뼈대가 통째로 흐려진다.
- *
- * 그래서 크기는 한 칸(12 → 13), 잉크는 본문보다 **진하게**(ink) 올렸다.
- * 본문이 ink-2이므로 라벨이 ink면 크기가 작아도 먼저 눈에 걸린다 —
- * 앱이 "강조는 색이 아니라 잉크의 굵기·채움으로 말한다"고 한 것과 같은 지렛대다. */
-.features dt {
+ * 지적을 반영한 값이다(오너, 2026-09-23). 웹에서는 이 라벨이 **유일한 섹션
+ * 제목**이라, 안 읽히면 뼈대가 통째로 흐려진다. 그래서 크기는 한 칸(12 → 13),
+ * 잉크는 본문보다 **진하게**(ink) — 본문이 ink-2이므로 작아도 먼저 눈에 걸린다. */
+.cell h2 {
   font-family: "Rapt Label", var(--serif);
-  font-size: 13px;              /* 앱 RaptType.meta(12)에서 한 칸 — 위 주석 참고 */
-  font-weight: 700;             /* 진짜 볼드 — 위 @font-face 참고 */
-  letter-spacing: 0.04em;       /* 작은 크기의 한글 라벨은 조금 열어준다 */
+  font-size: 13px;
+  font-weight: 700;             /* 진짜 볼드 — @font-face "Rapt Label" 참고 */
+  letter-spacing: 0.04em;
   color: var(--ink);
-  margin-top: 56px;
-  border-top: 1px solid var(--rule);
-  padding-top: 36px;
-  padding-bottom: 12px;         /* AboutView label의 padding(.bottom, 12) */
+  margin: 0 0 14px;
 }
 
-/* 첫 항목 위의 56px는 섹션 자체의 위 여백과 겹친다 */
-.features dt:first-of-type { margin-top: 0; }
-
-.features dd {
-  line-height: 1.9;             /* .lede·.coda 와 같은 "말하는 자리" 행간 */
+.cell p {
+  line-height: 1.9;             /* "말하는 자리" 행간 */
   color: var(--ink-2);
-  margin: 0;
+  margin: 0 0 16px;
   text-wrap: pretty;
 }
 
-/* 설명이 길어지면 문단을 나눌 수 있다. 간격은 문서 본문과 같은 원리로 —
- * 한 줄 높이(17 × 1.9 ≈ 32px)보다 작으면 문단이 안 갈린 것처럼 보인다. */
-.features dd p { margin: 0 0 20px; }
-.features dd p:last-child { margin-bottom: 0; }
-
-/* `.features dt + dd { border-top }` 규칙이 여기 있었다 — .features dd 와
- * 똑같은 선언이라 중복인데다, 특이도(0,1,2)가 아래 미디어쿼리의
- * `.features dd { border-top: 0 }`(0,1,1)를 **이겨서** 좁은 화면에서
- * 구분선이 사라지지 않았다. 세로로 쌓이는 모바일에서는 라벨과 그 설명
- * 사이에 선이 그어져 둘이 남남처럼 보였다. 지우면 둘 다 해결된다.
- * (특이도는 순서와 무관하게 이긴다 — 미디어쿼리를 뒤에 둔 것으로는 못 막는다.)
- */
+.cell p:last-child { margin-bottom: 0; }
 
 /* 500자 초과 강조 — 앱에 남아 있는 단 하나의 색. 여기서는 그 처리를
  * 문장 안에서 그대로 보여준다.
@@ -409,27 +494,54 @@ mark.overflow {
   padding: 0 2px;
 }
 
-/* 닫는 말 — 페이지에서 유일하게 제품이 아니라 태도를 말하는 자리 */
-.coda {
-  max-width: var(--measure);
+/* ── 맺음 ── 페이지에서 유일하게 기능이 아니라 쓰는 방식을 말하는 자리 */
+.closing {
+  max-width: 640px;
   margin: 0 auto;
-  padding: 40px var(--gutter) 96px;
+  padding: 48px var(--gutter) 112px;
+  text-align: center;
 }
 
-.coda p {
+.closing p {
   font-family: var(--serif);
   font-size: 19px;
   line-height: 1.9;
   color: var(--ink-2);
-  margin: 0 0 20px;
-  text-wrap: pretty;
+  margin: 0 0 24px;
+  text-wrap: balance;
 }
 
-.coda .platforms {
+.closing .platforms {
   font-size: 12px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   color: var(--ink-3);
   margin: 0;
+}
+
+/* ── 좁은 화면 ──
+ * 무대는 가로로 넘기는 띠가 된다. 가운데(읽기) 화면이 먼저 서고, 오른쪽에 다음
+ * 장이 비쳐 넘길 수 있다는 게 보인다. 설명은 한 줄로 쌓인다. */
+@media (max-width: 899px) {
+  .intro { padding-top: 48px; }
+  .intro .wordmark { font-size: 60px; }
+  .intro p.lede { font-size: 18px; }
+
+  .stage { margin-top: 56px; padding-bottom: 40px; }
+  .stage::before { top: 52%; }
+  .spread {
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 0 var(--gutter) 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--gutter);
+    scrollbar-width: none;
+  }
+  .spread::-webkit-scrollbar { display: none; }
+  .phone { --w: 64vw; scroll-snap-align: start; }
+  .phone.center { order: -1; }
+
+  .details { grid-template-columns: 1fr; padding-top: 72px; }
 }
 
 /* ── 법률 문서 ───────────────────────────────────────────────────── */
@@ -464,7 +576,7 @@ main.doc h1 {
  * 사이에 선이 없었다. */
 main.doc h2 {
   font-family: "Rapt Label", var(--serif);
-  font-size: 13px;              /* 위 .features dt 의 크기·잉크 주석 참고 */
+  font-size: 13px;              /* 랜딩 .cell h2 의 크기·잉크 주석 참고 */
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.6;
@@ -553,11 +665,7 @@ main.doc blockquote.note p {
 main.doc blockquote.note p:last-child { margin-bottom: 0; }
 
 @media (max-width: 560px) {
-  .hero { padding-top: 14vh; }
-  .hero .wordmark { font-size: 44px; }
   .site-header { padding-top: 32px; }
-  /* .features 의 2단 → 1단 재조립 규칙이 여기 있었다. 이제 넓은 화면에서도
-   * 라벨이 본문 위에 쌓이므로(AboutView 구조) 좁은 화면에 따로 할 일이 없다. */
 }
 
 /* 사업자 정보 — 푸터에서 가장 낮은 층위라 한 단계 더 물러나 앉힌다.

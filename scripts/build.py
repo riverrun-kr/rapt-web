@@ -6,6 +6,7 @@ terms/index.html, privacy/index.html 이 다시 생성된다. 마크다운은 �
 문서에서 실제로 쓰는 부분집합만 지원한다: '# ', '## ', '> ' (블록인용),
 빈 줄로 구분된 문단, '- ' 목록, 인라인 **굵게**, 인라인 [링크](주소).
 """
+import hashlib
 import re
 import subprocess
 import sys
@@ -71,7 +72,10 @@ SWITCH_LABEL = {"ko": "한국어", "en": "English"}
 LANDINGS = [
     {"slug": "", "lang": "ko", "source": "home.md", "alt": "en",
      "title": "Rapt",
-     "description": "떠오른 순간은 글감으로 적어두고, 때가 된 것만 글로 옮겨 씁니다. "
+     # 리드와 같은 문장으로 맞춘다(2026-09-28). 예전 문장("떠오른 순간은…")이
+     # 리드가 바뀐 뒤에도 여기와 링크 카드에만 남아, 공유된 카드와 페이지가
+     # 다른 말을 하고 있었다.
+     "description": "주변이 작아질수록 글이 커집니다. 오롯하게 문장에 몰입하세요. "
                     "Threads에 최적화된 미니멀 글쓰기 앱, Rapt."},
     {"slug": "en", "lang": "en", "source": "en/home.md", "alt": "",
      "title": "Rapt",
@@ -232,8 +236,80 @@ def build_doc(doc: dict) -> None:
     print(f"wrote {out_dir / 'index.html'}")
 
 
+# ── 랜딩 ─────────────────────────────────────────────────────────
+#
+# 2026-09-28 재설계. 페이지 전체가 **가운데 축 하나**로 대칭이고, 앱 화면
+# 다섯 장이 첫 화면의 주인공이다:
+#
+#   머리(워드마크·리드·배지) → 무대(화면 다섯 장) → 설명(2×2) → 맺음
+#
+# 그 전 두 판은 둘 다 넓은 화면에서 휑했다 — 화면을 기능 설명마다 끼워 넣어도,
+# 한 줄로 모아도, 결국 **글 칼럼(680px)이 주인공이고 화면이 곁다리**라 칼럼
+# 리듬에 끌려가 오른쪽이 비었다. 게다가 사이트가 왼쪽 정렬 문서라 무게가 늘
+# 왼쪽으로 쏠렸다. 네 가지 배치를 실제로 만들어 같은 폭에서 비교한 끝에 오너가
+# 고른 구조다.
+#
+# 원고(home.md)와의 계약:
+#   HERO_SHOT: 이름 | 대체 텍스트   무대 한가운데 화면
+#   HERO_LABEL: 읽기 모드           그 화면 아래 캡션
+#   CLOSING: 동기화                 이 라벨의 절은 격자가 아니라 맺음 문장이 된다
+#   ## 라벨 아래 SHOT: 이름 | 대체 텍스트   그 기능의 화면(무대에 선다)
+#
+# 무대의 순서는 원고의 기능 순서 그대로이고, 한가운데에 HERO_SHOT이 끼어든다.
+# 지금 원고로는 글감 → 글 → **읽기** → 맞춤법 → 발행 — 쓰고, 읽어보고,
+# 다듬고, 올리는 흐름이 왼쪽에서 오른쪽으로 흐른다.
+#
+# 이미지 파일은 앱 저장소의 `tools/web_assets.py`가 스크린샷 원본에서 만든다
+# (`assets/screens/<이름>-<light|dark>-<400|800>.webp`). 배색은 <picture>의
+# media가 방문자 설정을 따라 고른다 — 사이트 CSS가 prefers-color-scheme만
+# 보므로 정확히 같은 조건이다. URL에는 내용 해시를 여기서 직접 붙인다 — 이
+# 마크업은 템플릿이 아니라 여기서 생성되므로 stamp_assets.py가 볼 수 없다.
+SCREEN_DIR = "/assets/screens"
+# 원본은 전부 6.9인치(1320×2868). 800px 폭이면 높이 1738 — width/height를
+# 박아둬야 이미지가 오기 전에 자리가 잡혀 글이 밀려 내려가지 않는다.
+SCREEN_WH = (800, 1738)
+# 그려지는 폭은 site.css의 .phone과 맞춘다(넓은 화면 최대 300px, 좁은 화면 64vw).
+PHONE_SIZES = "(max-width: 899px) 64vw, 300px"
+
+
+def asset_url(path: str) -> str:
+    data = (ROOT / path.lstrip("/")).read_bytes()
+    return f"{path}?v={hashlib.sha256(data).hexdigest()[:10]}"
+
+
+def phone_html(spec: str, rank: str, caption: str) -> str:
+    """무대에 서는 화면 한 장. rank는 center/inner/outer — 가운데서 멀수록 작다."""
+    name, _, alt = (part.strip() for part in spec.partition("|"))
+    if not alt:
+        raise SystemExit(f"화면 '{name}'에 대체 텍스트가 없다 — `이름 | 설명` 꼴로 쓸 것")
+
+    def srcset(scheme: str) -> str:
+        urls = []
+        for w in (400, 800):
+            path = f"{SCREEN_DIR}/{name}-{scheme}-{w}.webp"
+            if not (ROOT / path.lstrip("/")).exists():
+                # 조용히 깨진 이미지를 내보내느니 빌드를 멈춘다.
+                raise SystemExit(f"{path}가 없다 — 앱 저장소에서 tools/web_assets.py를 먼저 돌릴 것")
+            urls.append(f"{asset_url(path)} {w}w")
+        return ", ".join(urls)
+
+    # 넓은 화면에선 다섯 장이 전부 첫 화면에 들어오므로 lazy가 사실상 즉시 로드다.
+    # 좁은 화면에선 가로 띠의 뒤쪽 장들이 실제로 미뤄진다. 한가운데만 바로 받는다.
+    loading = "" if rank == "center" else ' loading="lazy"'
+    return (
+        f'    <figure class="phone {rank}">'
+        f'<picture>'
+        f'<source media="(prefers-color-scheme: dark)" srcset="{srcset("dark")}" sizes="{PHONE_SIZES}" />'
+        f'<img src="{asset_url(f"{SCREEN_DIR}/{name}-light-800.webp")}" srcset="{srcset("light")}" '
+        f'sizes="{PHONE_SIZES}" width="{SCREEN_WH[0]}" height="{SCREEN_WH[1]}" alt="{alt}"{loading} decoding="async" />'
+        f'</picture>'
+        f'<figcaption>{inline(caption)}</figcaption>'
+        f'</figure>'
+    )
+
+
 def parse_landing(md_text: str):
-    """랜딩 원고 → (머리 값들, 기능 목록 HTML).
+    """랜딩 원고 → (머리 값들, [(라벨, 문단들, 화면 지정)]).
 
     형식은 두 부분이다. 머리는 `KEY: 값` 줄(LEDE는 여러 줄 = 여러 행),
     그 아래는 문서와 같은 `## 라벨` + 문단. 앞의 일반 마크다운으로는 히어로
@@ -253,12 +329,14 @@ def parse_landing(md_text: str):
             out.append(" ".join(cur))
         return out
 
-    meta, items, label, buf = {"LEDE": []}, [], None, []
+    meta, items, label, buf, shot = {"LEDE": []}, [], None, [], None
     for line in md_text.splitlines():
         if line.startswith("## "):
             if label is not None:
-                items.append((label, paragraphs(buf)))
-            label, buf = line[3:].strip(), []
+                items.append((label, paragraphs(buf), shot))
+            label, buf, shot = line[3:].strip(), [], None
+        elif label is not None and line.startswith("SHOT:"):
+            shot = line.split(":", 1)[1].strip()
         elif label is not None:
             buf.append(line)
         elif ":" in line and line.split(":", 1)[0].isupper():
@@ -266,20 +344,48 @@ def parse_landing(md_text: str):
             (meta["LEDE"].append(value.strip()) if key == "LEDE"
              else meta.update({key: value.strip()}))
     if label is not None:
-        items.append((label, paragraphs(buf)))
+        items.append((label, paragraphs(buf), shot))
+    return meta, items
 
-    features = "\n\n".join(
-        f"    <dt>{inline(name)}</dt>\n    <dd>"
-        + "".join(f"<p>{inline(para)}</p>" for para in paras)
-        + "</dd>"
-        for name, paras in items
-    )
-    return meta, features
+
+def stage_html(meta: dict, items: list) -> str:
+    """화면 다섯 장. 원고의 기능 순서대로 세우고 한가운데에 HERO_SHOT을 끼운다.
+    가운데서 한 칸이면 inner, 그 너머는 outer. 화면이 없는 원고(영문)면 무대가 없다."""
+    shots = [(shot, label) for label, _, shot in items if shot]
+    if not meta.get("HERO_SHOT"):
+        return ""
+    mid = len(shots) // 2
+    row = shots[:mid] + [(meta["HERO_SHOT"], meta.get("HERO_LABEL", ""))] + shots[mid:]
+    center = mid
+
+    def rank(i):
+        d = abs(i - center)
+        return "center" if d == 0 else "inner" if d == 1 else "outer"
+
+    phones = "\n".join(phone_html(s, rank(i), cap) for i, (s, cap) in enumerate(row))
+    return (f'<section class="stage" aria-label="{meta.get("STAGE_LABEL", "Rapt 화면")}">\n'
+            f'  <div class="spread">\n{phones}\n  </div>\n</section>')
+
+
+def details_html(meta: dict, items: list) -> tuple:
+    """(설명 격자, 맺음 문단). CLOSING으로 지정된 절만 격자에서 빠져 맺음이 된다."""
+    closing_label = meta.get("CLOSING")
+    cells, closing = [], ""
+    for label, paras, _ in items:
+        body = "".join(f"<p>{inline(p)}</p>" for p in paras)
+        if label == closing_label:
+            closing = body
+        else:
+            cells.append(f'  <div class="cell">\n    <h2>{inline(label)}</h2>\n    {body}\n  </div>')
+    if closing_label and not closing:
+        raise SystemExit(f"CLOSING: {closing_label} — 그런 라벨(## )이 원고에 없다")
+    return "\n".join(cells), closing
 
 
 def build_landing(page: dict) -> None:
     md_text = (ROOT / "content" / page["source"]).read_text(encoding="utf-8")
-    meta, features = parse_landing(md_text)
+    meta, items = parse_landing(md_text)
+    details, closing = details_html(meta, items)
 
     out = ROOT / page["slug"] / "index.html" if page["slug"] else ROOT / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -295,7 +401,9 @@ def build_landing(page: dict) -> None:
         .replace("{{LEDE}}", "<br />".join(meta["LEDE"]))
         .replace("{{BADGE}}", meta.get("BADGE", ""))
         .replace("{{PLATFORMS}}", meta.get("PLATFORMS", ""))
-        .replace("{{FEATURES}}", features)
+        .replace("{{STAGE}}", stage_html(meta, items))
+        .replace("{{DETAILS}}", details)
+        .replace("{{CLOSING}}", closing)
     )
     out.write_text(html, encoding="utf-8")
     print(f"wrote {out}")
