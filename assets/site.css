@@ -511,6 +511,19 @@ mark.overflow {
   text-wrap: balance;
 }
 
+/* 맺음 인용 — 리드와 같은 목소리(명조 19px · ink-2)로 두고, 출처만 한 단 물린다.
+ * 인용 부호를 문장에 직접 둔다: 명조에는 이탤릭이 없어서 "인용임"을 모양으로
+ * 드러낼 다른 방법이 없다. */
+.epigraph { margin: 0 0 44px; }
+.epigraph blockquote { margin: 0; }
+.epigraph blockquote p { margin: 0; }
+.epigraph figcaption {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
 .closing .platforms {
   font-size: 12px;
   letter-spacing: 0.04em;

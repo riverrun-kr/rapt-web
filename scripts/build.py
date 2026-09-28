@@ -252,7 +252,8 @@ def build_doc(doc: dict) -> None:
 # 원고(home.md)와의 계약:
 #   HERO_SHOT: 이름 | 대체 텍스트   무대 한가운데 화면
 #   HERO_LABEL: 읽기 모드           그 화면 아래 캡션
-#   CLOSING: 동기화                 이 라벨의 절은 격자가 아니라 맺음 문장이 된다
+#   CLOSING: 라벨                   이 라벨의 절은 격자가 아니라 맺음 문장이 된다
+#   QUOTE: 문장 / QUOTE_BY: 출처     맺음 자리의 인용(한국어 랜딩은 이걸 쓴다)
 #   ## 라벨 아래 SHOT: 이름 | 대체 텍스트   그 기능의 화면(무대에 선다)
 #
 # 무대의 순서는 원고의 기능 순서 그대로이고, 한가운데에 HERO_SHOT이 끼어든다.
@@ -341,8 +342,12 @@ def parse_landing(md_text: str):
             buf.append(line)
         elif ":" in line and line.split(":", 1)[0].isupper():
             key, value = line.split(":", 1)
-            (meta["LEDE"].append(value.strip()) if key == "LEDE"
-             else meta.update({key: value.strip()}))
+            # LEDE·QUOTE는 여러 줄 = 여러 행(<br />). 인용은 마디마다 직접 끊는다 —
+            # 브라우저에 맡기면 "주변이 아무리 / 고요해도"처럼 구절 한가운데서 갈렸다.
+            if key in ("LEDE", "QUOTE"):
+                meta.setdefault(key, []).append(value.strip())
+            else:
+                meta[key] = value.strip()
     if label is not None:
         items.append((label, paragraphs(buf), shot))
     return meta, items
@@ -379,6 +384,17 @@ def details_html(meta: dict, items: list) -> tuple:
             cells.append(f'  <div class="cell">\n    <h2>{inline(label)}</h2>\n    {body}\n  </div>')
     if closing_label and not closing:
         raise SystemExit(f"CLOSING: {closing_label} — 그런 라벨(## )이 원고에 없다")
+    # 맺음 인용(2026-09-29). 한국어 랜딩의 동기화 문장을 오너가 빼고 격언으로
+    # 바꿨다. 인용문과 출처를 한 덩어리로 묶는 표준 마크업(figure > blockquote +
+    # figcaption)을 쓴다 — 스크린리더가 "인용"으로 읽고, 출처가 인용 밖 본문으로
+    # 흘러나가지 않는다.
+    if meta.get("QUOTE"):
+        by = meta.get("QUOTE_BY", "")
+        closing += (
+            f'<figure class="epigraph"><blockquote><p>“{"<br />".join(inline(q) for q in meta["QUOTE"])}”</p></blockquote>'
+            + (f'<figcaption>— {inline(by)}</figcaption>' if by else "")
+            + "</figure>"
+        )
     return "\n".join(cells), closing
 
 

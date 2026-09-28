@@ -4,7 +4,10 @@ BADGE: 출시 준비 중
 PLATFORMS: iPhone · Mac
 HERO_SHOT: reading | 읽기 모드 — 완성된 글이 타래 단위로 놓인 Rapt 화면
 HERO_LABEL: 읽기 모드
-CLOSING: 동기화
+QUOTE: 글을 쓸 때는 아무리 혼자여도 모자라고,
+QUOTE: 주변이 아무리 고요해도 모자라다.
+QUOTE: 밤조차 충분히 밤이 아니다.
+QUOTE_BY: 프란츠 카프카 (Franz Kafka)
 
 ## 글감
 
@@ -31,7 +34,3 @@ SHOT: spellcheck | 맞춤법 검사 결과 — 고칠 곳마다 원래 표기와
 SHOT: publish | Threads 발행 화면 — 네 개 포스트가 모두 발행되었고 아래에 열기 버튼이 있는 화면
 
 Rapt는 Meta Threads 타래글 작성에 특화된 글쓰기 도구입니다. 타래 단위로 글을 쓸 수 있고, Threads 계정을 연결하면 앱에서 바로 글을 발행할 수 있습니다.
-
-## 동기화
-
-iPhone에서 적어둔 글감을, Mac에서 그대로 이어 작성할 수 있습니다. 본인의 iCloud를 쓰기 때문에 계정을 새로 만들 필요가 없습니다.
