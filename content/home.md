@@ -7,7 +7,7 @@ HERO_LABEL: 읽기 모드
 QUOTE: 글을 쓸 때는 아무리 혼자여도 모자라고,
 QUOTE: 주변이 아무리 고요해도 모자라다.
 QUOTE: 밤조차 충분히 밤이 아니다.
-QUOTE_BY: 프란츠 카프카 (Franz Kafka)
+QUOTE_BY: 프란츠 카프카 (Franz Kafka, 1913)
 
 ## 글감
 
