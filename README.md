@@ -102,7 +102,7 @@ PLATFORMS: iPhone · Mac
 - `scripts/landing.html` — 랜딩 템플릿. `<head>`는 문서 템플릿과 같은 내용을 갖고 있으니 메타를 고칠 땐 **둘 다** 본다.
 - `content/*.md` — 문서 페이지 **원본**(약관·방침·지원·데이터 삭제·라이선스), `content/en/*.md`가 그 영문판. 내용을 바꿀 땐 이 파일만 수정한다. 페이지를 추가하려면 `content/`에 md를 넣고 `build.py`의 `DOCS`에 한 줄 더하면 된다 — **`sitemap.xml`은 따라온다**(아래).
 - `scripts/build.py`, `scripts/template.html` — `content/*.md` → `{slug}/index.html` 변환기 + `sitemap.xml` 생성기. 지원하는 마크다운은 `# `/`## `/`> `/`- `/문단/`**굵게**`/`[링크](주소)`뿐이다 — 문서가 쓰는 문법을 넘어서면 **원문이 그대로 화면에 나간다**(링크·목록 둘 다 실제로 그렇게 새어 나간 적이 있다). 페이지 공통 `<head>`(메타·파비콘 등)를 바꾸려면 `template.html`을 고치고 `python3 scripts/build.py`를 다시 실행한다 — `index.html`, `404.html`은 별도 문서라 템플릿을 안 쓰므로 같은 변경을 직접 반영해야 한다.
-- `assets/` — 파비콘(`favicon-16/32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-screen-1200x630.png`), 랜딩 앱 화면(`screens/`), 공용 CSS(`site.css`), 자체 호스팅 폰트 2종(`fonts/` — 워드마크용 Bodoni, 섹션 라벨용 명조 볼드)
+- `assets/` — 파비콘(`favicon-16/32`, `apple-touch-icon-180`, `site-icon-192/512`), OG 이미지(`og-reading-1200x630.png`), 랜딩 앱 화면(`screens/`), 공용 CSS(`site.css`), 자체 호스팅 폰트 2종(`fonts/` — 워드마크용 Bodoni, 섹션 라벨용 명조 볼드)
 - `scripts/subset_label_font.py` — 섹션 라벨용 명조 볼드 서브셋 생성기. **라벨 문구를 고치거나 문서를 추가하면 다시 돌릴 것.** Google Fonts에서 Nanum Myeongjo 700을 통째로 받으면 라벨 하나 굵히자고 179KB가 더 나가는데(실측), 라벨이 쓰는 글자만 남기면 35KB다. 서브셋에 없는 글자는 다음 폰트로 떨어져 브라우저가 **가짜 굵기**를 만들어내므로 그 글자만 튄다 — 스크립트가 빠진 글자를 검사해 알려준다.
 - `manifest.json` — 웹 앱 매니페스트. `assets/site-icon-192.png`, `site-icon-512.png`를 참조해 Android/PWA 홈 화면 추가를 지원한다.
 - `threads-callback/index.html` — Meta OAuth 리디렉션 중계. Meta는 HTTPS `redirect_uri`만 허용해서 여기로 먼저 돌아온 뒤 쿼리스트링을 `rapt://threads-auth`로 넘긴다(앱 쪽 `Rapt/ThreadsAuth.swift`). `noindex`라 sitemap에 넣지 않는다.
@@ -123,7 +123,7 @@ PLATFORMS: iPhone · Mac
 앱 아이콘이 바뀌면 웹 에셋도 같이 갱신해야 한다(2026-09-11 이전엔 두 세대 뒤처져 있었다 — 어두운 사각형 + Newsreader "Rapt" 전체 워드마크였고, OG 이미지엔 이미 제거된 태운 오렌지 점이 남아 있었다).
 
 - **파비콘 5종** — 원본은 `rapt-brand-assets/layers-bodoni/icon-light-1024.png`(opsz 11)와 `icon-light-small-1024.png`(opsz 6). 32px 이하 슬롯은 헤어라인이 사라지므로 반드시 opsz 6 판을 쓴다. `apple-touch-icon-180.png`는 iOS가 스스로 마스킹하므로 **미리 라운딩하지 않는다**(이중 라운딩 문제). 나머지는 22.37% 라운딩.
-- **OG 이미지** — `assets/og-screen-1200x630.png`. 종이 배경(`#F6F3EE`) 위에 왼쪽은 Bodoni 워드마크 + 명조 리드 문장, 오른쪽은 읽기 모드 화면을 세운 기기. **앱 저장소의 `tools/web_assets.py`가 만든다**(스크린샷 원본에서). 2026-09-28 이전 카드(`og-1200x630.png`)는 오른쪽 절반이 비어 있었고 문구가 옛 리드였다 — 이 사이트의 사용자는 Threads에 있어서, 방문자 대부분이 사이트보다 이 카드를 먼저 본다. **내용을 바꾸면 파일 이름도 바꾼다** — 스크래퍼(Threads·카카오톡 등)는 URL 기준으로 오래 캐시하고 쿼리스트링을 떼고 보는 곳도 있어서, 이름을 그대로 두면 옛 이미지가 계속 나간다.
+- **OG 이미지** — `assets/og-reading-1200x630.png`. 종이 배경(`#F6F3EE`) 위에 왼쪽은 Bodoni 워드마크 + 명조 리드 문장, 오른쪽은 읽기 모드 화면을 세운 기기. **앱 저장소의 `tools/web_assets.py`가 만든다**(스크린샷 원본에서). 2026-09-28 이전 카드(`og-1200x630.png`)는 오른쪽 절반이 비어 있었고 문구가 옛 리드였다. 같은 날 기기 안의 상태 줄(시각·배터리)을 지우면서 이름을 한 번 더 바꿨다(`og-screen` → `og-reading`) — 이 사이트의 사용자는 Threads에 있어서, 방문자 대부분이 사이트보다 이 카드를 먼저 본다. **내용을 바꾸면 파일 이름도 바꾼다** — 스크래퍼(Threads·카카오톡 등)는 URL 기준으로 오래 캐시하고 쿼리스트링을 떼고 보는 곳도 있어서, 이름을 그대로 두면 옛 이미지가 계속 나간다.
 - **워드마크 폰트** — `assets/fonts/BodoniModa11pt-Medium-latin.woff2`. 앱이 번들하는 `Rapt/Rapt/Fonts/BodoniModa11pt-Medium.ttf`를 라틴만 남겨 줄인 것(12KB)이라 글자꼴이 앱 아이콘 글리프와 정확히 같다. 이건 정적 인스턴스라 opsz·weight가 이미 구워져 있다 — CSS에서 `font-variation-settings`를 걸지 말 것. **OFL 폰트를 웹에서 직접 배포하는 것이므로 `assets/fonts/OFL.txt`(라이선스 원문)를 같이 올려둬야 한다** — 폰트 파일만 빼고 올리면 라이선스 위반이다.
 
 ## 랜딩 구조 (2026-09-28 재설계)
@@ -165,6 +165,7 @@ cd ../rapt-web && python3 scripts/build.py              # 새 해시로 랜딩 �
 - **라이트·다크 두 벌.** 사이트가 방문자 배색을 따라가므로 `<picture>`의 `media`로 같이 바꿔 낀다. 라이트만 두면 다크 페이지 한가운데 크림색 화면이 박혀 눈이 부신다.
 - **폭 400·800 두 가지.** 무대에서 넓은 화면 최대 300px(가운데), 좁은 화면 64vw로 그리므로 1배는 400, 2배는 800이 받는다. 800px WebP가 장당 55~77KB(원본 PNG는 400KB 안팎).
 - **영문 랜딩에는 넣지 않았다.** 화면 속 UI와 글이 전부 한국어라, 영문 방문자에겐 "영어로는 못 쓰는 앱"으로 읽힌다. 앱에 영문 지원이 들어오면 영문 화면으로 찍어 넣는다. (링크 카드는 한 벌이라 영문 페이지도 한국어 카드를 쓴다 — 예전 카드도 문구가 한국어였다.)
+- **상태 줄(시각·신호·배터리)은 지운다**(오너 판단, "굉장히 거슬린다"). 잘라내지 않고 행마다 그 행의 바탕색으로 덮는다 — 잘라내면 화면 비율이 바뀌어 기기 틀이 짧아진다. 앱 저장소 `tools/store_mockup.py`의 `clean_status_bar`가 스토어 컷과 웹 이미지 모두에 적용한다. 촬영 원본은 그대로 둔다.
 - 화면 속 글은 **오너가 Threads에 실제로 발행한 글**이다. 앱이 자기 소개를 하는 더미 글로는 "스레드 글도 깊을 수 있다"는 주장이 증명되지 않는다.
 
 ## 캐시 무효화 — 에셋을 고쳤으면 반드시
