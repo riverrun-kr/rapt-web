@@ -17,7 +17,7 @@
 <meta property="og:description" content="A minimal writing app built for Threads." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rapt.kr/en/" />
-<meta property="og:image" content="https://rapt.kr/assets/og-1200x630.png" />
+<meta property="og:image" content="https://rapt.kr/assets/og-screen-1200x630.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -28,13 +28,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=03f355c6cd" />
+<link rel="stylesheet" href="/assets/site.css?v=acccfdd48d" />
 </head>
-<body>
+<body class="landing">
 <header class="site-header">
   <p class="lang"><span class="lang-on">English</span><a href="/" hreflang="ko" lang="ko">한국어</a></p>
 </header>
-<div class="hero">
+<section class="intro">
   <h1><span class="wordmark">Rapt</span></h1>
   <p class="lede">The less there is around it, the more the writing grows.<br />Give the sentence your whole attention.</p>
   <!-- 출시 교체 지점 ①: 이 배지를 App Store 링크로 바꾼다.
@@ -42,30 +42,33 @@
        버튼이 되는 순간 잉크로 꽉 찬 캡슐로 뒤집으면 같은 문법 안에서
        "빈 원 → 꽉 찬 원"과 같은 전환이 된다. -->
   <div class="status">Coming soon</div>
-</div>
-
-<section class="features">
-  <dl>
-    <dt>Material</dt>
-    <dd><p>Catch a thought the moment it arrives. When one has sat long enough in the list, carry it on into a piece of writing.</p><p>The note you started from stays above that writing, there whenever you want to look back at it.</p></dd>
-
-    <dt>Writing</dt>
-    <dd><p>You write in threads. Past 500 characters nothing is split for you; the app simply shows <mark class="overflow">how far over you are</mark>, quietly. The sentence is yours.</p></dd>
-
-    <dt>Spelling</dt>
-    <dd><p>Korean spelling is checked sentence by sentence, and you choose what to accept, one at a time.</p></dd>
-
-    <dt>Publishing to Threads</dt>
-    <dd><p>Rapt is a writing tool built for composing Threads posts. You write in threads, and once your Threads account is connected you can publish straight from the app.</p></dd>
-
-    <dt>Sync</dt>
-    <dd><p>A note you jot down on iPhone is waiting on your Mac, ready to be carried on. It runs on your own iCloud, so there is no new account to create.</p></dd>
-  </dl>
 </section>
 
-<!-- 출시 교체 지점 ②: 이 위가 스크린샷이 들어갈 자리. 지원 기기 범위가
-     확정돼야 어떤 기기 프레임으로 찍을지 정해진다. -->
-<section class="coda">
+<!-- 출시 교체 지점 ② — 채웠다(2026-09-28). 화면은 머리 바로 아래 "무대"에
+     다섯 장이 가로로 선다(build.py stage_html). 원고의 HERO_SHOT·SHOT 줄이 정한다. -->
+
+
+<section class="details">
+  <div class="cell">
+    <h2>Material</h2>
+    <p>Catch a thought the moment it arrives. When one has sat long enough in the list, carry it on into a piece of writing.</p><p>The note you started from stays above that writing, there whenever you want to look back at it.</p>
+  </div>
+  <div class="cell">
+    <h2>Writing</h2>
+    <p>You write in threads. Past 500 characters nothing is split for you; the app simply shows <mark class="overflow">how far over you are</mark>, quietly. The sentence is yours.</p>
+  </div>
+  <div class="cell">
+    <h2>Spelling</h2>
+    <p>Korean spelling is checked sentence by sentence, and you choose what to accept, one at a time.</p>
+  </div>
+  <div class="cell">
+    <h2>Publishing to Threads</h2>
+    <p>Rapt is a writing tool built for composing Threads posts. You write in threads, and once your Threads account is connected you can publish straight from the app.</p>
+  </div>
+</section>
+
+<section class="closing">
+  <p>A note you jot down on iPhone is waiting on your Mac, ready to be carried on. It runs on your own iCloud, so there is no new account to create.</p>
   <p class="platforms">iPhone · Mac</p>
 </section>
 

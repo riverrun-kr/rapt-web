@@ -39,11 +39,19 @@ ASSETS = [
 ]
 
 # 손으로 쓰는 페이지 + 빌드 템플릿. (terms/privacy는 산출물이라 여기 없다.)
+#
+# `scripts/landing.html`이 빠져 있었다(2026-09-28 발견). 랜딩이 빌드로 옮겨갈 때
+# 이 목록엔 산출물인 index.html만 남아서, 스탬프를 찍어도 build.py가 곧바로
+# **스탬프 없는 옛 템플릿으로 덮어썼다.** 그 뒤로 CSS를 몇 번 고쳤는데 랜딩은
+# 계속 옛 해시(03f355c6cd)를 가리켜 캐시 무효화가 통째로 꺼져 있었다 — 새 HTML +
+# 옛 CSS 조합이 바로 이 스크립트가 막으려던 상황이다. index.html·404.html은
+# 산출물이라 여기 있어도 소용없지만 해도 없어 그대로 둔다.
 PAGES = [
     "index.html",
     "404.html",
     "threads-callback/index.html",
     "scripts/template.html",
+    "scripts/landing.html",
 ]
 
 

@@ -2,6 +2,7 @@ LEDE: The less there is around it, the more the writing grows.
 LEDE: Give the sentence your whole attention.
 BADGE: Coming soon
 PLATFORMS: iPhone · Mac
+CLOSING: Sync
 
 ## Material
 
