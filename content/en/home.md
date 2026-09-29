@@ -2,7 +2,10 @@ LEDE: The less there is around it, the more the writing grows.
 LEDE: Give the sentence your whole attention.
 BADGE: Coming soon
 PLATFORMS: iPhone · Mac
-CLOSING: Sync
+QUOTE: When you write, you can never be alone enough,
+QUOTE: it can never be quiet enough around you,
+QUOTE: the night is still too little night.
+QUOTE_BY: Franz Kafka, 1913
 
 ## Material
 
@@ -21,7 +24,3 @@ Korean spelling is checked sentence by sentence, and you choose what to accept, 
 ## Publishing to Threads
 
 Rapt is a writing tool built for composing Threads posts. You write in threads, and once your Threads account is connected you can publish straight from the app.
-
-## Sync
-
-A note you jot down on iPhone is waiting on your Mac, ready to be carried on. It runs on your own iCloud, so there is no new account to create.
