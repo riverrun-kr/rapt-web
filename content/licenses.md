@@ -12,7 +12,7 @@ Copyright 2020 The Bodoni Moda Project Authors.
 **나눔명조 (Nanum Myeongjo)** — 앱이 말하는 자리의 한글 문장.
 Copyright 2010 NHN Corporation. 디자인 FONTRIX. 네이버가 SIL OFL 1.1로 배포합니다.
 
-**Noto Serif KR** — 글감 메모의 본문.
+**Noto Serif KR** — 이용자가 쓰는 글의 본문.
 Copyright 2017–2024 Adobe.
 
 **IBM Plex Mono** — 글자 수와 날짜 등 숫자 표기.

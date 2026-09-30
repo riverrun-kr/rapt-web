@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=a07283ec19" />
+<link rel="stylesheet" href="/assets/site.css?v=7eb895c124" />
 </head>
 <body>
 <header class="site-header">
@@ -36,17 +36,18 @@
   <p class="lang"><span class="lang-on">한국어</span><a href="/en/privacy/" hreflang="en" lang="en">English</a></p>
 </header>
 <main class="doc">
-<h1>Rapt 개인정보처리방침</h1>
-<blockquote class="note"><p>최종 개정 2026-09-11 · 앱 출시 전 — 정식 시행일은 앱스토어 출시 시점에 확정됩니다.</p><p>이 방침은 현재 앱 구현 상태(기기 내 저장 + 이용자 본인의 iCloud 동기화, 운영자 서버·계정·분석 도구 없음)를 기준으로 작성되었습니다. 새 기능이 도입되면 그때 갱신합니다.</p></blockquote>
+<h1>개인정보처리방침</h1>
+<blockquote class="note"><p>최종 개정 2026-09-30 · 앱 출시 전 — 정식 시행일은 앱스토어 출시 시점에 확정됩니다.</p></blockquote>
 <h2>1. 수집하는 개인정보</h2>
 <p>Rapt는 이용자의 개인정보를 수집하지 않습니다. 회원가입, 로그인, 이메일 주소, 위치 정보, 광고 식별자, 분석 도구(Analytics), 크래시 리포팅 등 어떠한 형태의 데이터 수집·추적 기능도 앱에 포함되어 있지 않습니다.</p>
 <h2>2. 작성한 콘텐츠의 저장</h2>
 <p>이용자가 Rapt에서 작성한 글(본문, 타래 등)은 기기 내부 저장소에 저장되며, <strong>이용자 본인의 Apple iCloud 계정을 통해 같은 계정으로 로그인된 이용자의 다른 기기와 동기화됩니다.</strong> 이 동기화 과정의 데이터 저장·전송에는 Apple의 개인정보처리방침이 적용됩니다.</p>
-<p>글을 보관하는 용도의 운영자 서버는 없습니다. 이용자가 쓴 글은 아래 3항의 두 기능을 직접 실행하는 경우를 제외하면 기기와 이용자 본인의 iCloud를 벗어나지 않으며, 운영자를 포함한 제3자는 iCloud를 경유하는 콘텐츠를 포함해 이용자의 글에 접근할 수 없습니다.</p>
+<p>글을 보관하는 용도의 운영자 서버는 없습니다. 이용자가 쓴 글은 아래 3항의 맞춤법 검사·Threads 발행을 직접 실행하는 경우를 제외하면 기기와 이용자 본인의 iCloud를 벗어나지 않으며, 운영자를 포함한 제3자는 iCloud를 경유하는 콘텐츠를 포함해 이용자의 글에 접근할 수 없습니다.</p>
 <h2>3. 이용자가 실행할 때만 외부로 전송되는 경우</h2>
-<p>아래 두 기능은 <strong>이용자가 직접 실행할 때에 한해</strong> 해당 글을 외부로 전송합니다. 실행하지 않으면 어떤 내용도 나가지 않습니다.</p>
+<p>아래 기능은 <strong>이용자가 직접 실행할 때에 한해</strong> 외부로 전송합니다. 실행하지 않으면 어떤 내용도 나가지 않습니다.</p>
 <p><strong>맞춤법 검사</strong> — 검사를 요청한 글의 텍스트가 운영자가 운영하는 중계 서버를 거쳐 맞춤법 검사 제공업체(bareun.ai)로 전송됩니다. 중계 서버는 전달만 할 뿐 그 내용을 저장하거나 기록하지 않으며, 운영자는 전송되는 글을 열람하지 않습니다. 전송된 내용의 처리에는 해당 업체의 정책이 적용됩니다. 중계 서버를 두는 이유는 검사에 필요한 접근 키를 앱에 넣지 않기 위해서입니다.</p>
-<p><strong>Threads 발행</strong> — 이용자가 Threads 계정을 연결하고 발행을 실행하면, 발행 대상 글이 Threads(Meta)로 전송되어 이용자의 계정에 게시됩니다. 이는 이용자가 의도한 게시 행위이며, 게시된 콘텐츠에는 Threads(Meta)의 정책이 적용됩니다. Threads 접근 토큰은 이용자 기기의 키체인에 저장되고 운영자는 이를 보관하지 않습니다.</p>
+<p><strong>Threads 발행</strong> — 이용자가 Threads 계정을 연결하고 발행을 실행하면, 발행 대상 글이 앱에서 Threads(Meta)로 직접 전송되어 이용자의 계정에 게시됩니다. 이는 이용자가 의도한 게시 행위이며, 게시된 콘텐츠에는 Threads(Meta)의 정책이 적용됩니다.</p>
+<p><strong>Threads 계정 연결</strong> — 계정을 연결할 때, Threads가 발급한 인증 코드를 접근 토큰으로 바꾸는 단계가 운영자의 중계 서버를 거칩니다. 이 교환에 필요한 비밀 키를 앱에 넣지 않기 위해서입니다. 중계 서버는 토큰을 전달만 할 뿐 저장하거나 기록하지 않습니다. 발급된 토큰은 이용자 기기의 키체인에 저장되고, 운영자는 이를 보관하지 않습니다.</p>
 <h2>4. 제3자 제공</h2>
 <p>위 3항에 적은, 이용자가 직접 실행한 기능에 따른 전송을 제외하면 Rapt는 어떠한 개인정보나 콘텐츠도 제3자에게 제공, 판매, 공유하지 않습니다. 애초에 수집하는 정보가 없으므로 제공할 정보도 없습니다.</p>
 <h2>5. Apple 플랫폼을 통한 정보 처리</h2>
@@ -60,7 +61,7 @@
 <p>이 개인정보처리방침은 데이터 처리 방식에 영향을 주는 서비스 변경에 따라 갱신될 수 있으며, 변경 시 이 페이지에 갱신된 내용과 시행일을 게시합니다. 중요한 변경의 경우 앱 업데이트 노트 등을 통해 추가로 안내합니다.</p>
 <h2>9. 개인정보 보호책임자</h2>
 <p>Rapt는 개인정보 관련 문의와 불만처리를 아래 연락처에서 접수합니다.</p>
-<ul><li>운영자: Rapt 운영자</li><li>이메일: support@rapt.kr</li></ul>
+<ul><li>개인정보 보호책임자: 김재민 (카인드닷츠 대표)</li><li>이메일: support@rapt.kr</li></ul>
 </main>
 <footer class="site-footer">
   <a class="wordmark" href="/">Rapt</a>

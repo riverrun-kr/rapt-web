@@ -260,11 +260,21 @@ a { color: inherit; }
 .site-footer {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 32px var(--gutter) 64px;
-  border-top: 1px solid var(--rule);
+  padding: 0 var(--gutter) 64px;
   font-size: 12px;              /* RaptType.meta */
   line-height: 1.75;            /* 본문과 같은 "읽는 글" 행간 */
   color: var(--ink-3);
+}
+
+/* 푸터 구분선은 **글자 폭에만** 긋는다(2026-09-30). 예전엔 border-top이라 좌우
+ * 여백(--gutter)까지 뻗어서, 바로 위 본문 절의 구분선보다 양쪽으로 24px씩 길었다 —
+ * 같은 페이지에서 선의 시작점이 둘이었다. 여백 안쪽 블록으로 그으면 본문 구분선·
+ * 랜딩 설명 격자와 가장자리가 맞는다. */
+.site-footer::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--rule);
+  margin-bottom: 32px;
 }
 
 /* 푸터 링크는 ink-3(2.82:1)이라 AA(4.5:1)에 못 미쳤다. 앱이 2026-09-19에

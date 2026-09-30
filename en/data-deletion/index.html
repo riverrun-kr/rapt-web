@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=a07283ec19" />
+<link rel="stylesheet" href="/assets/site.css?v=7eb895c124" />
 </head>
 <body>
 <header class="site-header">
@@ -50,8 +50,8 @@
 <p>Tapping <strong>disconnect account</strong> inside the app deletes the access token stored on your device. That token lived only in your device's keychain from the start, and the operator has never held it.</p>
 <p>To revoke the permission on the Threads side as well, remove Rapt from the connected-apps list in your Threads (or Instagram) account settings.</p>
 <p><strong>Rapt cannot delete posts already published to Threads</strong> — you must delete those in Threads directly.</p>
-<h2>The relay server used by spell checking and publishing</h2>
-<p>These two features send the relevant text out only when you run them yourself. The relay server only forwards; it neither stores nor logs the content, so nothing remains there to delete.</p>
+<h2>The relay server used by spell checking and account connection</h2>
+<p>Spell checking passes the text you submit, and connecting a Threads account passes the access token being issued, through the relay server. Both happen only when you run them yourself, and the relay only forwards — it neither stores nor logs anything, so nothing remains there to delete. Publishing does not go through the relay; it goes straight from the app to Threads.</p>
 <h2>Other inquiries</h2>
 <p><strong>support@rapt.kr</strong></p>
 </main>

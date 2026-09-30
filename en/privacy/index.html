@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400&display=swap" />
-<link rel="stylesheet" href="/assets/site.css?v=a07283ec19" />
+<link rel="stylesheet" href="/assets/site.css?v=7eb895c124" />
 </head>
 <body>
 <header class="site-header">
@@ -36,17 +36,18 @@
   <p class="lang"><span class="lang-on">English</span><a href="/privacy/" hreflang="ko" lang="ko">한국어</a></p>
 </header>
 <main class="doc">
-<h1>Rapt Privacy Policy</h1>
-<blockquote class="note"><p>Last revised 2026-09-11 · Before launch — the effective date will be fixed when the app ships on the App Store.</p><p>This policy describes the app as it is currently built: storage on the device plus sync through the user's own iCloud, with no operator server, no accounts, and no analytics tooling. It will be updated when new features are introduced.</p><p>This English text is provided for the reader's convenience. The <a href="/privacy/">Korean version</a> is the governing text.</p></blockquote>
+<h1>Privacy Policy</h1>
+<blockquote class="note"><p>Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.</p><p>This English text is provided for the reader's convenience. The <a href="/privacy/">Korean version</a> is the governing text.</p></blockquote>
 <h2>1. Personal Information We Collect</h2>
 <p>Rapt collects no personal information. The app contains no data collection or tracking of any kind — no sign-up, no sign-in, no email address, no location, no advertising identifier, no analytics, and no crash reporting.</p>
 <h2>2. Storage of What You Write</h2>
 <p>Everything you write in Rapt, including post bodies and threads, is stored in the device's local storage and <strong>synced, through your own Apple iCloud account, to your other devices signed in to that same account.</strong> Apple's privacy policy governs the storage and transmission that happen in the course of that sync.</p>
-<p>There is no operator server that holds your writing. Except when you run the two features described in section 3 below, what you write never leaves your device and your own iCloud, and no third party — the operator included — can reach your writing, including content passing through iCloud.</p>
+<p>There is no operator server that holds your writing. Except when you run spell checking or Threads publishing (section 3 below), what you write never leaves your device and your own iCloud, and no third party — the operator included — can reach your writing, including content passing through iCloud.</p>
 <h2>3. The Only Cases Where Content Is Sent Out, and Only When You Ask</h2>
-<p>The two features below send the relevant text out <strong>only when you run them yourself.</strong> If you never run them, nothing leaves.</p>
+<p>The features below communicate with outside services <strong>only when you run them yourself.</strong> If you never run them, nothing leaves.</p>
 <p><strong>Spell checking</strong> — the text you submit for checking is sent, by way of a relay server operated by the operator, to the spell-checking provider (bareun.ai). The relay server only forwards; it does not store or log the content, and the operator does not read what passes through. The provider's own policy governs its handling of what is sent. The relay exists so that the access key the check requires never has to sit inside the app.</p>
-<p><strong>Threads publishing</strong> — once you have connected a Threads account and you publish, the selected writing is sent to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted. The Threads access token is stored in your device's keychain, and the operator does not retain it.</p>
+<p><strong>Threads publishing</strong> — once you have connected a Threads account and you publish, the selected writing is sent directly from the app to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted.</p>
+<p><strong>Connecting a Threads account</strong> — when you connect an account, the step that exchanges the authorization code Threads issues for an access token passes through the operator's relay server, so that the secret key this exchange requires never has to sit inside the app. The relay only forwards the token; it does not store or log it. The token is stored in your device's keychain, and the operator does not retain it.</p>
 <h2>4. Disclosure to Third Parties</h2>
 <p>Apart from the transmissions described in section 3, which happen only when you run those features yourself, Rapt does not provide, sell, or share any personal information or content with third parties. Since nothing is collected in the first place, there is nothing to provide.</p>
 <h2>5. Processing Through the Apple Platform</h2>
@@ -60,7 +61,7 @@
 <p>This privacy policy may be updated to reflect service changes that affect how data is handled. When it is, the updated text and its effective date will be posted on this page. Significant changes will additionally be noted in places such as the app's update notes.</p>
 <h2>9. Privacy Contact</h2>
 <p>Rapt receives privacy inquiries and complaints at the contact below.</p>
-<ul><li>Operator: the Rapt operator</li><li>Email: support@rapt.kr</li></ul>
+<ul><li>Privacy officer: 김재민, representative of 카인드닷츠 (KIND_DOTS goods)</li><li>Email: support@rapt.kr</li></ul>
 </main>
 <footer class="site-footer">
   <a class="wordmark" href="/en/">Rapt</a>

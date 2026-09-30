@@ -28,9 +28,9 @@ To revoke the permission on the Threads side as well, remove Rapt from the conne
 
 **Rapt cannot delete posts already published to Threads** — you must delete those in Threads directly.
 
-## The relay server used by spell checking and publishing
+## The relay server used by spell checking and account connection
 
-These two features send the relevant text out only when you run them yourself. The relay server only forwards; it neither stores nor logs the content, so nothing remains there to delete.
+Spell checking passes the text you submit, and connecting a Threads account passes the access token being issued, through the relay server. Both happen only when you run them yourself, and the relay only forwards — it neither stores nor logs anything, so nothing remains there to delete. Publishing does not go through the relay; it goes straight from the app to Threads.
 
 ## Other inquiries
 

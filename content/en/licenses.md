@@ -14,7 +14,7 @@ Copyright 2020 The Bodoni Moda Project Authors.
 **Nanum Myeongjo** — the Korean sentences in the places where the app speaks.
 Copyright 2010 NHN Corporation. Designed by FONTRIX. Distributed by Naver under SIL OFL 1.1.
 
-**Noto Serif KR** — the body text of material notes.
+**Noto Serif KR** — the body text of what you write.
 Copyright 2017–2024 Adobe.
 
 **IBM Plex Mono** — numerals such as character counts and dates.
