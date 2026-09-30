@@ -17,7 +17,7 @@
 <meta property="og:description" content="A minimal writing app built for Threads." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://rapt.kr/en/" />
-<meta property="og:image" content="https://rapt.kr/assets/og-paper-1200x630.png" />
+<meta property="og:image" content="https://rapt.kr/assets/og-paper-en-1200x630.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -47,24 +47,32 @@
 
 <!-- 출시 교체 지점 ② — 채웠다(2026-09-28). 화면은 머리 바로 아래 "무대"에
      다섯 장이 가로로 선다(build.py stage_html). 원고의 HERO_SHOT·SHOT 줄이 정한다. -->
-
+<section class="stage" aria-label="Rapt screens">
+  <div class="spread">
+    <figure class="phone outer"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/screens/en-memo-dark-400.webp?v=c47cd1fc1d 400w, /assets/screens/en-memo-dark-800.webp?v=978556e8cb 800w" sizes="(max-width: 899px) 64vw, 300px" /><img src="/assets/screens/en-memo-light-800.webp?v=b11b18cb8d" srcset="/assets/screens/en-memo-light-400.webp?v=786c3e8a3c 400w, /assets/screens/en-memo-light-800.webp?v=b11b18cb8d 800w" sizes="(max-width: 899px) 64vw, 300px" width="800" height="1738" alt="The note written first stays at the top, with the thread continuing below it" loading="lazy" decoding="async" /></picture><figcaption>From note to writing</figcaption></figure>
+    <figure class="phone inner"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/screens/en-overflow-dark-400.webp?v=87e720196f 400w, /assets/screens/en-overflow-dark-800.webp?v=003f7e17a0 800w" sizes="(max-width: 899px) 64vw, 300px" /><img src="/assets/screens/en-overflow-light-800.webp?v=a5399e40b9" srcset="/assets/screens/en-overflow-light-400.webp?v=56ba227f9d 400w, /assets/screens/en-overflow-light-800.webp?v=a5399e40b9 800w" sizes="(max-width: 899px) 64vw, 300px" width="800" height="1738" alt="A post past 500 characters — only the part that runs over is shaded pale red, and 593/500 is shown" loading="lazy" decoding="async" /></picture><figcaption>Made for Threads</figcaption></figure>
+    <figure class="phone center"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/screens/en-writing-dark-400.webp?v=e5e30702f4 400w, /assets/screens/en-writing-dark-800.webp?v=d68ad88177 800w" sizes="(max-width: 899px) 64vw, 300px" /><img src="/assets/screens/en-writing-light-800.webp?v=6fe03a386c" srcset="/assets/screens/en-writing-light-400.webp?v=9948982b94 400w, /assets/screens/en-writing-light-800.webp?v=6fe03a386c 800w" sizes="(max-width: 899px) 64vw, 300px" width="800" height="1738" alt="Writing mode — only the post being written stays sharp while the rest of the thread fades back" decoding="async" /></picture><figcaption>Built for focus</figcaption></figure>
+    <figure class="phone inner"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/screens/en-spellcheck-dark-400.webp?v=9de164ac56 400w, /assets/screens/en-spellcheck-dark-800.webp?v=93e656b1c3 800w" sizes="(max-width: 899px) 64vw, 300px" /><img src="/assets/screens/en-spellcheck-light-800.webp?v=a8eee92b6d" srcset="/assets/screens/en-spellcheck-light-400.webp?v=b59b760473 400w, /assets/screens/en-spellcheck-light-800.webp?v=a8eee92b6d 800w" sizes="(max-width: 899px) 64vw, 300px" width="800" height="1738" alt="Spelling results — each fix shows the original and the suggestion, to apply one at a time or all at once with Apply All" loading="lazy" decoding="async" /></picture><figcaption>Spelling, fixed in place</figcaption></figure>
+    <figure class="phone outer"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/screens/en-publish-dark-400.webp?v=5433ab0173 400w, /assets/screens/en-publish-dark-800.webp?v=c3bac17a63 800w" sizes="(max-width: 899px) 64vw, 300px" /><img src="/assets/screens/en-publish-light-800.webp?v=073cf6215a" srcset="/assets/screens/en-publish-light-400.webp?v=1258ba018b 400w, /assets/screens/en-publish-light-800.webp?v=073cf6215a 800w" sizes="(max-width: 899px) 64vw, 300px" width="800" height="1738" alt="Publish to Threads — all four posts are published, with an Open button below" loading="lazy" decoding="async" /></picture><figcaption>Straight to Threads</figcaption></figure>
+  </div>
+</section>
 
 <section class="details">
   <div class="cell">
-    <h2>Material</h2>
+    <h2>Notes</h2>
     <p>Catch a thought the moment it arrives. When it has ripened, it becomes a piece of writing, as it is.</p><p>Once it has, the note you started from stays above it, there whenever you want to look back.</p>
   </div>
   <div class="cell">
     <h2>Writing</h2>
-    <p>Write thread by thread, the way Threads reads. Past 500 characters nothing is cut for you; the app simply shows <mark class="overflow">how far over you are</mark>, quietly. The sentence is yours.</p>
+    <p>Write post by post, the way Threads reads. Past 500 characters nothing is cut for you; the app simply shows <mark class="overflow">how far over you are</mark>, quietly. The sentence is yours.</p>
   </div>
   <div class="cell">
     <h2>Spelling</h2>
-    <p>Right where you finish writing, Korean spelling is checked sentence by sentence. Accept the suggestions one at a time, or all at once.</p>
+    <p>Check your spelling right where you finish writing, and accept the suggestions one at a time or all at once. English is checked on your device and never leaves it.</p>
   </div>
   <div class="cell">
     <h2>Publishing to Threads</h2>
-    <p>Connect your Threads account and post what you wrote, exactly as you wrote it, straight from the app — no copying thread by thread, no putting them back in order.</p>
+    <p>Connect your Threads account and post what you wrote, exactly as you wrote it, straight from the app — no copying post by post, no putting them back in order.</p>
   </div>
   <div class="cell">
     <h2>iPhone and Mac</h2>
@@ -72,7 +80,7 @@
   </div>
   <div class="cell">
     <h2>Storage</h2>
-    <p>What you write stays on your devices and in your iCloud. Unless you run a spell check or publish, none of it goes anywhere.</p>
+    <p>What you write stays on your devices and in your iCloud. Unless you check Korean spelling or publish, none of it goes anywhere.</p>
   </div>
 </section>
 
