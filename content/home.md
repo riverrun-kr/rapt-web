@@ -2,7 +2,7 @@ LEDE: 주변이 작아질수록 글이 커집니다.
 LEDE: 오롯하게 문장에 몰입하세요.
 BADGE: 출시 준비 중
 PLATFORMS: iPhone · Mac
-HERO_SHOT: reading | 읽기 모드 — 완성된 글이 타래 단위로 놓인 Rapt 화면
+HERO_SHOT: writing | 작성 모드 — 쓰고 있는 타래만 또렷하고 나머지는 흐리게 가라앉은 Rapt 화면
 HERO_LABEL: 몰입을 위한 UI
 QUOTE: 글을 쓸 때는 아무리 혼자여도 모자라고,
 QUOTE: 주변이 아무리 고요해도 모자라다.
