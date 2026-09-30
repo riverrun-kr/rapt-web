@@ -15,6 +15,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://rapt.kr"
+# 링크 미리보기 카드는 언어마다 따로 둔다(2026-10-01 영문판) — 영문 페이지를 공유했는데
+# 한국어 문장이 박힌 카드가 뜨면 안 된다. 두 장 모두 앱 저장소의 tools/web_assets.py가
+# 만든다(영문은 `web_assets.py <이 저장소> en`). 카드 내용을 바꾸면 파일 이름도 바꿀 것 —
+# 스크래퍼가 URL 기준으로 오래 캐시한다(README의 OG 이미지 항목).
+OG_IMAGES = {"ko": "og-paper-1200x630.png", "en": "og-paper-en-1200x630.png"}
 TEMPLATE = (ROOT / "scripts" / "template.html").read_text(encoding="utf-8")
 LANDING_TEMPLATE = (ROOT / "scripts" / "landing.html").read_text(encoding="utf-8")
 
@@ -227,6 +232,7 @@ def build_doc(doc: dict) -> None:
         .replace("{{DESCRIPTION}}", f'Rapt {doc["title"]}')
         .replace("{{PATH}}", doc["slug"] + "/")
         .replace("{{LANG}}", lang)
+        .replace("{{OG_IMAGE}}", OG_IMAGES[lang])
         .replace("{{ALTERNATES}}", alternates_html(ko_path))
         .replace("{{HEADER}}", header_html(lang, doc["alt"], wordmark=True))
         .replace("{{FOOTER}}", footer_html(lang))
@@ -432,6 +438,7 @@ def build_landing(page: dict) -> None:
         .replace("{{DESCRIPTION}}", page["description"])
         .replace("{{PATH}}", page["slug"] + "/" if page["slug"] else "")
         .replace("{{LANG}}", page["lang"])
+        .replace("{{OG_IMAGE}}", OG_IMAGES[page["lang"]])
         .replace("{{ALTERNATES}}", alternates_html(""))
         .replace("{{HEADER}}", header_html(page["lang"], page["alt"], wordmark=False))
         .replace("{{FOOTER}}", footer_html(page["lang"]))
@@ -457,6 +464,7 @@ def build_404() -> None:
         .replace("{{DESCRIPTION}}", NOT_FOUND["title"])
         .replace("{{PATH}}", "404.html")
         .replace("{{LANG}}", NOT_FOUND["lang"])
+        .replace("{{OG_IMAGE}}", OG_IMAGES[NOT_FOUND["lang"]])
         .replace("{{ALTERNATES}}", "")
         .replace("{{HEADER}}", header_html(NOT_FOUND["lang"], "en", wordmark=True))
         .replace("{{FOOTER}}", footer_html(NOT_FOUND["lang"]))
