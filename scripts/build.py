@@ -236,6 +236,14 @@ def build_doc(doc: dict) -> None:
     print(f"wrote {out_dir / 'index.html'}")
 
 
+# 출시 스위치(출시 교체 지점 ①, scripts/landing.html). **출시 당일 True로 바꾸고**
+# build.py → 배포. 그 전에는 이 주소가 스토어에 없는 페이지라 링크를 걸지 않는다 —
+# 앱의 SyncStatusView.macAppStoreURL과 같은 판단이다(죽은 링크를 심지 않는다).
+# 번호는 App Store Connect의 Apple ID(오너, 2026-09-30). 나라를 박지 않은 주소라
+# 방문자의 스토어로 알아서 간다. iPhone과 Mac이 한 번들 ID(한 앱 레코드)라 주소도 하나다.
+LAUNCHED = False
+APP_STORE_URL = "https://apps.apple.com/app/id6815147495"
+
 # ── 랜딩 ─────────────────────────────────────────────────────────
 #
 # 2026-09-28 재설계. 페이지 전체가 **가운데 축 하나**로 대칭이고, 앱 화면
@@ -358,6 +366,14 @@ def parse_landing(md_text: str):
     return meta, items
 
 
+def badge_html(meta: dict) -> str:
+    """출시 전에는 테두리만 있는 상태 배지, 출시 뒤에는 잉크로 꽉 찬 App Store 링크.
+    앱의 "상태는 형태로 말한다"(빈 원 → 꽉 찬 원)를 그대로 옮긴 전환이다."""
+    if LAUNCHED:
+        return f'<a class="status get" href="{APP_STORE_URL}">{meta["DOWNLOAD"]}</a>'
+    return f'<div class="status">{meta.get("BADGE", "")}</div>'
+
+
 def stage_html(meta: dict, items: list) -> str:
     """화면 다섯 장. 원고의 기능 순서대로 세우고 한가운데에 HERO_SHOT을 끼운다.
     가운데서 한 칸이면 inner, 그 너머는 outer. 화면이 없는 원고(영문)면 무대가 없다."""
@@ -420,7 +436,7 @@ def build_landing(page: dict) -> None:
         .replace("{{HEADER}}", header_html(page["lang"], page["alt"], wordmark=False))
         .replace("{{FOOTER}}", footer_html(page["lang"]))
         .replace("{{LEDE}}", "<br />".join(meta["LEDE"]))
-        .replace("{{BADGE}}", meta.get("BADGE", ""))
+        .replace("{{BADGE}}", badge_html(meta))
         .replace("{{PLATFORMS}}", meta.get("PLATFORMS", ""))
         .replace("{{STAGE}}", stage_html(meta, items))
         .replace("{{DETAILS}}", details)
