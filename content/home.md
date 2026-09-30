@@ -3,13 +3,15 @@ LEDE: 오롯하게 문장에 몰입하세요.
 BADGE: 출시 준비 중
 PLATFORMS: iPhone · Mac
 HERO_SHOT: reading | 읽기 모드 — 완성된 글이 타래 단위로 놓인 Rapt 화면
-HERO_LABEL: 읽기 모드
+HERO_LABEL: 몰입을 위한 UI
 QUOTE: 글을 쓸 때는 아무리 혼자여도 모자라고,
 QUOTE: 주변이 아무리 고요해도 모자라다.
 QUOTE: 밤조차 충분히 밤이 아니다.
 QUOTE_BY: 프란츠 카프카 (Franz Kafka, 1913)
 
 ## 글감
+
+CAPTION: 글감이 작품으로
 
 SHOT: memo | 처음에 적어둔 글감 메모가 위에 남아 있고, 그 아래로 타래가 이어지는 화면
 
@@ -19,17 +21,23 @@ SHOT: memo | 처음에 적어둔 글감 메모가 위에 남아 있고, 그 아�
 
 ## 글
 
+CAPTION: Threads 최적화
+
 SHOT: overflow | 500자를 넘긴 타래 — 넘친 부분에만 옅은 붉은 밑칠이 깔리고 631/500이 표시된 화면
 
 글은 타래 단위로 씁니다. 500자를 넘어도 자동으로 나누지 않고 ==넘친 만큼==만 조용히 보여줍니다. 문장의 주인은 당신이니까요.
 
 ## 맞춤법
 
+CAPTION: 편리한 교정
+
 SHOT: spellcheck | 맞춤법 검사 결과 — 고칠 곳마다 원래 표기와 제안, 반영하기 버튼이 놓인 화면
 
 한국어 맞춤법을 문장 단위로 짚어주고, 무엇을 반영할지는 하나씩 고릅니다.
 
 ## Threads 발행
+
+CAPTION: 즉각적인 발행
 
 SHOT: publish | Threads 발행 화면 — 네 개 포스트가 모두 발행되었고 아래에 열기 버튼이 있는 화면
 

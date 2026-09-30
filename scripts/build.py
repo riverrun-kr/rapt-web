@@ -255,6 +255,7 @@ def build_doc(doc: dict) -> None:
 #   CLOSING: 라벨                   이 라벨의 절은 격자가 아니라 맺음 문장이 된다
 #   QUOTE: 문장 / QUOTE_BY: 출처     맺음 자리의 인용(한국어 랜딩은 이걸 쓴다)
 #   ## 라벨 아래 SHOT: 이름 | 대체 텍스트   그 기능의 화면(무대에 선다)
+#   ## 라벨 아래 CAPTION: 문구              그 화면 아래 캡션(없으면 라벨)
 #
 # 무대의 순서는 원고의 기능 순서 그대로이고, 한가운데에 HERO_SHOT이 끼어든다.
 # 지금 원고로는 글감 → 글 → **읽기** → 맞춤법 → 발행 — 쓰고, 읽어보고,
@@ -330,14 +331,18 @@ def parse_landing(md_text: str):
             out.append(" ".join(cur))
         return out
 
-    meta, items, label, buf, shot = {"LEDE": []}, [], None, [], None
+    meta, items, label, buf, shot, cap = {"LEDE": []}, [], None, [], None, None
     for line in md_text.splitlines():
         if line.startswith("## "):
             if label is not None:
-                items.append((label, paragraphs(buf), shot))
-            label, buf, shot = line[3:].strip(), [], None
+                items.append((label, paragraphs(buf), shot, cap or label))
+            label, buf, shot, cap = line[3:].strip(), [], None, None
         elif label is not None and line.startswith("SHOT:"):
             shot = line.split(":", 1)[1].strip()
+        # 무대 화면 아래 캡션. 없으면 절 라벨을 쓴다. 캡션은 화면의 한 줄 소개이고
+        # 라벨은 설명 격자의 제목이라 역할이 달라, 따로 줄 수 있게 했다(2026-09-30).
+        elif label is not None and line.startswith("CAPTION:"):
+            cap = line.split(":", 1)[1].strip()
         elif label is not None:
             buf.append(line)
         elif ":" in line and line.split(":", 1)[0].isupper():
@@ -349,14 +354,14 @@ def parse_landing(md_text: str):
             else:
                 meta[key] = value.strip()
     if label is not None:
-        items.append((label, paragraphs(buf), shot))
+        items.append((label, paragraphs(buf), shot, cap or label))
     return meta, items
 
 
 def stage_html(meta: dict, items: list) -> str:
     """화면 다섯 장. 원고의 기능 순서대로 세우고 한가운데에 HERO_SHOT을 끼운다.
     가운데서 한 칸이면 inner, 그 너머는 outer. 화면이 없는 원고(영문)면 무대가 없다."""
-    shots = [(shot, label) for label, _, shot in items if shot]
+    shots = [(shot, cap) for _, _, shot, cap in items if shot]
     if not meta.get("HERO_SHOT"):
         return ""
     mid = len(shots) // 2
@@ -376,7 +381,7 @@ def details_html(meta: dict, items: list) -> tuple:
     """(설명 격자, 맺음 문단). CLOSING으로 지정된 절만 격자에서 빠져 맺음이 된다."""
     closing_label = meta.get("CLOSING")
     cells, closing = [], ""
-    for label, paras, _ in items:
+    for label, paras, _, _ in items:
         body = "".join(f"<p>{inline(p)}</p>" for p in paras)
         if label == closing_label:
             closing = body
