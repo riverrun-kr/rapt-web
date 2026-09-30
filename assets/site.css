@@ -34,7 +34,7 @@
  */
 @font-face {
   font-family: "Rapt Label";
-  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=bf347bfc43") format("woff2");
+  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=3f19365a65") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -72,16 +72,27 @@
   --rule:   #DDDAD6;   /* RaptRule — 구분선 */
   --ink:    #2D2823;   /* RaptInk — 본문 잉크 (= AccentColor) */
   --ink-2:  #625C58;   /* RaptInk2 */
-  --ink-3:  #96918D;   /* RaptInk3 */
+  --ink-3:  #85807C;   /* RaptInk3 — 앱이 2026-09-30에 #96918D에서 진하게 바꿨다(2.82→3.5:1) */
   --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg — 밑칠 */
 
-  /* 기기 틀 — 랜딩 무대의 앱 화면(.phone)을 두르는 베젤. 앱에는 대응 컬러셋이 없다
-   * (앱 화면을 "보여줄" 때만 생기는 물건이라). 대신 스토어 스크린샷 목업
-   * (앱 저장소 tools/store_mockup.py의 BEZEL·EDGE)과 같은 값을 써서, 스토어와
-   * 사이트의 기기가 같은 물건으로 보이게 한다. */
-  --bezel:         #FAF8F5;
-  --bezel-edge:    #DEDAD3;
-  --screen-shadow: 0 26px 46px -28px rgba(45, 40, 35, 0.40);
+  /* 무대의 앱 화면(.phone) — 기기 틀 없이 화면 한 장을 종이 위에 세운다(2026-09-30
+   * 오너 선택, 마감 C). 스토어 스크린샷(앱 저장소 tools/store_mockup.py의
+   * screen_card·seat)과 같은 값이라 스토어와 사이트의 화면이 같은 물건으로 보인다.
+   * 앱에는 대응 컬러셋이 없다(앱 화면을 "보여줄" 때만 생기는 물건이라).
+   *
+   * 가장자리 선은 불투명이다 — 라이트는 잉크, 다크는 흰색. 스토어 쪽 머리말에
+   * 사연이 있다(오너가 고른 시안이 불투명으로 그려져 있었다). 그림자는 두 겹:
+   * 멀리 넓게 번지는 것과 바로 밑에 짧게 붙는 것. 다크에서 그림자는 검정 위
+   * 검정이라 안 보이므로, 먼 쪽은 뒤에서 번지는 따뜻한 빛이 맡는다.
+   * 오프셋·번짐은 화면 폭(--w)에 곱하는 비율이다(.phone img). */
+  --screen-edge:        var(--ink);
+  --shadow-far:         rgba(60, 50, 40, 0.27);
+  --shadow-far-y:       0.041;
+  --shadow-far-blur:    0.125;
+  --shadow-far-spread:  0;
+  --shadow-near:        rgba(40, 34, 28, 0.24);
+  --shadow-near-y:      0.009;
+  --shadow-near-blur:   0.025;
   /* 랜딩 무대 뒤 종이 띠. 라이트는 sunken — recess는 캔버스와 너무 붙어서
    * 의도가 아니라 얼룩처럼 보였다(시안 비교, 2026-09-28). */
   --stage-bg:      var(--sunken);
@@ -140,11 +151,14 @@
     --ink-2:  #9A9894;
     --ink-3:  #767471;
     --overflow-bg:     rgba(189, 65, 63, 0.22);
-    --bezel:         #3E3A35;
-    --bezel-edge:    #605B54;
-    /* 다크에서 그림자는 검정 위 검정이라 안 보인다 — 대신 아래로 옅은 빛을
-     * 깐다(스토어 목업의 다크 처리와 같은 발상). */
-    --screen-shadow: 0 30px 64px -34px rgba(150, 138, 120, 0.26);
+    --screen-edge:        #FFFFFF;
+    --shadow-far:         rgba(210, 170, 120, 0.13);   /* 뒤에서 번지는 따뜻한 빛 */
+    --shadow-far-y:       0;
+    --shadow-far-blur:    0.16;
+    --shadow-far-spread:  0.009;
+    --shadow-near:        rgba(0, 0, 0, 0.47);
+    --shadow-near-y:      0.0125;
+    --shadow-near-blur:   0.032;
     --stage-bg:      var(--recess);   /* 다크는 recess가 이미 캔버스보다 확실히 짙다 */
   }
 }
@@ -373,13 +387,28 @@ body.landing .site-footer { max-width: var(--wide); }
   line-height: 1.5;
 }
 
+/* 출시 뒤 — 같은 캡슐을 잉크로 채워 App Store 링크가 된다(build.py LAUNCHED).
+ * 키보드 초점은 전역 :focus-visible이 맡는다. */
+a.status.get {
+  color: var(--canvas);
+  background: var(--ink);
+  border-color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+a.status.get:hover {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+}
+
 /* ── 무대 ──
  * 화면 다섯 장이 가로로, 좌우대칭으로 선다. 가운데가 가장 크고 바깥으로 갈수록
  * 작아지며(0.88 · 0.77), 아랫단을 맞춰 한 줄에 선 모양이 완만한 피라미드가 된다.
  * 뒤에 한 톤 짙은 종이 띠를 깔아, 책상 위에 원고를 세운 것처럼 공간을 준다.
  *
- * 베젤·모서리는 화면 폭(--w)에 비례시킨다 — 크기가 다른 다섯 장이 같은 물건으로
- * 보이려면 두께와 곡률이 같은 **비율**이어야 한다. 비율은 스토어 목업과 같다. */
+ * 모서리·선·그림자는 화면 폭(--w)에 비례시킨다 — 크기가 다른 다섯 장이 같은
+ * 물건으로 보이려면 곡률과 번짐이 같은 **비율**이어야 한다. 비율은 스토어 목업과 같다. */
 .stage {
   position: relative;
   isolation: isolate;           /* 아래 ::before의 z-index를 이 안에 가둔다 */
@@ -411,18 +440,39 @@ body.landing .site-footer { max-width: var(--wide); }
 }
 
 .phone picture {
+  position: relative;           /* 다이내믹 아일랜드(::after)의 기준 */
   display: block;
-  padding: calc(var(--w) * 0.016);
-  border-radius: calc(var(--w) * 0.112);
-  background: var(--bezel);
-  box-shadow: inset 0 0 0 1px var(--bezel-edge), var(--screen-shadow);
 }
 
+/* 모서리는 실제 iPhone 디스플레이 비율(화면 폭의 14%). 선 두께는 스토어의 2px/1120px
+ * 비율인데, 무대 크기에서는 0.5px 밑으로 떨어져 흐려지므로 그 밑으로는 안 간다. */
 .phone img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: calc(var(--w) * 0.096);
+  border-radius: calc(var(--w) * 0.14);
+  box-shadow:
+    0 0 0 max(0.5px, calc(var(--w) * 0.0018)) var(--screen-edge),
+    0 calc(var(--w) * var(--shadow-far-y)) calc(var(--w) * var(--shadow-far-blur))
+      calc(var(--w) * var(--shadow-far-spread)) var(--shadow-far),
+    0 calc(var(--w) * var(--shadow-near-y)) calc(var(--w) * var(--shadow-near-blur))
+      calc(var(--w) * -0.0054) var(--shadow-near);
+}
+
+/* 다이내믹 아일랜드 — 가운데 한 장("몰입을 위한 UI")에만 얹는다(오너, 2026-09-30).
+ * 나머지 네 장과 스토어 컷에는 없다. 크기·위치는 실제 비율(화면 폭의 28.6%·8.48%,
+ * 위에서 2.5%)이다. 그 자리는 작성 모드 컷의 첫 타래 위 여백이라 글자를 가리지
+ * 않는다 — 그렇게 찍었다(앱 저장소 RaptStoreScreenshots.captureWriting). */
+.phone.center picture::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--w) * 0.025);
+  left: 50%;
+  width: calc(var(--w) * 0.286);
+  height: calc(var(--w) * 0.0848);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #000;
 }
 
 .phone figcaption {
