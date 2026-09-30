@@ -599,12 +599,18 @@ mark.overflow {
   .intro .wordmark { font-size: 60px; }
   .intro p.lede { font-size: 18px; }
 
-  .stage { margin-top: 56px; padding-bottom: 40px; }
+  /* 가로 스크롤 상자는 세로로 넘치는 것도 잘라낸다 — overflow-x가 auto면 y도 auto로
+   * 계산된다(CSS 명세). 화면 윗변 바깥에 그려지는 가장자리 선·그림자·다크의 빛이
+   * 상자 윗변에서 칼같이 잘려, 화면 윗부분이 잘린 것처럼 보였다(오너 지적,
+   * 2026-09-30). 상자 위에 그만큼 여유를 두고 무대의 윗여백에서 같은 만큼 빼서,
+   * 화면이 서는 자리는 그대로 둔다. 여유는 화면 폭(.phone의 64vw)의 12% — 그림자가
+   * 눈에 보이는 범위다(번짐 반경 0.125~0.16w의 안쪽). */
+  .stage { margin-top: max(0px, calc(56px - 64vw * 0.12)); padding-bottom: 40px; }
   .stage::before { top: 52%; }
   .spread {
     justify-content: flex-start;
     gap: 16px;
-    padding: 0 var(--gutter) 4px;
+    padding: calc(64vw * 0.12) var(--gutter) 4px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding: 0 var(--gutter);
