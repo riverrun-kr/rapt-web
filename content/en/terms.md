@@ -1,14 +1,12 @@
-# Rapt Terms of Service
+# Terms of Service
 
-> Last revised 2026-09-11 · Before launch — the effective date will be fixed when the app ships on the App Store.
->
-> These terms describe the app as it is currently built: storage on the device plus sync through the user's own iCloud, with no accounts and no payments. If features such as in-app purchases are actually introduced, the relevant clauses will be updated at that time. These terms may continue to change as the service does.
+> Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.
 >
 > This English text is provided for the reader's convenience. The [Korean version](/terms/) is the governing text.
 
 ## 1. About the Service
 
-Rapt is a minimal writing app built for Threads. It is developed and operated by an individual, and is not affiliated with Meta (which operates Threads) or with any other company or institution.
+Rapt is a minimal writing app built for Threads. It is developed and operated by 카인드닷츠 (KIND_DOTS goods, the &ldquo;operator&rdquo;), and is not affiliated with Meta (which operates Threads) or with any other company or institution.
 
 ## 2. Accounts
 
@@ -26,7 +24,7 @@ Your writing leaves your device only when you run one of two features yourself �
 
 What you write is stored locally on your device and synced, through your own Apple iCloud account, to your other devices signed in to that same account. Apple's iCloud terms apply to the storage and transmission that happen in the course of that sync.
 
-Rapt operates no server of its own, and no third party — the operator included — can reach your writing, including content passing through iCloud.
+Rapt keeps no server that stores your writing, and no third party — the operator included — can reach your writing, including content passing through iCloud. The relay server used for spell checking and for connecting a Threads account only forwards requests and does not store their content (see section 3 of the [Privacy Policy](/en/privacy/)).
 
 ## 5. Publishing to Threads
 
@@ -38,7 +36,7 @@ Content posted to Threads is separately governed by the Threads (Meta) terms of 
 
 ## 6. Limitations and Disclaimer
 
-Rapt is a project developed and operated by an individual, and the software is provided &ldquo;as is&rdquo;. The possibility of unexpected errors, abnormal termination, or data loss cannot be entirely ruled out, and you are encouraged to keep separate backups of writing that matters to you. To the fullest extent permitted by law, Rapt and its operator are not liable for data loss or other damages arising from use of the service.
+Rapt is an app developed and operated by one person, and the software is provided &ldquo;as is&rdquo;. The possibility of unexpected errors, abnormal termination, or data loss cannot be entirely ruled out, and you are encouraged to keep separate backups of writing that matters to you. To the fullest extent permitted by law, Rapt and its operator are not liable for data loss or other damages arising from use of the service.
 
 ## 7. Use of the Apple Platform
 
@@ -50,7 +48,7 @@ Except where otherwise indicated, the operator holds copyright in Rapt's interfa
 
 ## 9. Changes to These Terms and to the Service
 
-Rapt is a project run by an individual, and the service may change or be discontinued without prior notice. These terms may likewise change from time to time as the service is improved; when they do, the updated text and its effective date will be posted on this page.
+Rapt is an app run by one person, and the service may change or be discontinued without prior notice. These terms may likewise change from time to time as the service is improved; when they do, the updated text and its effective date will be posted on this page.
 
 ## 10. Governing Law and Jurisdiction
 

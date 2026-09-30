@@ -1,8 +1,6 @@
-# Rapt Privacy Policy
+# Privacy Policy
 
-> Last revised 2026-09-11 · Before launch — the effective date will be fixed when the app ships on the App Store.
->
-> This policy describes the app as it is currently built: storage on the device plus sync through the user's own iCloud, with no operator server, no accounts, and no analytics tooling. It will be updated when new features are introduced.
+> Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
 
@@ -14,15 +12,17 @@ Rapt collects no personal information. The app contains no data collection or tr
 
 Everything you write in Rapt, including post bodies and threads, is stored in the device's local storage and **synced, through your own Apple iCloud account, to your other devices signed in to that same account.** Apple's privacy policy governs the storage and transmission that happen in the course of that sync.
 
-There is no operator server that holds your writing. Except when you run the two features described in section 3 below, what you write never leaves your device and your own iCloud, and no third party — the operator included — can reach your writing, including content passing through iCloud.
+There is no operator server that holds your writing. Except when you run spell checking or Threads publishing (section 3 below), what you write never leaves your device and your own iCloud, and no third party — the operator included — can reach your writing, including content passing through iCloud.
 
 ## 3. The Only Cases Where Content Is Sent Out, and Only When You Ask
 
-The two features below send the relevant text out **only when you run them yourself.** If you never run them, nothing leaves.
+The features below communicate with outside services **only when you run them yourself.** If you never run them, nothing leaves.
 
 **Spell checking** — the text you submit for checking is sent, by way of a relay server operated by the operator, to the spell-checking provider (bareun.ai). The relay server only forwards; it does not store or log the content, and the operator does not read what passes through. The provider's own policy governs its handling of what is sent. The relay exists so that the access key the check requires never has to sit inside the app.
 
-**Threads publishing** — once you have connected a Threads account and you publish, the selected writing is sent to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted. The Threads access token is stored in your device's keychain, and the operator does not retain it.
+**Threads publishing** — once you have connected a Threads account and you publish, the selected writing is sent directly from the app to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted.
+
+**Connecting a Threads account** — when you connect an account, the step that exchanges the authorization code Threads issues for an access token passes through the operator's relay server, so that the secret key this exchange requires never has to sit inside the app. The relay only forwards the token; it does not store or log it. The token is stored in your device's keychain, and the operator does not retain it.
 
 ## 4. Disclosure to Third Parties
 
@@ -50,5 +50,5 @@ This privacy policy may be updated to reflect service changes that affect how da
 
 Rapt receives privacy inquiries and complaints at the contact below.
 
-- Operator: the Rapt operator
+- Privacy officer: 김재민, representative of 카인드닷츠 (KIND_DOTS goods)
 - Email: support@rapt.kr
