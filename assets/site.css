@@ -602,15 +602,21 @@ mark.overflow {
   /* 가로 스크롤 상자는 세로로 넘치는 것도 잘라낸다 — overflow-x가 auto면 y도 auto로
    * 계산된다(CSS 명세). 화면 윗변 바깥에 그려지는 가장자리 선·그림자·다크의 빛이
    * 상자 윗변에서 칼같이 잘려, 화면 윗부분이 잘린 것처럼 보였다(오너 지적,
-   * 2026-09-30). 상자 위에 그만큼 여유를 두고 무대의 윗여백에서 같은 만큼 빼서,
-   * 화면이 서는 자리는 그대로 둔다. 여유는 화면 폭(.phone의 64vw)의 12% — 그림자가
-   * 눈에 보이는 범위다(번짐 반경 0.125~0.16w의 안쪽). */
-  .stage { margin-top: max(0px, calc(56px - 64vw * 0.12)); padding-bottom: 40px; }
+   * 2026-09-30). 상자 안에 그만큼 여유를 두고 무대의 여백에서 같은 만큼 빼서,
+   * 화면이 서는 자리는 그대로 둔다.
+   *
+   * 여유는 화면 폭(.phone의 64vw)의 20%다. 처음엔 12%로 뒀는데 다크의 빛이 여전히
+   * 상자 윗변에서 잘려, 모서리마다 네모나게 잘린 배경으로 보였다(오너 지적,
+   * 2026-10-01). 시뮬레이터 Safari 실측: 잘린 자리에서 빛이 바탕보다 RGB 합 5 밝았다.
+   * 빛(번짐 0.16w, 퍼짐 0.009w)은 가우스 꼬리라 번짐 반경보다 멀리 가서, 합이
+   * 0.5 밑으로 떨어지려면 0.2w가 필요하다. 아래도 같은 이유로 캡션 밑에 여유를
+   * 두고, 무대의 아래 여백(40px)을 상자 안으로 옮긴다. */
+  .stage { margin-top: max(0px, calc(56px - 64vw * 0.2)); padding-bottom: 0; }
   .stage::before { top: 52%; }
   .spread {
     justify-content: flex-start;
     gap: 16px;
-    padding: calc(64vw * 0.12) var(--gutter) 4px;
+    padding: calc(64vw * 0.2) var(--gutter) max(44px, calc(64vw * 0.2 - 40px));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding: 0 var(--gutter);
