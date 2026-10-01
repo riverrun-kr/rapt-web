@@ -1,6 +1,6 @@
 # Privacy Policy
 
-> Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.
+> Last revised 2026-10-01 · Before launch — the effective date will be fixed when the app ships on the App Store.
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
 
@@ -18,7 +18,7 @@ There is no operator server that holds your writing. Except when you run spell c
 
 The features below communicate with outside services **only when you run them yourself.** If you never run them, nothing leaves.
 
-**Spell checking** — the text you submit for checking is sent, by way of a relay server operated by the operator, to the spell-checking provider (bareun.ai). The relay server only forwards; it does not store or log the content, and the operator does not read what passes through. The provider's own policy governs its handling of what is sent. The relay exists so that the access key the check requires never has to sit inside the app.
+**Spell checking** — for writing in Korean, the text you submit for checking is sent, by way of a relay server operated by the operator, to the spell-checking provider (bareun.ai). The relay server only forwards; it does not store or log the content, and the operator does not read what passes through. The provider's own policy governs its handling of what is sent. The relay exists so that the access key the check requires never has to sit inside the app. Spell checking of text that is not in Korean happens on your device; that text is not sent anywhere.
 
 **Threads publishing** — once you have connected a Threads account and you publish, the selected writing is sent directly from the app to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted.
 
