@@ -440,7 +440,6 @@ a.status.get:hover {
 }
 
 .phone picture {
-  position: relative;           /* 다이내믹 아일랜드(::after)의 기준 */
   display: block;
 }
 
@@ -459,21 +458,9 @@ a.status.get:hover {
       calc(var(--w) * -0.0054) var(--shadow-near);
 }
 
-/* 다이내믹 아일랜드 — 가운데 한 장("몰입을 위한 UI")에만 얹는다(오너, 2026-09-30).
- * 나머지 네 장과 스토어 컷에는 없다. 크기·위치는 실제 비율(화면 폭의 28.6%·8.48%,
- * 위에서 2.5%)이다. 그 자리는 작성 모드 컷의 첫 타래 위 여백이라 글자를 가리지
- * 않는다 — 그렇게 찍었다(앱 저장소 RaptStoreScreenshots.captureWriting). */
-.phone.center picture::after {
-  content: "";
-  position: absolute;
-  top: calc(var(--w) * 0.025);
-  left: 50%;
-  width: calc(var(--w) * 0.286);
-  height: calc(var(--w) * 0.0848);
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: #000;
-}
+/* 다이내믹 아일랜드는 그리지 않는다. 가운데 한 장("몰입을 위한 UI")에만 얹었다가
+ * 어색해서 걷어냈다(오너, 2026-10-01) — 기기 틀 없는 화면에 아일랜드만 떠 있었다.
+ * 그 컷도 다시 글 끝까지 내려 찍어, 화면 맨 위까지 편집기로 차 있다. */
 
 .phone figcaption {
   margin-top: 20px;
