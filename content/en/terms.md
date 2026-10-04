@@ -1,6 +1,11 @@
 # Terms of Service
 
+<!-- prelaunch -->
 > Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.
+<!-- /prelaunch -->
+<!-- launch -->
+> Effective {{LAUNCH_DATE}} · Last revised 2026-09-30
+<!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/terms/) is the governing text.
 
