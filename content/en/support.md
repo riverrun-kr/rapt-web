@@ -2,6 +2,18 @@
 
 > This English text is provided for the reader's convenience. The [Korean version](/support/) is the governing text.
 
+<!-- launch -->
+## For early users
+
+If you install Rapt before Rapt Pro — a one-time purchase — arrives, Rapt Pro is yours free, for good.
+
+- Nothing to sign up for. It unlocks on its own in the update that introduces Rapt Pro.
+- It follows the Apple ID you first installed with, on every iPhone and Mac using that Apple ID.
+- If you still see a purchase screen, write to support@rapt.kr and I'll sort it out.
+
+Writing notes and drafts, and copying them out, stay free with or without Rapt Pro.
+
+<!-- /launch -->
 ## Get in touch
 
 Where you got stuck, what you wish worked differently, what works well — tell me any of it by email.

@@ -216,9 +216,46 @@ def render_body(md_text: str) -> str:
     return "\n".join(html)
 
 
+# 출시 전·후 구간 표시(2026-10-04). 출시일에 바뀌어야 하는 문서 문구 — 약관·방침
+# 머리말의 시행일, 지원 페이지의 얼리 사용자 공지 — 를 미리 써 두고 LAUNCHED가
+# 고르게 한다. 표시는 한 줄을 통째로 차지해야 한다.
+LAUNCH_MARK = re.compile(r"^<!-- (/?)(launch|prelaunch) -->\s*$")
+
+
+def apply_launch(md_text: str, source: str) -> str:
+    """`<!-- prelaunch -->`…`<!-- /prelaunch -->`는 출시 전에만, `<!-- launch -->`…
+    `<!-- /launch -->`는 출시 뒤에만 남긴다. 표시 줄 자체는 지워지므로, 인용(>)이
+    표시를 사이에 두고 이어져도 하나로 붙는다. 출시 뒤 구간의 `{{LAUNCH_DATE}}`는
+    LAUNCH_DATE로 바뀐다.
+
+    짝이 안 맞거나 닫히지 않은 표시는 **빌드를 멈춘다** — 출시 전 문구가 출시 뒤에
+    조용히 남거나 공지가 조용히 빠지는 게 이 장치에서 가장 나쁜 실패라서다.
+    """
+    out, open_block = [], None
+    for number, line in enumerate(md_text.splitlines(), 1):
+        mark = LAUNCH_MARK.match(line)
+        if mark:
+            closing, name = mark.group(1) == "/", mark.group(2)
+            if closing != (open_block is not None) or (closing and name != open_block):
+                raise SystemExit(f"{source}:{number} — 출시 구간 표시의 짝이 안 맞는다: {line.strip()}")
+            open_block = None if closing else name
+            continue
+        if open_block == ("prelaunch" if LAUNCHED else "launch"):
+            continue
+        out.append(line)
+    if open_block:
+        raise SystemExit(f"{source} — <!-- {open_block} -->가 닫히지 않았다")
+    text = "\n".join(out) + ("\n" if md_text.endswith("\n") else "")
+    if LAUNCHED:
+        return text.replace("{{LAUNCH_DATE}}", LAUNCH_DATE)
+    if "{{LAUNCH_DATE}}" in text:
+        raise SystemExit(f"{source} — 출시 뒤 구간 밖에 {{{{LAUNCH_DATE}}}}가 있다")
+    return text
+
+
 def build_doc(doc: dict) -> None:
     src = ROOT / "content" / doc["source"]
-    md_text = src.read_text(encoding="utf-8")
+    md_text = apply_launch(src.read_text(encoding="utf-8"), doc["source"])
     body_html = render_body(md_text)
 
     lang = doc["lang"]
@@ -249,6 +286,10 @@ def build_doc(doc: dict) -> None:
 # 방문자의 스토어로 알아서 간다. iPhone과 Mac이 한 번들 ID(한 앱 레코드)라 주소도 하나다.
 LAUNCHED = False
 APP_STORE_URL = "https://apps.apple.com/app/id6815147495"
+# 출시일 — LAUNCHED와 **함께** 채운다("YYYY-MM-DD", 2026-10-04). 약관·방침 머리말의
+# 시행일이 되고, 지원 페이지의 얼리 사용자 공지도 이때 같이 나간다(apply_launch).
+# LAUNCHED가 True인데 비어 있으면 빌드가 멈춘다.
+LAUNCH_DATE = ""
 
 # ── 랜딩 ─────────────────────────────────────────────────────────
 #
@@ -529,6 +570,8 @@ def build_sitemap() -> None:
 
 
 def main() -> None:
+    if LAUNCHED and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", LAUNCH_DATE):
+        raise SystemExit("LAUNCHED = True면 LAUNCH_DATE도 'YYYY-MM-DD'로 채울 것 — 약관·방침의 시행일이 된다")
     for page in LANDINGS:
         build_landing(page)
     for doc in DOCS:

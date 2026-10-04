@@ -1,6 +1,11 @@
 # Privacy Policy
 
-> Last revised 2026-10-01 · Before launch — the effective date will be fixed when the app ships on the App Store.
+<!-- prelaunch -->
+> Last revised 2026-10-04 · Before launch — the effective date will be fixed when the app ships on the App Store.
+<!-- /prelaunch -->
+<!-- launch -->
+> Effective {{LAUNCH_DATE}} · Last revised 2026-10-04
+<!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
 
@@ -23,6 +28,8 @@ The features below communicate with outside services **only when you run them yo
 **Threads publishing** — once you have connected a Threads account and you publish, the selected writing is sent directly from the app to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs the content once posted.
 
 **Connecting a Threads account** — when you connect an account, the step that exchanges the authorization code Threads issues for an access token passes through the operator's relay server, so that the secret key this exchange requires never has to sit inside the app. The relay only forwards the token; it does not store or log it. The token is stored in your device's keychain, and the operator does not retain it.
+
+**Usage totals** — to run the service, the relay server keeps only daily totals of how many requests each feature received (for spell checking, also how many words were sent). These totals contain nothing that identifies you — no IP address, account or device information — and none of your writing.
 
 ## 4. Disclosure to Third Parties
 
