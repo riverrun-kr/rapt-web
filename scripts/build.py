@@ -75,15 +75,17 @@ SWITCH_LABEL = {"ko": "한국어", "en": "English"}
 # 따로 놀고 있었고(404의 푸터엔 사업자 정보가 빠져 있었다) 한 곳 더 늘리는 건
 # 시간 문제라, 헤더·푸터·언어 전환을 **코드 한 곳에서 생성**하는 쪽으로 옮겼다.
 LANDINGS = [
+    # 탭 제목은 무엇인지까지 말한다(2026-10-07, 앱 완성도 점검 21) — 「Rapt」뿐이라
+    # 검색 결과·공유 카드(og:title이 같은 값)에서 무슨 페이지인지 알 수 없었다.
     {"slug": "", "lang": "ko", "source": "home.md", "alt": "en",
-     "title": "Rapt",
+     "title": "Rapt — Threads를 위한 글쓰기 앱",
      # 리드와 같은 문장으로 맞춘다(2026-09-28). 예전 문장("떠오른 순간은…")이
      # 리드가 바뀐 뒤에도 여기와 링크 카드에만 남아, 공유된 카드와 페이지가
      # 다른 말을 하고 있었다.
      "description": "주변이 작아질수록 글이 커집니다. 오롯하게 문장에 몰입하세요. "
                     "Threads에 최적화된 미니멀 글쓰기 앱, Rapt."},
     {"slug": "en", "lang": "en", "source": "en/home.md", "alt": "",
-     "title": "Rapt",
+     "title": "Rapt — A writing app for Threads",
      "description": "A minimal writing app built for Threads."},
 ]
 
@@ -421,6 +423,16 @@ def badge_html(meta: dict) -> str:
     return f'<div class="status">{meta.get("BADGE", "")}</div>'
 
 
+def app_banner_html() -> str:
+    """Safari 스마트 앱 배너(출시 교체 지점 ⑦, 2026-10-07 앱 완성도 점검 21). iPhone에서
+    랜딩을 열면 맨 위에 앱 설치 줄이 붙어 한 번에 스토어로 간다. 배지 링크와 같은 이유로
+    출시 뒤에만 켠다 — 스토어에 없는 앱을 가리키면 배너가 뜨지 않거나 빈 화면으로 간다."""
+    if not LAUNCHED:
+        return ""
+    app_id = APP_STORE_URL.rsplit("/id", 1)[1]
+    return f'<meta name="apple-itunes-app" content="app-id={app_id}" />\n'
+
+
 def stage_html(meta: dict, items: list) -> str:
     """화면 다섯 장. 원고의 기능 순서대로 세우고 한가운데에 HERO_SHOT을 끼운다.
     가운데서 한 칸이면 inner, 그 너머는 outer. 화면이 없는 원고(영문)면 무대가 없다."""
@@ -477,6 +489,7 @@ def build_landing(page: dict) -> None:
         LANDING_TEMPLATE
         .replace("{{TITLE}}", page["title"])
         .replace("{{DESCRIPTION}}", page["description"])
+        .replace("{{APP_BANNER}}\n", app_banner_html())
         .replace("{{PATH}}", page["slug"] + "/" if page["slug"] else "")
         .replace("{{LANG}}", page["lang"])
         .replace("{{OG_IMAGE}}", OG_IMAGES[page["lang"]])
