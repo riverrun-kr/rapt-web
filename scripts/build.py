@@ -298,7 +298,7 @@ LAUNCH_DATE = ""
 # 2026-09-28 재설계. 페이지 전체가 **가운데 축 하나**로 대칭이고, 앱 화면
 # 다섯 장이 첫 화면의 주인공이다:
 #
-#   머리(워드마크·리드·배지) → 무대(화면 다섯 장) → 설명(2×2) → 맺음
+#   머리(워드마크·리드·배지) → 무대(화면 다섯 장) → 서문 → 설명(2×2) → 맺음
 #
 # 그 전 두 판은 둘 다 넓은 화면에서 휑했다 — 화면을 기능 설명마다 끼워 넣어도,
 # 한 줄로 모아도, 결국 **글 칼럼(680px)이 주인공이고 화면이 곁다리**라 칼럼
@@ -309,6 +309,7 @@ LAUNCH_DATE = ""
 # 원고(home.md)와의 계약:
 #   HERO_SHOT: 이름 | 대체 텍스트   무대 한가운데 화면
 #   HERO_LABEL: 읽기 모드           그 화면 아래 캡션
+#   OPENING: 라벨                   이 라벨의 절은 격자가 아니라 무대 아래 서문이 된다
 #   CLOSING: 라벨                   이 라벨의 절은 격자가 아니라 맺음 문장이 된다
 #   QUOTE: 문장 / QUOTE_BY: 출처     맺음 자리의 인용(한국어 랜딩은 이걸 쓴다)
 #   ## 라벨 아래 SHOT: 이름 | 대체 텍스트   그 기능의 화면(무대에 선다)
@@ -376,16 +377,19 @@ def parse_landing(md_text: str):
     """
     def paragraphs(lines):
         """빈 줄로 갈린 덩어리를 문단 목록으로. 설명이 길어지면 한 덩어리로
-        쏟아내는 대신 문단을 나눌 수 있어야 한다(오너 요청, 2026-09-23)."""
+        쏟아내는 대신 문단을 나눌 수 있어야 한다(오너 요청, 2026-09-23).
+
+        문단 안의 원고 줄바꿈은 "\n"으로 남겨 둔다 — 격자 칸·맺음은 공백으로
+        이어 붙이고(예전과 같다), 서문만 그 줄을 구절의 끝으로 쓴다(details_html)."""
         out, cur = [], []
         for line in lines:
             if line.strip():
                 cur.append(line.strip())
             elif cur:
-                out.append(" ".join(cur))
+                out.append("\n".join(cur))
                 cur = []
         if cur:
-            out.append(" ".join(cur))
+            out.append("\n".join(cur))
         return out
 
     meta, items, label, buf, shot, cap = {"LEDE": []}, [], None, [], None, None
@@ -453,15 +457,33 @@ def stage_html(meta: dict, items: list) -> str:
 
 
 def details_html(meta: dict, items: list) -> tuple:
-    """(설명 격자, 맺음 문단). CLOSING으로 지정된 절만 격자에서 빠져 맺음이 된다."""
+    """(서문, 설명 격자, 맺음 문단). OPENING·CLOSING으로 지정된 절은 격자에서 빠져
+    각각 서문과 맺음이 된다.
+
+    서문(2026-10-10, 오너 제안) — 격자의 여섯 칸은 전부 "무엇을 하는가"였고, 이
+    도구가 **왜 이렇게 생겼는지**(몰입을 위해 기능을 덜어냈다)를 말하는 문장이
+    페이지 어디에도 없었다. 무대 한가운데 가장 큰 화면(HERO_LABEL)만 짝이 되는
+    설명 칸이 없던 자리이기도 하다. 기능 칸과 같은 무게로 격자에 넣지 않고,
+    페이지의 가운데 축 위에 따로 세워 아래 여섯 칸을 거느리는 서문으로 둔다."""
+    opening_label = meta.get("OPENING")
     closing_label = meta.get("CLOSING")
-    cells, closing = [], ""
+    cells, opening, closing = [], "", ""
     for label, paras, _, _ in items:
-        body = "".join(f"<p>{inline(p)}</p>" for p in paras)
-        if label == closing_label:
+        body = "".join(f"<p>{inline(p.replace(chr(10), ' '))}</p>" for p in paras)
+        if label == opening_label:
+            # 원고의 한 줄 = 한 구절. 넓은 화면에선 구절마다 줄을 바꾸고(맺음 인용을
+            # 마디마다 직접 끊는 것과 같은 이유 — 브라우저에 맡기면 「기능을 더하기보다 /
+            # 덜어내는」처럼 구절 한가운데서 갈렸다), 좁은 화면에선 이어 흐르게 둔다(site.css).
+            lines = "".join(
+                "<p>" + " ".join(f'<span class="phrase">{inline(l)}</span>' for l in p.split("\n")) + "</p>"
+                for p in paras)
+            opening = f'<section class="opening">\n  <h2>{inline(label)}</h2>\n  {lines}\n</section>'
+        elif label == closing_label:
             closing = body
         else:
             cells.append(f'  <div class="cell">\n    <h2>{inline(label)}</h2>\n    {body}\n  </div>')
+    if opening_label and not opening:
+        raise SystemExit(f"OPENING: {opening_label} — 그런 라벨(## )이 원고에 없다")
     if closing_label and not closing:
         raise SystemExit(f"CLOSING: {closing_label} — 그런 라벨(## )이 원고에 없다")
     # 맺음 인용(2026-09-29). 한국어 랜딩의 동기화 문장을 오너가 빼고 격언으로
@@ -475,13 +497,13 @@ def details_html(meta: dict, items: list) -> tuple:
             + (f'<figcaption>— {inline(by)}</figcaption>' if by else "")
             + "</figure>"
         )
-    return "\n".join(cells), closing
+    return opening, "\n".join(cells), closing
 
 
 def build_landing(page: dict) -> None:
     md_text = (ROOT / "content" / page["source"]).read_text(encoding="utf-8")
     meta, items = parse_landing(md_text)
-    details, closing = details_html(meta, items)
+    opening, details, closing = details_html(meta, items)
 
     out = ROOT / page["slug"] / "index.html" if page["slug"] else ROOT / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -500,6 +522,7 @@ def build_landing(page: dict) -> None:
         .replace("{{BADGE}}", badge_html(meta))
         .replace("{{PLATFORMS}}", meta.get("PLATFORMS", ""))
         .replace("{{STAGE}}", stage_html(meta, items))
+        .replace("{{OPENING}}", opening)
         .replace("{{DETAILS}}", details)
         .replace("{{CLOSING}}", closing)
     )

@@ -34,7 +34,7 @@
  */
 @font-face {
   font-family: "Rapt Label";
-  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=f5a013b2e5") format("woff2");
+  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=9ff7ea899a") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -503,6 +503,44 @@ a.status.get:hover {
   .phone.outer  { --w: calc(var(--u) * 0.77); }
 }
 
+/* ── 서문 ── (2026-10-10)
+ * 무대와 격자 사이, 페이지의 가운데 축 위. 아래 여섯 칸이 "무엇을 하는가"라면
+ * 여기는 이 도구가 **왜 이렇게 생겼는가**(몰입을 위해 기능을 덜어냈다)를 말한다.
+ * 맺음과 같은 목소리(명조 19px · ink-2)로 두어 페이지의 처음과 끝이 같은 목소리로
+ * 말하게 하고, 라벨은 격자 칸 라벨(.cell h2)과 같은 서체·크기·잉크를 써서
+ * 이것도 설명의 한 절임을 드러낸다. */
+.opening {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 104px var(--gutter) 0;
+  text-align: center;
+}
+
+.opening h2 {
+  font-family: "Rapt Label", var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+
+.opening p {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.9;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+
+.opening p:last-child { margin-bottom: 0; }
+
+/* 원고의 한 줄이 한 구절이다(build.py details_html). 넓은 화면에선 구절마다 줄을
+ * 바꾸고, 좁은 화면에선 이어 흘린다 — 한 구절이 좁은 폭을 넘으면 구절 안에서 다시
+ * 갈려 꼬리만 한 줄에 남기 때문이다. */
+.opening .phrase { display: block; }
+
 /* ── 설명 ──
  * 2×2 격자. 칸마다 AboutView의 문법(구분선 → 라벨 → 본문)을 지킨다 — 한 칼럼
  * 목록일 때 쓰던 문법을 칸 단위로 옮겨온 것이다. */
@@ -632,6 +670,9 @@ mark.overflow {
   .phone { --w: 64vw; scroll-snap-align: start; }
   .phone.center { order: -1; }
 
+  .opening { padding-top: 72px; }
+  .opening p { font-size: 18px; }
+  .opening .phrase { display: inline; }
   .details { grid-template-columns: 1fr; padding-top: 72px; }
 }
 
