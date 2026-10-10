@@ -10,6 +10,16 @@ QUOTE: When you write, you can never be alone enough,
 QUOTE: it can never be quiet enough around you,
 QUOTE: the night is still too little night.
 QUOTE_BY: Franz Kafka, 1913
+OPENING: Focus
+
+## Focus
+
+Rapt is a writing tool built for focus.
+Rather than adding features, it leaves them out,
+keeping only what writing needs.
+
+While you write, the tools step back
+and only the post you're on stays sharp.
 
 ## Notes
 
