@@ -76,23 +76,21 @@
   --overflow-bg:     rgba(226, 73, 71, 0.16);   /* RaptOverflowBg — 밑칠 */
 
   /* 무대의 앱 화면(.phone) — 기기 틀 없이 화면 한 장을 종이 위에 세운다(2026-09-30
-   * 오너 선택, 마감 C). 스토어 스크린샷(앱 저장소 tools/store_mockup.py의
-   * screen_card·seat)과 같은 값이라 스토어와 사이트의 화면이 같은 물건으로 보인다.
+   * 오너 선택, 마감 C). 화면의 **모양**(연속 곡선 모서리 · 옅은 안쪽 가장자리)은 이미지에
+   * 구워져 있고(앱 저장소 tools/web_frame.swift, 2026-10-11) 여기서는 그 모양을 따라
+   * 드리우는 그림자만 정한다. 예전엔 CSS가 원호 모서리에 불투명 1px 윤곽선을 그었는데
+   * "거칠고 아마추어 같다"(오너)는 지적으로 바꿨다 — 경위는 web_frame.swift 머리 주석.
    * 앱에는 대응 컬러셋이 없다(앱 화면을 "보여줄" 때만 생기는 물건이라).
    *
-   * 가장자리 선은 불투명이다 — 라이트는 잉크, 다크는 흰색. 스토어 쪽 머리말에
-   * 사연이 있다(오너가 고른 시안이 불투명으로 그려져 있었다). 그림자는 두 겹:
-   * 멀리 넓게 번지는 것과 바로 밑에 짧게 붙는 것. 다크에서 그림자는 검정 위
-   * 검정이라 안 보이므로, 먼 쪽은 뒤에서 번지는 따뜻한 빛이 맡는다.
+   * 그림자는 두 겹: 바로 밑에 짧게 붙는 것과 멀리 넓게 번지는 것. 다크에서 그림자는
+   * 검정 위 검정이라 안 보이므로, 먼 쪽은 뒤에서 번지는 따뜻한 빛이 맡는다.
    * 오프셋·번짐은 화면 폭(--w)에 곱하는 비율이다(.phone img). */
-  --screen-edge:        var(--ink);
-  --shadow-far:         rgba(60, 50, 40, 0.27);
-  --shadow-far-y:       0.041;
-  --shadow-far-blur:    0.125;
-  --shadow-far-spread:  0;
-  --shadow-near:        rgba(40, 34, 28, 0.24);
-  --shadow-near-y:      0.009;
-  --shadow-near-blur:   0.025;
+  --shot-near:          rgba(40, 34, 28, 0.20);
+  --shot-near-y:        0.006;
+  --shot-near-blur:     0.016;
+  --shot-far:           rgba(60, 50, 40, 0.20);
+  --shot-far-y:         0.045;
+  --shot-far-blur:      0.11;
   /* 랜딩 무대 뒤 종이 띠. 라이트는 sunken — recess는 캔버스와 너무 붙어서
    * 의도가 아니라 얼룩처럼 보였다(시안 비교, 2026-09-28). */
   --stage-bg:      var(--sunken);
@@ -151,14 +149,12 @@
     --ink-2:  #9A9894;
     --ink-3:  #767471;
     --overflow-bg:     rgba(189, 65, 63, 0.22);
-    --screen-edge:        #FFFFFF;
-    --shadow-far:         rgba(210, 170, 120, 0.13);   /* 뒤에서 번지는 따뜻한 빛 */
-    --shadow-far-y:       0;
-    --shadow-far-blur:    0.16;
-    --shadow-far-spread:  0.009;
-    --shadow-near:        rgba(0, 0, 0, 0.47);
-    --shadow-near-y:      0.0125;
-    --shadow-near-blur:   0.032;
+    --shot-near:          rgba(0, 0, 0, 0.55);
+    --shot-near-y:        0.010;
+    --shot-near-blur:     0.030;
+    --shot-far:           rgba(210, 170, 120, 0.12);   /* 뒤에서 번지는 따뜻한 빛 */
+    --shot-far-y:         0;
+    --shot-far-blur:      0.16;
     --stage-bg:      var(--recess);   /* 다크는 recess가 이미 캔버스보다 확실히 짙다 */
   }
 }
@@ -407,8 +403,9 @@ a.status.get:hover {
  * 작아지며(0.88 · 0.77), 아랫단을 맞춰 한 줄에 선 모양이 완만한 피라미드가 된다.
  * 뒤에 한 톤 짙은 종이 띠를 깔아, 책상 위에 원고를 세운 것처럼 공간을 준다.
  *
- * 모서리·선·그림자는 화면 폭(--w)에 비례시킨다 — 크기가 다른 다섯 장이 같은
- * 물건으로 보이려면 곡률과 번짐이 같은 **비율**이어야 한다. 비율은 스토어 목업과 같다. */
+ * 그림자는 화면 폭(--w)에 비례시킨다 — 크기가 다른 다섯 장이 같은 물건으로 보이려면
+ * 번짐이 같은 **비율**이어야 한다. 모서리·가장자리는 이미지에 구워져 있어 크기를 따라
+ * 저절로 같이 줄고 는다. */
 .stage {
   position: relative;
   isolation: isolate;           /* 아래 ::before의 z-index를 이 안에 가둔다 */
@@ -443,39 +440,21 @@ a.status.get:hover {
   display: block;
 }
 
-/* 모서리는 실제 iPhone 디스플레이 비율(화면 폭의 14%). 선 두께는 스토어의 2px/1120px
- * 비율인데, 무대 크기에서는 0.5px 밑으로 떨어져 흐려지므로 그 밑으로는 안 간다. */
+/* 모양(연속 곡선 모서리 · 옅은 안쪽 가장자리)은 이미지에 구워져 있다 — :root의 무대 주석.
+ * 그래서 border-radius·box-shadow가 아니라 drop-shadow로, 이미지의 투명 모서리를 따라 드리운다. */
 .phone img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: calc(var(--w) * 0.14);
-  box-shadow:
-    0 0 0 max(0.5px, calc(var(--w) * 0.0018)) var(--screen-edge),
-    0 calc(var(--w) * var(--shadow-far-y)) calc(var(--w) * var(--shadow-far-blur))
-      calc(var(--w) * var(--shadow-far-spread)) var(--shadow-far),
-    0 calc(var(--w) * var(--shadow-near-y)) calc(var(--w) * var(--shadow-near-blur))
-      calc(var(--w) * -0.0054) var(--shadow-near);
+  filter:
+    drop-shadow(0 calc(var(--w) * var(--shot-near-y)) calc(var(--w) * var(--shot-near-blur)) var(--shot-near))
+    drop-shadow(0 calc(var(--w) * var(--shot-far-y)) calc(var(--w) * var(--shot-far-blur)) var(--shot-far));
 }
 
-/* 가운데 화면(작성 모드)은 글 끝까지 내려 찍은 컷이라 **맨 윗줄이 글자 중간에서
- * 잘린다**(이미지 위 2%, 800px 폭에서 34px) — 모바일에선 이 화면이 첫 장이라 반쯤
- * 잘린 줄이 무대의 첫인상이 됐다(2026-10-07, 앱 완성도 점검 21). 이미지를 다시 자르면
- * 다섯 장의 비율이 어긋나므로, 화면 위쪽을 종이로 살짝 덮는다: 위 2.2%까지 꽉, 5.5%에서
- * 걷힌다 — 잘린 줄은 지워지고 둘째 줄이 종이에서 떠오른다.
- *
- * 덮개는 이미지와 같은 크기·같은 둥근 모서리로 그 위에 얹는다(picture::after). 화면
- * 테두리 선과 그림자는 이미지 바깥에 그려지므로 가려지지 않는다. 색은 화면 속 종이와
- * 같은 --canvas — 배색이 바뀌면 이미지(<picture>의 media)와 같은 조건으로 함께 바뀐다. */
-.phone.center picture { position: relative; }
-.phone.center picture::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: calc(var(--w) * 0.14);
-  background: linear-gradient(to bottom, var(--canvas) 0, var(--canvas) 2.2%, transparent 5.5%);
-  pointer-events: none;
-}
+/* 가운데 화면(작성 모드)은 글 끝까지 내려 찍은 컷이라 맨 윗줄이 글자 중간에서 잘린다 —
+ * 화면 위 2.2%까지 종이색으로 덮고 5.5%에서 걷는다(2026-10-07, 앱 완성도 점검 21).
+ * 처음엔 여기서 picture::after로 얹었는데, 모양이 이미지로 옮겨 가면서 덮개도 같은 곡선으로
+ * 이미지 안에 굽는다(앱 저장소 tools/web_assets.py의 HERO, 2026-10-11). */
 
 /* 다이내믹 아일랜드는 그리지 않는다. 가운데 한 장("몰입을 위한 UI")에만 얹었다가
  * 어색해서 걷어냈다(오너, 2026-10-01) — 기기 틀 없는 화면에 아일랜드만 떠 있었다.
@@ -536,9 +515,10 @@ a.status.get:hover {
 
 .opening p:last-child { margin-bottom: 0; }
 
-/* 원고의 한 줄이 한 구절이다(build.py details_html). 넓은 화면에선 구절마다 줄을
- * 바꾸고, 좁은 화면에선 이어 흘린다 — 한 구절이 좁은 폭을 넘으면 구절 안에서 다시
- * 갈려 꼬리만 한 줄에 남기 때문이다. */
+/* 원고의 한 줄이 한 구절이다(build.py details_html) — 화면 폭과 상관없이 구절마다 줄을
+ * 바꾼다. 처음엔 좁은 화면에서 이어 흘리고 균형 줄바꿈에 맡겼는데, 360·390px에서
+ * 「물러나고, 지금 / 쓰는」처럼 구절 한가운데서 갈렸다(2026-10-11). 가장 긴 구절도
+ * 360px 폭에 한 줄로 든다. */
 .opening .phrase { display: block; }
 
 /* ── 설명 ──
@@ -670,9 +650,10 @@ mark.overflow {
   .phone { --w: 64vw; scroll-snap-align: start; }
   .phone.center { order: -1; }
 
-  .opening { padding-top: 72px; }
+  /* 폰에서는 서문도 왼쪽 정렬 — 한 칼럼에서 가운데 정렬 서문 바로 밑에 왼쪽 정렬 칸이 오면
+   * 읽는 축이 한 번 흔들렸다(오너, 2026-10-11). 머리와 맺음 인용은 가운데 그대로다. */
+  .opening { padding-top: 72px; text-align: left; }
   .opening p { font-size: 18px; }
-  .opening .phrase { display: inline; }
   .details { grid-template-columns: 1fr; padding-top: 72px; }
 }
 
