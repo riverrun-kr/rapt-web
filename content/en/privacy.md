@@ -1,10 +1,10 @@
 # Privacy Policy
 
 <!-- prelaunch -->
-> Last revised 2026-10-11 · Before launch — the effective date will be fixed when the app ships on the App Store.
+> Last revised 2026-10-12 · Before launch — the effective date will be fixed when the app ships on the App Store.
 <!-- /prelaunch -->
 <!-- launch -->
-> Effective {{LAUNCH_DATE}} · Last revised 2026-10-11
+> Effective {{LAUNCH_DATE}} · Last revised 2026-10-12
 <!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
@@ -31,7 +31,7 @@ The features below communicate with outside services **only when you run them yo
 
 **Usage totals** — to run the service, the relay server keeps only daily totals of how many requests each feature received (for spell checking, also how many words were sent). These totals contain nothing that identifies you — no IP address, account or device information — and none of your writing.
 
-**Daily spell-check usage** — to keep spell checking from being overused from a single place, the relay server turns the connecting IP address into a value that cannot be turned back into the address, keeps it together with the number of words sent that day for that day only, and deletes it when the day changes. Because the value is made together with the date, it cannot be linked across days. The IP address itself and your writing are not stored.
+**Daily spell-check usage** — to keep spell checking from being overused from a single place, the relay server turns the connecting IP address into a value that cannot be turned back into the address, keeps it together with the number of words sent that day for that day only, and deletes it when the day changes. To keep requests from piling up in a short time, it also counts requests per minute under the same value, and deletes those counts within a minute or two. Because the value is made together with the date, it cannot be linked across days. The IP address itself and your writing are not stored.
 
 ## 4. Disclosure to Third Parties
 
