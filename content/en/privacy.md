@@ -13,6 +13,8 @@
 
 Rapt collects no personal information. The app contains no data collection or tracking of any kind — no sign-up, no sign-in, no email address, no location, no advertising identifier, no analytics, and no crash reporting.
 
+**Email inquiries** — If you contact us outside the app at support@rapt.kr, the operator keeps the email address you write from and the content of your inquiry (including attachments) in its mailbox in order to reply. Inquiry records are kept for three years from the day the inquiry is resolved and then deleted. Once payments are introduced, records of complaints and disputes must be kept for three years under Korea's Act on the Consumer Protection in Electronic Commerce, so all inquiry records follow the same period. The mailbox runs on Hiworks, a service of Gabia Inc., which stores the mail on the operator's behalf (outsourced processing).
+
 ## 2. Storage of What You Write
 
 Everything you write in Rapt, including post bodies and threads, is stored in the device's local storage and **synced, through your own Apple iCloud account, to your other devices signed in to that same account.** Apple's privacy policy governs the storage and transmission that happen in the course of that sync.
@@ -43,7 +45,9 @@ The features below communicate with outside services **only when you run them yo
 
 ## 4. Disclosure to Third Parties
 
-Apart from the transmissions described in section 3, which happen only when you run those features yourself, Rapt does not provide, sell, or share any personal information or content with third parties. Since nothing is collected in the first place, there is nothing to provide.
+Apart from the transmissions described in section 3, which happen only when you run those features yourself, Rapt does not provide, sell, or share any personal information or content with third parties. Since the app collects nothing in the first place, there is nothing to provide.
+
+**Requests from public authorities** — The operator does not keep users' writing or account information, so there is little to provide even if a law enforcement agency or another public authority requests user information. If such a request arrives, the operator first checks that it rests on a legal basis and follows the required procedure (such as a warrant). If it lacks a basis or appears unlawful, the operator declines it or challenges it through the procedures the law provides. When a request must be complied with, the operator provides only the minimum necessary within its scope, and keeps a record of the requesting authority, the request, its legal basis, and the operator's response.
 
 ## 5. Processing Through the Apple Platform
 
@@ -55,7 +59,7 @@ Rapt collects no personal information from any user, children under 14 included,
 
 ## 7. Your Rights
 
-Because Rapt holds no personal information about you, there is no data on which a request to access, correct, or delete could operate.
+Because the Rapt app and the relay server hold no personal information about you, there is no data on which a request to access, correct, or delete could operate. For email inquiries, you can ask at support@rapt.kr to see or delete your records; they are deleted without delay unless the law requires them to be kept.
 
 Deleting the app removes the content stored on that device. Note, however, that **content synced to iCloud remains in iCloud after the app is deleted — it stays visible on your other devices signed in to the same account, and it is restored if you reinstall the app.** To remove what is held in iCloud as well, delete the writing inside the app (emptying the trash deletes it permanently), or delete Rapt's data from your device under Settings → Apple Account → iCloud.
 
