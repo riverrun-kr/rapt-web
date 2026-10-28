@@ -1,10 +1,10 @@
 # Privacy Policy
 
 <!-- prelaunch -->
-> Last revised 2026-10-12 · Before launch — the effective date will be fixed when the app ships on the App Store.
+> Last revised 2026-10-28 · Before launch — the effective date will be fixed when the app ships on the App Store.
 <!-- /prelaunch -->
 <!-- launch -->
-> Effective {{LAUNCH_DATE}} · Last revised 2026-10-12
+> Effective {{LAUNCH_DATE}} · Last revised 2026-10-28
 <!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
@@ -32,6 +32,14 @@ The features below communicate with outside services **only when you run them yo
 **Usage totals** — to run the service, the relay server keeps only daily totals of how many requests each feature received (for spell checking, also how many words were sent). These totals contain nothing that identifies you — no IP address, account or device information — and none of your writing.
 
 **Daily spell-check usage** — to keep spell checking from being overused from a single place, the relay server turns the connecting IP address into a value that cannot be turned back into the address, keeps it together with the number of words sent that day for that day only, and deletes it when the day changes. To keep requests from piling up in a short time, it also counts requests per minute under the same value, and deletes those counts within a minute or two. Because the value is made together with the date, it cannot be linked across days. The IP address itself and your writing are not stored.
+
+**Where the relay server runs, and processing outside Korea** — The relay server runs on Cloudflare Workers, a serverless service of Cloudflare, Inc. (United States). When you run a spell check or connect a Threads account, the request is processed at a Cloudflare data center near you, which may be outside Korea, and nothing is kept once processing ends. The value described under "Daily spell-check usage" is kept in Cloudflare's database only for the periods stated there, and the usage totals are kept there as well (they contain nothing that identifies you). If you do not use these features, nothing is sent.
+
+- Recipient: Cloudflare, Inc. (privacyquestions@cloudflare.com)
+- Countries: the United States and other countries where Cloudflare has data centers
+- Items: the text you ask to spell check, the Threads authorization code and access token, and your IP address
+- When and how: sent over the network each time you use one of these features
+- Purpose and retention: to run the relay server; requests are deleted as soon as they are processed, the daily-usage value by the end of that day, and the per-minute counts within a minute or two
 
 ## 4. Disclosure to Third Parties
 
