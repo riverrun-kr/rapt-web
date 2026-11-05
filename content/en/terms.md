@@ -1,17 +1,17 @@
 # Terms of Service
 
 <!-- prelaunch -->
-> Last revised 2026-09-30 · Before launch — the effective date will be fixed when the app ships on the App Store.
+> Last revised 2026-11-05 · Before launch — the effective date will be fixed when the app ships on the App Store.
 <!-- /prelaunch -->
 <!-- launch -->
-> Effective {{LAUNCH_DATE}} · Last revised 2026-09-30
+> Effective {{LAUNCH_DATE}} · Last revised 2026-11-05
 <!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/terms/) is the governing text.
 
 ## 1. About the Service
 
-Rapt is a minimal writing app built for Threads. It is developed and operated by 카인드닷츠 (KIND_DOTS goods, the &ldquo;operator&rdquo;), and is not affiliated with Meta (which operates Threads) or with any other company or institution.
+Rapt is a minimal writing app built for Threads. It is developed and operated by 카인드닷츠 (KIND_DOTS, the &ldquo;operator&rdquo;), and is not affiliated with Meta (which operates Threads) or with any other company or institution.
 
 ## 2. Accounts
 

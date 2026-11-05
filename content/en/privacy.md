@@ -1,10 +1,10 @@
 # Privacy Policy
 
 <!-- prelaunch -->
-> Last revised 2026-10-28 · Before launch — the effective date will be fixed when the app ships on the App Store.
+> Last revised 2026-11-05 · Before launch — the effective date will be fixed when the app ships on the App Store.
 <!-- /prelaunch -->
 <!-- launch -->
-> Effective {{LAUNCH_DATE}} · Last revised 2026-10-28
+> Effective {{LAUNCH_DATE}} · Last revised 2026-11-05
 <!-- /launch -->
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
@@ -71,5 +71,5 @@ This privacy policy may be updated to reflect service changes that affect how da
 
 Rapt receives privacy inquiries and complaints at the contact below.
 
-- Privacy officer: 김재민, representative of 카인드닷츠 (KIND_DOTS goods)
+- Privacy officer: 김재민
 - Email: support@rapt.kr
