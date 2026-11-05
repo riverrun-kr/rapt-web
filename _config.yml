@@ -1,0 +1,8 @@
+# GitHub Pages(Jekyll)가 원고·빌드 스크립트·README를 사이트로 내보내지 않게 한다.
+# 이 파일이 없을 때 content/*.md가 /content/*.html로, scripts/와 README.md가 그대로 열려
+# 출시 날에야 보일 「먼저 오신 분께」까지 rapt.kr에서 읽혔다(2026-11-05 검토).
+# 빌드된 HTML에는 front matter가 없어서 Jekyll이 손대지 않고 그대로 복사한다.
+exclude:
+  - README.md
+  - content
+  - scripts

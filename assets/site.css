@@ -215,6 +215,9 @@ a { color: inherit; }
   letter-spacing: -0.005em;
   text-decoration: none;
   color: var(--ink);
+  /* 한 단어 로고라 줄이 갈리면 안 된다. Bodoni가 오기 전의 대체 서체 폭으로 잡힌 flex 항목을
+     body의 overflow-wrap이 단어 안에서 끊어, iPhone Safari에서 「Rap / t」로 갈렸다(2026-11-05). */
+  white-space: nowrap;
 }
 
 .site-header {
@@ -225,7 +228,7 @@ a { color: inherit; }
   align-items: baseline;
 }
 
-.site-header .wordmark { font-size: 22px; }
+.site-header .wordmark { font-size: 22px; flex: none; }
 
 /* ── 언어 전환 ────────────────────────────────────────────────────────
  * 푸터 맨 아래, 이메일과 사업자 정보 **뒤**에 있었다 — 페이지에서 가장 마지막에
