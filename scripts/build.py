@@ -626,6 +626,32 @@ def build_sitemap() -> None:
     print(f"wrote {out}")
 
 
+BODY_FONT = ROOT / "assets" / "fonts" / "NanumMyeongjo-Regular-site.woff2"
+
+
+def check_body_font() -> None:
+    """빌드된 페이지의 글자가 본문 서체 서브셋에 다 있는지 본다(2026-11-05). 빠진 글자는
+    대체 서체로 떨어져 그 글자만 모양이 튄다. 걸리면 subset_body_font.py → stamp_assets.py →
+    build.py 순서로 다시 돌린다."""
+    try:
+        from fontTools.ttLib import TTFont
+    except ImportError:
+        print("경고: fontTools가 없어 본문 서체 검사를 건너뛴다")
+        return
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from subset_body_font import CACHE, site_chars  # 서브셋과 같은 기준으로 글자를 모은다
+    covered = set(TTFont(BODY_FONT).getBestCmap())
+    missing = {c for c in site_chars() if ord(c) not in covered}
+    if CACHE.exists():   # 원본 서체에도 없는 글자(이모지 등)는 어차피 대체 서체가 그린다
+        have = set(TTFont(CACHE).getBestCmap())
+        missing = {c for c in missing if ord(c) in have}
+    else:
+        missing = {c for c in missing if c.isascii() or "\uac00" <= c <= "\ud7a3"}
+    if missing:
+        raise SystemExit("본문 서체 서브셋에 없는 글자: " + " ".join(sorted(missing)) +
+                         "\n→ python3 scripts/subset_body_font.py → stamp_assets.py → build.py")
+
+
 def main() -> None:
     if LAUNCHED and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", LAUNCH_DATE):
         raise SystemExit("LAUNCHED = True면 LAUNCH_DATE도 'YYYY-MM-DD'로 채울 것 — 약관·방침의 시행일이 된다")
@@ -635,6 +661,7 @@ def main() -> None:
         build_doc(doc)
     build_404()
     build_sitemap()
+    check_body_font()
 
 
 if __name__ == "__main__":

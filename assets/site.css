@@ -40,6 +40,20 @@
   font-display: swap;
 }
 
+/* ── 본문 명조(Regular) ──────────────────────────────────────────────
+ * Google Fonts에서 받던 것을 사이트에 쓰인 글자만 잘라 직접 서빙한다(2026-11-05 검토).
+ * 조각 16개·약 270KB가 파일 하나로 줄고, 방문자의 IP 주소가 Google로 가지 않는다
+ * (개인정보처리방침 9항). 원고를 고쳐 새 글자가 생기면 scripts/subset_body_font.py를
+ * 다시 돌린다 — 빠진 글자는 build.py가 빌드 끝에 잡는다. 이름을 "Nanum Myeongjo"로 둬서
+ * --serif가 그대로 이 face를 고른다. 페이지 머리의 preload와 주소·해시가 같아야 두 번 받지 않는다. */
+@font-face {
+  font-family: "Nanum Myeongjo";
+  src: url("/assets/fonts/NanumMyeongjo-Regular-site.woff2?v=7fa4faa50a") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Rapt 웹사이트 공용 스타일
  *
  * 토큰 이름과 값은 앱의 디자인 언어를 그대로 따라온다

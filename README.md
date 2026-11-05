@@ -182,6 +182,11 @@ cd ../rapt-web && python3 scripts/build.py                 # 새 해시로 랜�
 
 ## 캐시 무효화 — 에셋을 고쳤으면 반드시
 
+**배포되는 CSS는 `assets/site.min.css`다(2026-11-05).** `stamp_assets.py`가 `site.css`에서 주석만 걷어 만든다 — 주석이 원본의 약 70%라 화면 그리기를 막는 CSS가 37KB → 10.5KB로 준다. 결정의 이유는 계속 `site.css` 주석에 적고, `site.min.css`는 손으로 고치지 않는다.
+
+**본문 서체(나눔명조 400)도 직접 서빙한다(2026-11-05).** Google Fonts를 빼서 방문자 IP가 Google로 가지 않고(개인정보처리방침), 조각 16개(약 270KB)가 파일 하나(약 80KB)로 줄었다. 사이트에 쓰인 글자만 담은 서브셋이라, **원고를 고쳐 새 글자가 생기면** `python3 scripts/subset_body_font.py` → `stamp_assets.py` → `build.py` 순서로 돌린다. 빠뜨려도 `build.py`가 빌드 끝에서 빠진 글자를 찾아 멈춘다. 서브셋을 만들 때 공백(U+0020)을 꼭 넣을 것 — 처음에 빠져서 띄어쓰기만 대체 서체로 그려져 줄이 넓어졌다.
+
+
 GitHub Pages는 모든 파일에 `Cache-Control: max-age=600`을 붙인다. CSS를 고쳐 배포해도 직전 10분 안에 그 파일을 받아간 브라우저는 재검증 없이 옛 CSS를 쓰기 때문에, **새 HTML + 옛 CSS** 조합으로 레이아웃이 통째로 깨져 보인다(2026-09-11에 실제로 겪음).
 
 `assets/` 안의 무언가를 고쳤으면 순서대로:

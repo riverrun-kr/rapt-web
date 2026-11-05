@@ -27,12 +27,14 @@ ROOT = Path(__file__).resolve().parent.parent
 FONT_ASSETS = [
     "/assets/fonts/BodoniModa11pt-Medium-latin.woff2",
     "/assets/fonts/NanumMyeongjo-Bold-labels.woff2",
+    "/assets/fonts/NanumMyeongjo-Regular-site.woff2",
 ]
 FONT_HOSTS = ["assets/site.css"]
 
 # HTML 안에서 참조되는 것들.
+# 페이지는 원본(site.css)이 아니라 주석을 걷은 배포본(site.min.css)을 가리킨다 — write_min_css 참고.
 ASSETS = [
-    "/assets/site.css",
+    "/assets/site.min.css",
     "/assets/favicon-16.png",
     "/assets/favicon-32.png",
     "/assets/apple-touch-icon-180.png",
@@ -78,6 +80,19 @@ def stamp_into(files, assets) -> None:
         print(f"  {asset} -> ?v={stamp}")
 
 
+def write_min_css() -> None:
+    """배포용 CSS — site.css에서 주석만 걷는다(2026-11-05 검토). 주석이 원본의 약 70%라
+    화면 그리기를 막는 CSS가 34KB → 10KB 남짓(gzip 12.6 → 2.6KB)으로 준다. 원본은 결정의
+    이유를 적어 두는 곳이라 그대로 두고, 페이지는 이 파일을 가리킨다. 손으로 고치지 말 것."""
+    src = (ROOT / "assets" / "site.css").read_text(encoding="utf-8")
+    out = re.sub(r"/\*.*?\*/", "", src, flags=re.S)
+    out = re.sub(r"[ \t]+\n", "\n", out)
+    out = re.sub(r"\n{2,}", "\n", out).strip() + "\n"
+    (ROOT / "assets" / "site.min.css").write_text(out, encoding="utf-8")
+    print(f"wrote assets/site.min.css  {len(out.encode()) / 1024:.1f} KB "
+          f"(원본 {len(src.encode()) / 1024:.1f} KB)")
+
+
 def main() -> None:
     # 1단계: 폰트 해시를 site.css 안에 먼저 찍는다.
     #
@@ -86,9 +101,12 @@ def main() -> None:
     # CSS 해시를 계산해야 HTML이 가리키는 값이 실제 파일과 맞는다. 반대로 하면
     # HTML은 옛 CSS 해시를 가리키고, 그게 바로 이 스크립트가 막으려던 상황이다.
     stamp_into(FONT_HOSTS, FONT_ASSETS)
+    # 1.5단계: 폰트 해시가 박힌 site.css에서 배포본을 만든다 — 그다음에 그 해시를 잰다.
+    write_min_css()
 
     # 2단계: (이제 확정된) CSS와 파비콘 해시를 HTML에 찍는다.
-    stamps = {a: digest(a) for a in ASSETS}
+    # 글꼴은 페이지 머리의 preload에도 있다 — CSS 안 주소와 해시까지 같아야 두 번 받지 않는다.
+    stamps = {a: digest(a) for a in ASSETS + FONT_ASSETS}
     for page in PAGES:
         path = ROOT / page
         text = original = path.read_text(encoding="utf-8")
