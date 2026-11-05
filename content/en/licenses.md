@@ -1,4 +1,4 @@
-# Open-Source Licenses
+# Open Source Licenses
 
 > Notices for the third-party works used by Rapt (the app) and by this website. For copyright in the app itself, see section 8 of the [Terms of Service](/en/terms/).
 >

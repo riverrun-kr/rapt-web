@@ -50,7 +50,7 @@ DOCS = [
      "source": "en/support.md", "alt": "support"},
     {"slug": "en/data-deletion", "lang": "en", "title": "Data Deletion",
      "source": "en/data-deletion.md", "alt": "data-deletion"},
-    {"slug": "en/licenses", "lang": "en", "title": "Open-Source Licenses",
+    {"slug": "en/licenses", "lang": "en", "title": "Open Source Licenses",
      "source": "en/licenses.md", "alt": "licenses"},
 ]
 
@@ -63,7 +63,7 @@ FOOTER = {
     "en": [("/en/support/", "Support"), ("/en/terms/", "Terms of Service"),
            ("/en/privacy/", "Privacy Policy"),
            ("/en/data-deletion/", "Data Deletion"),
-           ("/en/licenses/", "Open-Source Licenses")],
+           ("/en/licenses/", "Open Source Licenses")],
 }
 
 # 언어 전환 링크에 붙는 라벨 — 항상 **가려는 쪽 언어로** 적는다. 읽지 못하는
@@ -92,7 +92,9 @@ LANDINGS = [
 NOT_FOUND = {"lang": "ko", "title": "찾을 수 없는 페이지",
              "heading": "여기엔 아무것도 없어요",
              "body": ["주소를 다시 확인해 주세요.",
-                      '<a href="/">Rapt로 돌아가기 →</a>']}
+                      '<a href="/">Rapt로 돌아가기 →</a>',
+                      # 영문 방문자에게도 출구 하나(2026-11-05 검토) — /en/ 아래 없는 주소도 이 404가 받는다.
+                      '<span lang="en">Nothing here. <a href="/en/">Back to Rapt →</a></span>']}
 
 # 사업자 정보 — Meta 비즈니스 인증이 "법적 상호가 웹사이트에 없어 이 사이트가
 # 그 사업자의 것인지 확인할 수 없다"로 거절한 자리다(2026-09-23). **상호는
@@ -135,13 +137,19 @@ def header_html(lang: str, alt: str, wordmark: bool) -> str:
 
 
 def footer_html(lang: str) -> str:
-    nav = "\n".join(f'    <a href="{href}">{label}</a>' for href, label in FOOTER[lang])
+    def nav_link(href: str, label: str) -> str:
+        # 처리방침 링크만 class를 달아 CSS가 잉크로 구분한다(표준 개인정보 보호지침 제20조).
+        mark = ' class="privacy"' if href.endswith("privacy/") else ""
+        return f'    <a href="{href}"{mark}>{label}</a>'
+    nav = "\n".join(nav_link(href, label) for href, label in FOOTER[lang])
+    # 영문 페이지에서 한국어 사업자 정보는 한국어로 읽히게(스크린리더·서체 선택).
+    business_lang = ' lang="ko"' if lang == "en" else ""
     return (
         '<footer class="site-footer">\n'
         f'  <a class="wordmark" href="{home(lang)}">Rapt</a>\n'
         f'  <nav class="footer-nav">\n{nav}\n  </nav>\n'
         '  <a class="footer-mail" href="mailto:support@rapt.kr">support@rapt.kr</a>\n'
-        f'  <p class="footer-business">{BUSINESS}</p>\n'
+        f'  <p class="footer-business"{business_lang}>{BUSINESS}</p>\n'
         '</footer>'
     )
 
@@ -164,7 +172,13 @@ def inline(text: str) -> str:
     text = re.sub(r"\[([^\]]+?)\]\(([^)]+?)\)", r'<a href="\2">\1</a>', text)
     # ==강조== → 500자 초과 밑칠. 오너가 원고에서 쓰는 표기 그대로 받는다.
     text = re.sub(r"==(.+?)==", r'<mark class="overflow">\1</mark>', text)
-    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    # 한국어 줄바꿈 다듬기(2026-11-05 검토) — 「~할 수 있다/없다」의 「수」가 줄 끝·머리에 혼자
+    # 떨어지지 않게, 가운뎃점이 줄 머리에 와서 글머리표처럼 보이지 않게 붙임 공백(U+00A0)을 쓴다.
+    text = re.sub(r"(?<=[가-힣]) 수 (?=[있없])", "\u00a0수\u00a0", text)
+    text = text.replace(" · ", "\u00a0· ")
+    # 영문 아포스트로피는 둥근 것으로 — 나눔명조 라틴의 곧은 ' 는 따옴표처럼 서 있다.
+    return re.sub(r"(?<=[A-Za-z])'(?=[A-Za-z])", "\u2019", text)
 
 
 def render_body(md_text: str) -> str:
@@ -333,7 +347,7 @@ SCREEN_DIR = "/assets/screens"
 # 박아둬야 이미지가 오기 전에 자리가 잡혀 글이 밀려 내려가지 않는다.
 SCREEN_WH = (800, 1738)
 # 그려지는 폭은 site.css의 .phone과 맞춘다(넓은 화면 최대 300px, 좁은 화면 64vw).
-PHONE_SIZES = "(max-width: 899px) 64vw, 300px"
+PHONE_SIZES = "(max-width: 599px) 64vw, (max-width: 899px) 320px, 300px"
 
 
 def asset_url(path: str) -> str:
@@ -551,6 +565,9 @@ def build_404() -> None:
         .replace("{{FOOTER}}", footer_html(NOT_FOUND["lang"]))
         .replace("{{BODY}}", body)
     )
+    # 404는 자기 주소가 없다 — canonical 대신 검색 제외(2026-11-05 검토).
+    page = page.replace('<link rel="canonical" href="https://rapt.kr/404.html" />',
+                        '<meta name="robots" content="noindex" />')
     (ROOT / "404.html").write_text(page, encoding="utf-8")
     print(f"wrote {ROOT / '404.html'}")
 

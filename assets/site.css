@@ -94,6 +94,9 @@
   /* 랜딩 무대 뒤 종이 띠. 라이트는 sunken — recess는 캔버스와 너무 붙어서
    * 의도가 아니라 얼룩처럼 보였다(시안 비교, 2026-09-28). */
   --stage-bg:      var(--sunken);
+  /* 글자를 끌어 고를 때의 칠 — 사이트에 들어오는 유일한 바깥 색(OS 파랑)이었다. 앱도 AccentColor가
+   * 잉크라 선택 칠이 잉크 계열이다(2026-11-05 검토). */
+  --selection:     rgba(45, 40, 35, 0.14);
 
   /* 조판 */
   --measure: 680px;
@@ -156,10 +159,21 @@
     --shot-far-y:         0;
     --shot-far-blur:      0.16;
     --stage-bg:      var(--recess);   /* 다크는 recess가 이미 캔버스보다 확실히 짙다 */
+    --selection:     rgba(207, 205, 201, 0.22);
   }
 }
 
+/* 고대비 설정을 켠 사람에게는 작은 회색 글자(ink-3: 무대 캡션·플랫폼 표기·인용 출처)를 ink-2로
+ * 올린다. 장식으로 둔 낮은 대비는 기본 모습에서만 지킨다(2026-11-05 검토). */
+@media (prefers-contrast: more) { :root { --ink-3: var(--ink-2); } }
+
+/* 영문 문서는 680px 칼럼에서 한 줄이 약 90자로 길었다. 620px면 약 74자다(2026-11-05 검토).
+ * 머리·본문·푸터가 같은 변수를 써서 가장자리가 함께 움직인다. */
+html:lang(en) { --measure: 620px; }
+
 * { box-sizing: border-box; }
+
+::selection { background: var(--selection); }
 
 html, body {
   margin: 0;
@@ -241,7 +255,7 @@ a { color: inherit; }
  * 워드마크가 있다) space-between으로는 왼쪽에 붙어버린다.
  */
 .site-header .lang {
-  margin: 0 0 0 auto;
+  margin: 0 -8px 0 auto;        /* 링크의 좌우 여백 8px만큼 — 글자 오른끝을 단 오른끝에 맞춘다 */
   font-size: 12px;              /* RaptType.meta */
   line-height: 1.75;
 }
@@ -258,8 +272,9 @@ a { color: inherit; }
   border-right: 1px solid var(--rule);
 }
 
+/* 누를 수 있는 것은 ink-2 — 푸터 링크에 세운 규칙을 여기에도. ink-3(3.5:1)은 AA에 못 미쳤다(2026-11-05). */
 .site-header .lang a {
-  color: var(--ink-3);
+  color: var(--ink-2);
   text-decoration: none;
   transition: color 0.16s ease-in-out;   /* RaptMotion.dim */
 }
@@ -302,6 +317,10 @@ a { color: inherit; }
 }
 
 .site-footer a:hover { color: var(--ink); }
+
+/* 처리방침 링크만 잉크로 구분한다 — 표준 개인정보 보호지침 제20조(다른 링크와 구분되게).
+ * 강조는 굵기가 아니라 잉크다(서체 주석 참고). */
+.footer-nav a.privacy { color: var(--ink); }
 
 /* 워드마크는 14px 이하에서 트래킹을 0으로 연다(위 .wordmark 주석). */
 .site-footer .wordmark {
@@ -638,26 +657,47 @@ mark.overflow {
    * 빛(번짐 0.16w, 퍼짐 0.009w)은 가우스 꼬리라 번짐 반경보다 멀리 가서, 합이
    * 0.5 밑으로 떨어지려면 0.2w가 필요하다. 아래도 같은 이유로 캡션 밑에 여유를
    * 두고, 무대의 아래 여백(40px)을 상자 안으로 옮긴다. */
-  .stage { margin-top: max(0px, calc(56px - 64vw * 0.2)); padding-bottom: 0; }
+  .stage { --strip: 64vw; margin-top: max(0px, calc(56px - var(--strip) * 0.2)); padding-bottom: 0; }
   .stage::before { top: 52%; }
   .spread {
     justify-content: flex-start;
     gap: 16px;
-    padding: calc(64vw * 0.2) var(--gutter) max(44px, calc(64vw * 0.2 - 40px));
+    padding: calc(var(--strip) * 0.2) var(--gutter) max(44px, calc(var(--strip) * 0.2 - 40px));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding: 0 var(--gutter);
     scrollbar-width: none;
   }
   .spread::-webkit-scrollbar { display: none; }
-  .phone { --w: 64vw; scroll-snap-align: start; }
+  .phone { --w: var(--strip); scroll-snap-align: start; }
   .phone.center { order: -1; }
 
   /* 폰에서는 서문도 왼쪽 정렬 — 한 칼럼에서 가운데 정렬 서문 바로 밑에 왼쪽 정렬 칸이 오면
    * 읽는 축이 한 번 흔들렸다(오너, 2026-10-11). 머리와 맺음 인용은 가운데 그대로다. */
   .opening { padding-top: 72px; text-align: left; }
   .opening p { font-size: 18px; }
+  .closing p { font-size: 18px; }
   .details { grid-template-columns: 1fr; padding-top: 72px; }
+}
+
+/* 태블릿 폭(600~899px) — 띠의 화면이 64vw면 820px에서 525px로 실물 폰보다 커지고 900px에서
+ * 3.4배 뛰었다. 서문(640px 상자)과 설명 격자(전체 폭)의 시작선도 갈렸다(2026-11-05 검토).
+ * 화면 폭을 바꾸면 build.py의 PHONE_SIZES도 같이 고친다. */
+@media (min-width: 600px) and (max-width: 899px) {
+  .stage { --strip: 320px; }
+  .details, body.landing .site-footer { max-width: 640px; }
+}
+
+/* 작은 폰(380px 이하) — 375px에서 인용 첫 마디가 1px 모자라 구절 한가운데서 갈렸다(2026-11-05). */
+@media (max-width: 380px) {
+  .opening p, .closing p { font-size: 17px; }
+}
+
+/* 폰 다크의 무대 빛 — drop-shadow의 번짐 값은 반경이 아니라 표준편차(σ)라, 위의 0.2w 여유가
+ * σ=0.16w의 1.25σ밖에 안 돼 빛의 약 10%가 띠 윗변에서 직선으로 끊겼다(10-01 지적이 남아 있었다).
+ * 폰 다크에서만 번짐을 0.08w로 줄이면 Chrome과 iPhone Safari 모두 계단이 사라진다(2026-11-05 실측). */
+@media (max-width: 899px) and (prefers-color-scheme: dark) {
+  :root { --shot-far-blur: 0.08; }
 }
 
 /* ── 법률 문서 ───────────────────────────────────────────────────── */
@@ -709,7 +749,7 @@ main.doc h2 {
  * 28 → 38px, 겨우 36% 더 벌어졌다. 문단이 서로 붙어 약관이 한 덩어리
  * 벽으로 읽히던 원인이다. 20px면 48px가 되어 71% 더 벌어진다. */
 main.doc p {
-  font-size: 16px;
+  font-size: 17px;     /* 본문 17px(명조는 16px로 작게 읽힌다) — 16px이 남아 있었다(2026-11-05) */
   color: var(--ink-2);
   margin: 0 0 20px;
   text-wrap: pretty;
@@ -730,7 +770,7 @@ main.doc ul {
 }
 
 main.doc li {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--ink-2);
   margin: 0 0 10px;
   position: relative;
