@@ -7,6 +7,7 @@ terms/index.html, privacy/index.html 이 다시 생성된다. 마크다운은 �
 빈 줄로 구분된 문단, '- ' 목록, 인라인 **굵게**, 인라인 [링크](주소).
 """
 import hashlib
+import json
 import re
 import subprocess
 import sys
@@ -302,10 +303,14 @@ def build_doc(doc: dict) -> None:
 # 출시 스위치(출시 교체 지점 ①, scripts/landing.html). **출시 당일 True로 바꾸고**
 # build.py → 배포. 그 전에는 이 주소가 스토어에 없는 페이지라 링크를 걸지 않는다 —
 # 앱의 SyncStatusView.macAppStoreURL과 같은 판단이다(죽은 링크를 심지 않는다).
-# 번호는 App Store Connect의 Apple ID(오너, 2026-09-30). 나라를 박지 않은 주소라
-# 방문자의 스토어로 알아서 간다. iPhone과 Mac이 한 번들 ID(한 앱 레코드)라 주소도 하나다.
+# 번호는 App Store Connect의 Apple ID(오너, 2026-09-30). iPhone과 Mac이 한 번들 ID
+# (한 앱 레코드)라 주소도 하나다.
 LAUNCHED = False
 APP_STORE_URL = "https://apps.apple.com/app/id6815147495"
+# 나라를 박지 않은 주소는 iPhone·Mac에서는 방문자의 스토어로 열리지만, 데스크톱 브라우저에서는
+# 미국 스토어 웹 페이지로 간다(2026-11-05 검토 A6). 한국어 페이지는 한국 스토어로 못 박는다.
+# 영문 페이지는 그대로 둔다 — 판매 지역이 EU를 뺀 전부라 미국 스토어에도 있다.
+STORE_URLS = {"ko": APP_STORE_URL.replace("/app/", "/kr/app/"), "en": APP_STORE_URL}
 # 출시일 — LAUNCHED와 **함께** 채운다("YYYY-MM-DD", 2026-10-04). 약관·방침 머리말의
 # 시행일이 되고, 지원 페이지의 얼리 사용자 공지도 이때 같이 나간다(apply_launch).
 # LAUNCHED가 True인데 비어 있으면 빌드가 멈춘다.
@@ -437,12 +442,52 @@ def parse_landing(md_text: str):
     return meta, items
 
 
-def badge_html(meta: dict) -> str:
-    """출시 전에는 테두리만 있는 상태 배지, 출시 뒤에는 잉크로 꽉 찬 App Store 링크.
-    앱의 "상태는 형태로 말한다"(빈 원 → 꽉 찬 원)를 그대로 옮긴 전환이다."""
+# App Store 배지 — Apple 공식 배지를 그대로 쓴다(2026-11-05 검토 A6, 오너 결정 ①).
+# 그 전에는 잉크 캡슐에 "Download on the App Store"를 직접 적었는데, 배지 문구를 손으로
+# 만든 셈이라 Apple 마케팅 가이드라인(공식 아트워크만, 고치거나 번역하지 않는다)에 어긋났고,
+# 12px 글자·높이 30px이라 폰에서 누르기도 작았다.
+#
+# 가이드라인(developer.apple.com/app-store/marketing/guidelines, 2026-11-05 원문 확인):
+# - 화면에서 높이 40px 이상, 둘레에 높이의 1/4 이상 빈 자리, 페이지와 같은 언어의 배지.
+# - **검은 배지가 기본**이고 흰 배지는 검은 배지가 무거워 보일 때의 대안이다. 그래서 다크에서도
+#   검은 배지를 쓴다 — 다크 바탕에서는 흰 배지가 페이지에서 가장 밝은 덩어리가 돼 오히려
+#   무거웠고(촬영 비교), 검은 배지의 회색 테두리는 아트워크의 일부라 어두운 바탕에서도 선다.
+# - **한 화면(layout)에 배지는 하나.** 그래서 맺음의 받기는 배지가 아니라 글 링크다(build_landing).
+# 원본(assets/badges/): https://tools.applemediaservices.com/api/badges/
+#   download-on-the-app-store/black/{ko-kr|en-us}
+BADGE_HEIGHT = 44
+BADGE_ART = {  # 언어 → (높이 40일 때 너비 = SVG viewBox, 배지에 적힌 문구 그대로 = 대체 텍스트)
+    "ko": (129.70071, "App Store에서 다운로드 하기"),
+    "en": (119.66407, "Download on the App Store"),
+}
+
+
+def store_badge(lang: str) -> str:
+    width, alt = BADGE_ART[lang]
+    return (
+        f'<a class="store-badge" href="{STORE_URLS[lang]}">'
+        f'<img src="{asset_url(f"/assets/badges/app-store-{lang}-black.svg")}" alt="{alt}" '
+        f'width="{round(width * BADGE_HEIGHT / 40)}" height="{BADGE_HEIGHT}" /></a>'
+    )
+
+
+def badge_html(meta: dict, lang: str) -> str:
+    """출시 전에는 테두리만 있는 상태 배지(앱의 "상태는 형태로 말한다"), 출시 뒤에는
+    Apple 공식 App Store 배지."""
     if LAUNCHED:
-        return f'<a class="status get" href="{APP_STORE_URL}">{meta["DOWNLOAD"]}</a>'
+        return store_badge(lang)
     return f'<div class="status">{meta.get("BADGE", "")}</div>'
+
+
+def structured_data_html(page: dict) -> str:
+    """사이트 이름 구조화 데이터(2026-11-05 검토 D6). Google은 홈(도메인 루트)의 WebSite
+    데이터로 검색 결과에 붙는 사이트 이름을 정한다 — 하위 경로(/en/)는 사이트 이름을 따로
+    갖지 못해서 루트에만 둔다. 앱 정보(SoftwareApplication)는 넣지 않는다: 평점이나 리뷰가
+    필수 항목이라, 없이 넣으면 Search Console에 오류로 쌓이기만 한다."""
+    if page["slug"]:
+        return ""
+    data = {"@context": "https://schema.org", "@type": "WebSite", "name": "Rapt", "url": f"{SITE}/"}
+    return f'<script type="application/ld+json">{json.dumps(data)}</script>\n'
 
 
 def app_banner_html() -> str:
@@ -530,6 +575,7 @@ def build_landing(page: dict) -> None:
         .replace("{{TITLE}}", page["title"])
         .replace("{{DESCRIPTION}}", page["description"])
         .replace("{{APP_BANNER}}\n", app_banner_html())
+        .replace("{{STRUCTURED_DATA}}\n", structured_data_html(page))
         .replace("{{PATH}}", page["slug"] + "/" if page["slug"] else "")
         .replace("{{LANG}}", page["lang"])
         .replace("{{OG_IMAGE}}", OG_IMAGES[page["lang"]])
@@ -537,12 +583,18 @@ def build_landing(page: dict) -> None:
         .replace("{{HEADER}}", header_html(page["lang"], page["alt"], wordmark=False))
         .replace("{{FOOTER}}", footer_html(page["lang"]))
         .replace("{{LEDE}}", "<br />".join(meta["LEDE"]))
-        .replace("{{BADGE}}", badge_html(meta))
+        .replace("{{BADGE}}", badge_html(meta, page["lang"]))
         .replace("{{PLATFORMS}}", meta.get("PLATFORMS", ""))
         .replace("{{STAGE}}", stage_html(meta, items))
         .replace("{{OPENING}}", opening)
         .replace("{{DETAILS}}", details)
         .replace("{{CLOSING}}", closing)
+        # 맺음 인용 아래에 받기 링크를 한 번 더 둔다 — 페이지 끝까지 읽은 사람이 맨 위로
+        # 돌아가지 않아도 되게(2026-11-05 검토 A6). 배지는 한 화면에 하나뿐이라(위 BADGE_ART
+        # 주석) 여기는 글 링크이고, 문구는 원고의 DOWNLOAD. 출시 전에는 비운다.
+        .replace("  {{CLOSING_LINK}}\n", (
+            f'  <p class="get"><a href="{STORE_URLS[page["lang"]]}">{meta["DOWNLOAD"]}</a></p>\n'
+            if LAUNCHED else ""))
     )
     out.write_text(html, encoding="utf-8")
     print(f"wrote {out}")

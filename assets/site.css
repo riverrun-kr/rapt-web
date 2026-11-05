@@ -322,7 +322,7 @@ a { color: inherit; }
 /* 푸터 링크는 ink-3(2.82:1)이라 AA(4.5:1)에 못 미쳤다. 앱이 2026-09-19에
  * "못 읽는 색은 쓰지 않는다"를 기준으로 삼고 경고 잉크를 4.70:1로 눌러
  * 만든 것과 같은 기준을 여기에도 적용한다 — ink-2는 5.95:1.
- * 누를 수 있는 것과 장식성 라벨(.cell h2, .closing .platforms)을 가르는
+ * 누를 수 있는 것과 장식성 라벨(.cell h2, .intro .platforms)을 가르는
  * 선이기도 하다: 저쪽은 조용한 채로 둔다. */
 .site-footer a {
   text-decoration: none;
@@ -419,19 +419,27 @@ body.landing .site-footer { max-width: var(--wide); }
   line-height: 1.5;
 }
 
-/* 출시 뒤 — 같은 캡슐을 잉크로 채워 App Store 링크가 된다(build.py LAUNCHED).
- * 키보드 초점은 전역 :focus-visible이 맡는다. */
-a.status.get {
-  color: var(--canvas);
-  background: var(--ink);
-  border-color: var(--ink);
-  text-decoration: none;
-  transition: background-color 0.15s, border-color 0.15s;
+/* 출시 뒤 — Apple 공식 App Store 배지(build.py store_badge, 2026-11-05 검토 A6).
+ * 그 전 판은 이 캡슐을 잉크로 채우고 배지 문구를 직접 적었다 — Apple 가이드라인은 공식
+ * 아트워크만 허용한다. 아트워크에는 손대지 않는다: hover에도 그대로 두고, 키보드 초점
+ * 테두리는 전역 :focus-visible이 배지 바깥에 그린다(모서리는 배지를 따라 둥글게).
+ * 높이 44px(가이드라인 최소 40px). 다크에서도 검은 배지다(build.py BADGE_ART 주석). */
+.store-badge {
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 9px;
 }
 
-a.status.get:hover {
-  background: var(--ink-2);
-  border-color: var(--ink-2);
+.store-badge img { display: block; width: auto; height: 44px; }
+
+/* 플랫폼 표기 — 배지 밑의 조용한 라벨. 맺음 맨 끝에 있다가, 받기 전에 무엇에서 되는지가
+ * 먼저 보이게 올라왔다(2026-11-05 검토 A6). 간격 14px은 배지 둘레에 높이의 1/4(11px)
+ * 이상 빈 자리를 두라는 Apple 가이드라인을 넘긴 값이다. */
+.intro .platforms {
+  margin: 14px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
 }
 
 /* ── 무대 ──
@@ -644,12 +652,23 @@ mark.overflow {
   color: var(--ink-3);
 }
 
-.closing .platforms {
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  color: var(--ink-3);
+/* 맺음의 받기 링크(출시 뒤, build.py build_landing) — 배지는 한 화면에 하나라
+ * (Apple 가이드라인) 문서 본문 링크와 같은 밑줄 글로 둔다. */
+.closing p.get {
+  font-size: 15px;
+  line-height: 1.5;
   margin: 0;
 }
+
+.closing p.get a {
+  color: var(--ink);
+  text-decoration-color: var(--ink-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.16s ease-in-out;   /* RaptMotion.dim */
+}
+
+.closing p.get a:hover { text-decoration-color: var(--ink); }
 
 /* ── 좁은 화면 ──
  * 무대는 가로로 넘기는 띠가 된다. 가운데(읽기) 화면이 먼저 서고, 오른쪽에 다음

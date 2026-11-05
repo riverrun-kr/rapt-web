@@ -193,16 +193,17 @@ body.landing .site-footer { max-width: var(--wide); }
   padding: 5px 12px;
   line-height: 1.5;
 }
-a.status.get {
-  color: var(--canvas);
-  background: var(--ink);
-  border-color: var(--ink);
-  text-decoration: none;
-  transition: background-color 0.15s, border-color 0.15s;
+.store-badge {
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 9px;
 }
-a.status.get:hover {
-  background: var(--ink-2);
-  border-color: var(--ink-2);
+.store-badge img { display: block; width: auto; height: 44px; }
+.intro .platforms {
+  margin: 14px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
 }
 .stage {
   position: relative;
@@ -340,12 +341,19 @@ mark.overflow {
   letter-spacing: 0.02em;
   color: var(--ink-3);
 }
-.closing .platforms {
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  color: var(--ink-3);
+.closing p.get {
+  font-size: 15px;
+  line-height: 1.5;
   margin: 0;
 }
+.closing p.get a {
+  color: var(--ink);
+  text-decoration-color: var(--ink-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.16s ease-in-out;
+}
+.closing p.get a:hover { text-decoration-color: var(--ink); }
 @media (max-width: 899px) {
   .intro { padding-top: 48px; }
   .intro .wordmark { font-size: 60px; }
