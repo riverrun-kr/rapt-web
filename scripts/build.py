@@ -20,7 +20,22 @@ SITE = "https://rapt.kr"
 # 한국어 문장이 박힌 카드가 뜨면 안 된다. 두 장 모두 앱 저장소의 tools/web_assets.py가
 # 만든다(영문은 `web_assets.py <이 저장소> en`). 카드 내용을 바꾸면 파일 이름도 바꿀 것 —
 # 스크래퍼가 URL 기준으로 오래 캐시한다(README의 OG 이미지 항목).
-OG_IMAGES = {"ko": "og-paper-1200x630.png", "en": "og-paper-en-1200x630.png"}
+#
+# 언어마다 (출시 전, 출시 날) 두 장이다. 출시 날 카드(2026-11-05 검토 D5)는 홍보 표지의 짜임에
+# 「iPhone · Mac · App Store」를 적은 JPEG라 LAUNCHED일 때만 고른다(og_meta). 대체 텍스트는 카드에
+# 적힌 글과 그림을 그대로 옮긴다 — 스크린리더와, 그림을 못 불러온 미리보기가 읽는다.
+OG_IMAGES = {"ko": ("og-paper-1200x630.png", "og-launch-1200x630.jpg"),
+             "en": ("og-paper-en-1200x630.png", "og-launch-en-1200x630.jpg")}
+OG_ALTS = {
+    "ko": ("Rapt 워드마크와 「주변이 작아질수록 글이 커집니다.」, 옆에 Rapt의 읽기 화면",
+           "Rapt 워드마크와 「주변이 작아질수록 글이 커집니다」, 아래에 iPhone · Mac · App Store, "
+           "옆에 Rapt의 읽기 화면"),
+    "en": ("The Rapt wordmark and “The less there is around it, the more the writing grows.” "
+           "beside Rapt’s reading screen",
+           "The Rapt wordmark, “The less there is around it, the more the writing grows.” and "
+           "“iPhone · Mac · App Store” beside Rapt’s reading screen"),
+}
+OG_LOCALES = {"ko": "ko_KR", "en": "en_US"}
 TEMPLATE = (ROOT / "scripts" / "template.html").read_text(encoding="utf-8")
 LANDING_TEMPLATE = (ROOT / "scripts" / "landing.html").read_text(encoding="utf-8")
 
@@ -290,12 +305,12 @@ def build_doc(doc: dict) -> None:
         .replace("{{DESCRIPTION}}", f'Rapt {doc["title"]}')
         .replace("{{PATH}}", doc["slug"] + "/")
         .replace("{{LANG}}", lang)
-        .replace("{{OG_IMAGE}}", OG_IMAGES[lang])
         .replace("{{ALTERNATES}}", alternates_html(ko_path))
         .replace("{{HEADER}}", header_html(lang, doc["alt"], wordmark=True))
         .replace("{{FOOTER}}", footer_html(lang))
         .replace("{{BODY}}", body_html)
     )
+    page = og_meta(page, lang)
     (out_dir / "index.html").write_text(page, encoding="utf-8")
     print(f"wrote {out_dir / 'index.html'}")
 
@@ -500,6 +515,14 @@ def app_banner_html() -> str:
     return f'<meta name="apple-itunes-app" content="app-id={app_id}" />\n'
 
 
+def og_meta(html: str, lang: str) -> str:
+    """링크 미리보기 카드와 그 대체 텍스트·언어 — 출시 날 카드는 LAUNCHED일 때(맨 위 OG_IMAGES)."""
+    pick = 1 if LAUNCHED else 0
+    return (html.replace("{{OG_IMAGE}}", OG_IMAGES[lang][pick])
+                .replace("{{OG_IMAGE_ALT}}", OG_ALTS[lang][pick])
+                .replace("{{OG_LOCALE}}", OG_LOCALES[lang]))
+
+
 def stage_html(meta: dict, items: list) -> str:
     """화면 다섯 장. 원고의 기능 순서대로 세우고 한가운데에 HERO_SHOT을 끼운다.
     가운데서 한 칸이면 inner, 그 너머는 outer. 화면이 없는 원고(영문)면 무대가 없다."""
@@ -578,7 +601,6 @@ def build_landing(page: dict) -> None:
         .replace("{{STRUCTURED_DATA}}\n", structured_data_html(page))
         .replace("{{PATH}}", page["slug"] + "/" if page["slug"] else "")
         .replace("{{LANG}}", page["lang"])
-        .replace("{{OG_IMAGE}}", OG_IMAGES[page["lang"]])
         .replace("{{ALTERNATES}}", alternates_html(""))
         .replace("{{HEADER}}", header_html(page["lang"], page["alt"], wordmark=False))
         .replace("{{FOOTER}}", footer_html(page["lang"]))
@@ -596,6 +618,7 @@ def build_landing(page: dict) -> None:
             f'  <p class="get"><a href="{STORE_URLS[page["lang"]]}">{meta["DOWNLOAD"]}</a></p>\n'
             if LAUNCHED else ""))
     )
+    html = og_meta(html, page["lang"])
     out.write_text(html, encoding="utf-8")
     print(f"wrote {out}")
 
@@ -611,12 +634,12 @@ def build_404() -> None:
         .replace("{{DESCRIPTION}}", NOT_FOUND["title"])
         .replace("{{PATH}}", "404.html")
         .replace("{{LANG}}", NOT_FOUND["lang"])
-        .replace("{{OG_IMAGE}}", OG_IMAGES[NOT_FOUND["lang"]])
         .replace("{{ALTERNATES}}", "")
         .replace("{{HEADER}}", header_html(NOT_FOUND["lang"], "en", wordmark=True))
         .replace("{{FOOTER}}", footer_html(NOT_FOUND["lang"]))
         .replace("{{BODY}}", body)
     )
+    page = og_meta(page, NOT_FOUND["lang"])
     # 404는 자기 주소가 없다 — canonical 대신 검색 제외(2026-11-05 검토).
     page = page.replace('<link rel="canonical" href="https://rapt.kr/404.html" />',
                         '<meta name="robots" content="noindex" />')
