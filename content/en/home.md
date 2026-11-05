@@ -63,4 +63,4 @@ Start a note on iPhone and carry on writing on your Mac. It all moves through yo
 
 ## Storage
 
-What you write stays on your devices and in your iCloud. Unless you check Korean spelling or publish, none of it goes anywhere.
+What you write is saved on your devices and in your iCloud. Unless you check Korean spelling or publish, none of it goes anywhere.

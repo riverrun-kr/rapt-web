@@ -28,9 +28,9 @@
 <link rel="icon" href="/assets/favicon-32.png?v=58ad18c546" sizes="32x32" />
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png?v=3f5dd816bf" />
 <link rel="manifest" href="/manifest.json" />
-<link rel="preload" href="/assets/fonts/NanumMyeongjo-Regular-site.woff2?v=7fa4faa50a" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/NanumMyeongjo-Regular-site.woff2?v=459bdbdd61" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/BodoniModa11pt-Medium-latin.woff2?v=e632832146" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/site.min.css?v=5e22d0ad5e" />
+<link rel="stylesheet" href="/assets/site.min.css?v=4c2d07237b" />
 </head>
 <body>
 <header class="site-header">
@@ -39,23 +39,27 @@
 </header>
 <main class="doc">
 <h1>데이터 삭제</h1>
-<blockquote class="note"><p>Rapt를 쓰면서 남은 것을 지우는 방법을 한곳에 모았습니다. 무엇이 어디에 저장되는지는 <a href="/privacy/">개인정보처리방침</a>에 적어두었습니다.</p></blockquote>
-<h2>먼저, 운영자가 가진 것은 없습니다</h2>
-<p>Rapt는 회원가입도 로그인도 없고, 이용자의 글을 보관하는 운영자 서버도 없습니다. 그래서 <strong>운영자에게 삭제를 요청할 데이터 자체가 존재하지 않습니다.</strong> 아래는 이용자 본인의 기기와 계정에서 직접 지우는 방법입니다.</p>
+<blockquote class="note"><p>Rapt를 쓰면서 남은 것을 지우는 방법을 한곳에 모았습니다. 무엇이 어디에 저장되는지는 <a href="/privacy/">개인정보처리방침</a>에 적어 두었습니다.</p></blockquote>
+<h2>먼저, 운영자가 가진 것</h2>
+<p>Rapt에는 회원가입과 로그인이 없고, 이용자의 글을 보관하는 운영자 서버도 없습니다. 앱을 쓰는 동안 운영자가 이용자별로 쌓아 두는 것은 없습니다.</p>
+<ul><li><strong>문의 메일</strong> — support@rapt.kr로 문의하셨다면 그 메일이 남아 있습니다. 같은 주소로 요청하시면 지웁니다.</li><li><strong>남용 방지 기록</strong> — 맞춤법 검사 이용량을 세는 접속 주소 변환값은 한국 시간 자정이 지나면 자동으로 지워집니다(복구 기능에 최대 30일). 따로 요청하실 필요가 없습니다.</li></ul>
+<p>아래는 이용자 본인의 기기와 계정에서 직접 지우는 방법입니다.</p>
 <h2>글 — 앱에서 지우기</h2>
-<p>앱에서 글을 지우면 <strong>휴지통</strong>으로 갑니다. 휴지통에서 완전히 삭제하면 기기와 iCloud 양쪽에서 사라지고, 같은 계정의 다른 기기에서도 사라집니다.</p>
+<p>앱에서 글을 지우면 <strong>휴지통</strong>으로 갑니다. 휴지통에서 완전히 삭제하면 기기와 iCloud 양쪽에서 사라지고, 같은 계정의 다른 기기에서도 사라집니다. 그 글의 발행 기록(게시물 ID, 링크, 발행할 때의 글)도 함께 지워집니다.</p>
 <h2>기기와 iCloud에 남은 것 전부 지우기</h2>
-<p>앱을 삭제하면 그 기기에 저장된 내용은 함께 지워집니다. 다만 <strong>iCloud에 동기화된 내용은 앱을 지워도 iCloud에 남아</strong>, 같은 계정의 다른 기기에서 계속 보이고 앱을 다시 설치하면 복원됩니다.</p>
-<p>iCloud에 있는 것까지 지우시려면 기기 설정에서:</p>
-<p><strong>설정 → Apple 계정 → iCloud → 저장 공간 관리 → Rapt → 삭제</strong></p>
+<p>이 순서로 하시면 됩니다.</p>
+<ul><li>먼저 앱에서 <strong>계정 연결 해제</strong>를 누릅니다. 앱을 지워도 기기의 키체인에 Threads 연결 정보가 남을 수 있습니다.</li><li>쓰시는 <strong>모든 기기</strong>에서 Rapt를 지웁니다. 한 기기에라도 앱이 남아 있으면, iCloud를 지운 뒤 그 기기의 글이 다시 올라갈 수 있습니다.</li><li>마지막으로 iCloud에 남은 Rapt 데이터를 지웁니다. iPhone은 <strong>설정 → Apple 계정 → iCloud → 저장 공간 관리 → Rapt → 삭제</strong>, Mac은 시스템 설정의 <strong>Apple 계정 → iCloud</strong> 저장 공간 관리에서 Rapt를 골라 지웁니다.</li></ul>
+<p>직접 내보낸 파일(zip, Markdown, 텍스트)은 저장해 두신 곳에서 따로 지우셔야 합니다.</p>
 <h2>Threads 연결 끊기</h2>
-<p>앱 안에서 <strong>계정 연결 해제</strong>를 누르면 기기에 저장된 접근 토큰이 삭제됩니다. 이 토큰은 처음부터 이용자 기기의 키체인에만 있었고 운영자가 보관한 적이 없습니다.</p>
-<p>Threads 쪽에서도 권한을 회수하시려면 Threads(또는 Instagram) 계정 설정의 연결된 앱 목록에서 Rapt를 제거하시면 됩니다.</p>
+<p>앱 안에서 <strong>계정 연결 해제</strong>를 누르면 기기에 저장된 접근 토큰, Threads 사용자 ID, 사용자 이름이 지워집니다. 이 정보는 처음부터 이용자 기기의 키체인에만 있었고, 운영자가 보관한 적이 없습니다.</p>
+<p>Threads 쪽에서도 권한을 회수하시려면 Threads 앱의 <strong>설정 → 계정 → 웹사이트 권한</strong>에서 Rapt를 제거하시면 됩니다.</p>
 <p><strong>이미 Threads에 발행된 게시물은 Rapt가 지울 수 없습니다</strong> — Threads에서 직접 삭제하셔야 합니다.</p>
 <h2>맞춤법 검사·계정 연결을 거치는 중계 서버</h2>
-<p>맞춤법 검사는 검사를 요청한 글을, Threads 계정 연결은 발급 중인 접근 토큰을 중계 서버로 넘깁니다. 둘 다 이용자가 직접 실행할 때만 일어나고, 중계 서버는 전달만 할 뿐 저장하거나 기록하지 않으므로 그곳에 지울 것이 남지 않습니다. 발행 요청은 중계 서버를 거치지 않고 앱에서 Threads로 바로 갑니다.</p>
+<p>맞춤법 검사는 검사할 글을, Threads 계정 연결은 Threads가 준 인증 코드를 중계 서버로 보냅니다. 둘 다 이용자가 직접 실행할 때만 일어나고, 중계 서버는 글·코드·토큰을 저장하지 않습니다. 발행 요청은 중계 서버를 거치지 않고 앱에서 Threads로 바로 갑니다.</p>
+<h2>맞춤법 검사 서비스의 오류 기록</h2>
+<p>한국어 맞춤법 검사를 제공하는 바이칼에이아이(bareun.ai)는 2026년 11월 12일부터, 장애 원인을 진단하기 위해 오류가 난 요청의 본문을 보관할 수 있습니다. 검토가 끝나면 지우고, 늦어도 기록한 날부터 3년 뒤에는 지웁니다. 그 전에 지우기를 원하시면 해당 글의 일부와 검사한 날짜를 적어 support@rapt.kr로 알려 주세요. 운영자가 바이칼에이아이에 삭제를 요청합니다.</p>
 <h2>그 밖의 문의</h2>
-<p><strong>support@rapt.kr</strong></p>
+<p><strong><a href="mailto:support@rapt.kr">support@rapt.kr</a></strong></p>
 </main>
 <footer class="site-footer">
   <a class="wordmark" href="/">Rapt</a>

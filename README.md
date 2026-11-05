@@ -79,7 +79,7 @@ PLATFORMS: iPhone · Mac
 
 - ① 랜딩의 "출시 준비 중" 배지 → App Store 배지 — **준비해 둠(2026-09-30, 2026-11-05 공식 배지로 교체).** 출시 당일 `scripts/build.py`의 `LAUNCHED`를 `True`로 바꾸고 빌드·배포하면, 테두리 배지가 **Apple 공식 App Store 배지**(`assets/badges/`, 페이지 언어별 검은 배지 — 다크에서도, 높이 44px)가 되고, 맺음 인용 아래에 받기 링크(원고의 `DOWNLOAD:`)가 생긴다. 맺음이 배지가 아니라 글 링크인 건 Apple 가이드라인이 **한 화면에 배지 하나**라서다. 한국어 페이지는 한국 스토어(`/kr/app/id6815147495`), 영문은 나라 없는 주소로 간다 — 나라 없는 주소는 데스크톱 브라우저에서 미국 스토어로 가기 때문이다. 배지 아트워크는 **고치지 말 것**(색·모양·문구 — Apple 가이드라인), 바꿀 일이 생기면 `build.py`의 `BADGE_ART` 주석에 적힌 Apple 주소에서 다시 받는다. 그 전에는 켜지 말 것 — 스토어에 없는 페이지를 가리키는 죽은 링크가 된다
 - ~~② 스크린샷 자리~~ — **채움(2026-09-28).** 머리 아래 "무대"에 다섯 장이 가로로 선다(아래 "랜딩 구조")
-- ③ 약관·방침 머리말의 "최종 개정 · 앱 출시 전" → 시행일 — **준비해 둠(2026-10-04).** 한/영 네 문서의 머리말이 `<!-- prelaunch -->`(지금 문구)와 `<!-- launch -->`(`시행 {{LAUNCH_DATE}} · 최종 개정 …`) 구간으로 나뉘어 있다. **문서를 고쳐 최종 개정 날짜를 바꿀 땐 두 구간을 다 고칠 것.**
+- ③ 약관 머리말의 "최종 개정 · 앱 출시 전" → 시행일 — **준비해 둠(2026-10-04).** 한/영 약관의 머리말이 `<!-- prelaunch -->`(지금 문구)와 `<!-- launch -->`(`시행 {{LAUNCH_DATE}} · 최종 개정 …`) 구간으로 나뉘어 있다. **약관을 고쳐 최종 개정 날짜를 바꿀 땐 두 구간을 다 고칠 것.** 개인정보처리방침은 2026-11-06부터 구간 없이 시행일을 그대로 적는다 — 처리가 이미 시작됐으므로 출시일을 기다리지 않는다.
 - ④ `index.html`의 `description`·`og:description` 출시 후 문구 — 2026-09-28에 리드 문장으로 맞춰뒀다(`build.py`의 `LANDINGS`). 예전 문장("떠오른 순간은…")이 리드가 바뀐 뒤에도 여기와 링크 카드에만 남아 있었다
 - ⑧ 링크 미리보기 카드 → 출시 날 카드 — **준비해 둠(2026-11-05).** `LAUNCHED`가 켜지면 모든 페이지의 `og:image`가 `og-paper-*.png`에서 `og-launch-*.jpg`(홍보 표지의 짜임 + 「iPhone · Mac · App Store」, 76~80KB)로 바뀌고 대체 텍스트도 따라 바뀐다(`build.py`의 `OG_IMAGES`·`OG_ALTS`). 파일 이름이 달라서 Threads·카카오톡의 옛 캐시에 걸리지 않는다
 - ⑦ 랜딩(한/영)의 Safari 스마트 앱 배너(`<meta name="apple-itunes-app">`) — **준비해 둠(2026-10-07).** `LAUNCHED`가 켜지면 `build.py`의 `app_banner_html`이 `APP_STORE_URL`의 번호로 넣는다. iPhone 방문자가 맨 위 설치 줄에서 한 번에 스토어로 간다
@@ -126,7 +126,7 @@ PLATFORMS: iPhone · Mac
 
 ## 약관/방침 내용을 업데이트하는 방법
 
-1. `content/terms.md` 또는 `content/privacy.md`를 수정한다. **영문(`content/en/`)도 같이** 고치고, 머리말의 최종 개정 날짜는 `<!-- prelaunch -->`·`<!-- launch -->` 두 구간 모두 바꾼다.
+1. `content/terms.md` 또는 `content/privacy.md`를 수정한다. **영문(`content/en/`)도 같이** 고치고, 약관 머리말의 최종 개정 날짜는 `<!-- prelaunch -->`·`<!-- launch -->` 두 구간 모두 바꾼다(방침은 구간 없이 시행·최종 개정을 함께 적는다).
 2. `python3 scripts/build.py` 실행 → `terms/index.html`, `privacy/index.html`(과 영문판)이 재생성된다. 빠진 글자로 멈추면 `subset_body_font.py` → `stamp_assets.py` → `build.py`.
 3. 변경 사항을 커밋하고 `main`에 푸시하면 GitHub Pages가 자동 재배포한다.
 
