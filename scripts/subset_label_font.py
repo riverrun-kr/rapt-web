@@ -29,7 +29,7 @@ OUT = ROOT / "assets" / "fonts" / "NanumMyeongjo-Bold-labels.woff2"
 
 # 라벨에 안 쓰이더라도 늘 넣어두는 글자 — 조항 번호와 문장부호는 문서가
 # 늘어나면 거의 확실히 쓰인다. 몇 글자 더 넣는 비용이 빠뜨리는 비용보다 싸다.
-ALWAYS = set("0123456789. ·—–()[]&/:,'’“”")
+ALWAYS = set("0123456789. ·—–()[]&/:,'’“”\u00a0")
 ALWAYS |= set("abcdefghijklmnopqrstuvwxyz")
 ALWAYS |= set("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
@@ -44,7 +44,9 @@ def label_chars() -> set:
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     for m in re.findall(r"<dt[^>]*>(.*?)</dt>", html, re.S):
         chars |= set(re.sub(r"<[^>]+>", "", m).strip())
-    return {c for c in chars if c.strip()}
+    # 공백 두 가지는 꼭 남긴다 — strip()으로 거르면 띄어쓰기까지 빠져, 라벨의 띄어쓰기만 대체
+    # 서체로 그려졌다(「Threads 발행」 등, 2026-11-05 발견 — 본문 서브셋과 같은 실수).
+    return {c for c in chars if c in (" ", "\u00a0") or c.strip()}
 
 
 def main() -> None:
