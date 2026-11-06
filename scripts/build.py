@@ -320,7 +320,7 @@ def build_doc(doc: dict) -> None:
 # 앱의 SyncStatusView.macAppStoreURL과 같은 판단이다(죽은 링크를 심지 않는다).
 # 번호는 App Store Connect의 Apple ID(오너, 2026-09-30). iPhone과 Mac이 한 번들 ID
 # (한 앱 레코드)라 주소도 하나다.
-LAUNCHED = False
+LAUNCHED = True
 APP_STORE_URL = "https://apps.apple.com/app/id6815147495"
 # 나라를 박지 않은 주소는 iPhone·Mac에서는 방문자의 스토어로 열리지만, 데스크톱 브라우저에서는
 # 미국 스토어 웹 페이지로 간다(2026-11-05 검토 A6). 한국어 페이지는 한국 스토어로 못 박는다.
@@ -329,7 +329,7 @@ STORE_URLS = {"ko": APP_STORE_URL.replace("/app/", "/kr/app/"), "en": APP_STORE_
 # 출시일 — LAUNCHED와 **함께** 채운다("YYYY-MM-DD", 2026-10-04). 약관·방침 머리말의
 # 시행일이 되고, 지원 페이지의 얼리 사용자 공지도 이때 같이 나간다(apply_launch).
 # LAUNCHED가 True인데 비어 있으면 빌드가 멈춘다.
-LAUNCH_DATE = ""
+LAUNCH_DATE = "2026-11-06"
 
 # ── 랜딩 ─────────────────────────────────────────────────────────
 #
