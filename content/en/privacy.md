@@ -19,7 +19,7 @@ Without the key, the value used for abuse prevention cannot be turned back into 
 
 Beyond this, the relay server keeps daily totals of requests and words by feature and result. These totals contain nothing that identifies you (no IP address, account or device information) and none of your writing.
 
-In the App Store privacy label, &ldquo;Identifiers › Device ID&rdquo; refers to the converted address value above, and &ldquo;Usage Data › Product Interaction&rdquo; refers to the usage counts and the daily totals. None of this is linked to you.
+In the App Store privacy label, &ldquo;Identifiers › Device ID&rdquo; refers to the converted address value above, and &ldquo;Usage Data › Product Interaction&rdquo; refers to the usage counts and the daily totals. &ldquo;User Content › Other User Content&rdquo; refers to the body of a check request that the spell-checking service in section 3 may keep to diagnose errors. None of this is linked to you.
 
 ## 2. Storage of What You Write
 
