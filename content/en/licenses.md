@@ -20,12 +20,14 @@ Copyright 2017–2024 Adobe.
 **IBM Plex Mono** — numerals such as character counts and dates.
 Copyright 2017 IBM Corp.
 
-This website serves two of them directly: **Bodoni Moda** (the wordmark) and **Nanum Myeongjo Bold** (section labels). The full license text sits beside each font file — [Bodoni Moda](/assets/fonts/OFL.txt) · [Nanum Myeongjo](/assets/fonts/OFL-NanumMyeongjo.txt)
+This website serves two of them directly: **Bodoni Moda** (the wordmark) and **Nanum Myeongjo** (body text and section labels). The full license text sits beside each font file — [Bodoni Moda](/assets/fonts/OFL.txt) · [Nanum Myeongjo](/assets/fonts/OFL-NanumMyeongjo.txt)
 
-## Spell checking
+## Spelling
 
-Korean spell checking uses the **bareun.ai** API. The path by which submitted text travels is described in section 3 of the [Privacy Policy](/en/privacy/).
+Korean proofreading (spelling and spacing checks) uses the **bareun.ai** API. The path by which submitted text travels is described in section 3 of the [Privacy Policy](/en/privacy/).
+
+Writing in other languages is checked on your device and never leaves it.
 
 ## Threads
 
-Rapt publishes to a user's own account through the Threads API. Rapt is not affiliated with Meta or Threads, and Threads is a trademark of Meta Platforms, Inc.
+Rapt posts to a user's own account through the Threads API. Rapt is not affiliated with Meta or Threads, and Threads is a trademark of Meta Platforms, Inc.

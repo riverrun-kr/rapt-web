@@ -18,12 +18,14 @@ Copyright 2017–2024 Adobe.
 **IBM Plex Mono** — 글자 수와 날짜 등 숫자 표기.
 Copyright 2017 IBM Corp.
 
-이 웹사이트는 그중 **Bodoni Moda**(워드마크)와 **나눔명조 볼드**(섹션 라벨) 두 가지를 직접 서빙합니다. 각 폰트 파일 옆에 라이선스 원문을 함께 두고 있습니다 — [Bodoni Moda](/assets/fonts/OFL.txt) · [나눔명조](/assets/fonts/OFL-NanumMyeongjo.txt)
+이 웹사이트는 그중 **Bodoni Moda**(워드마크)와 **나눔명조**(본문과 섹션 라벨) 두 가지를 직접 서빙합니다. 각 폰트 파일 옆에 라이선스 원문을 함께 두고 있습니다 — [Bodoni Moda](/assets/fonts/OFL.txt) · [나눔명조](/assets/fonts/OFL-NanumMyeongjo.txt)
 
-## 맞춤법 검사
+## 교정
 
-한국어 맞춤법 검사는 **bareun.ai**의 API를 이용합니다. 검사를 요청한 글이 어떤 경로로 전달되는지는 [개인정보처리방침](/privacy/) 3항에 적어두었습니다.
+한국어 교정(맞춤법·띄어쓰기 검사)은 **bareun.ai**의 API를 이용합니다. 검사를 요청한 글이 어떤 경로로 전달되는지는 [개인정보처리방침](/privacy/) 3항에 적어두었습니다.
+
+그 밖의 언어로 쓴 글은 기기 안에서 검사하고, 밖으로 보내지 않습니다.
 
 ## Threads
 
-Rapt는 Threads API를 통해 이용자 본인의 계정에 글을 발행합니다. Rapt는 Meta 및 Threads와 제휴 관계가 없으며, Threads는 Meta Platforms, Inc.의 상표입니다.
+Rapt는 Threads API를 통해 이용자 본인의 계정에 글을 올립니다. Rapt는 Meta 및 Threads와 제휴 관계가 없으며, Threads는 Meta Platforms, Inc.의 상표입니다.
