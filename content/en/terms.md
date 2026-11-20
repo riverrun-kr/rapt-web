@@ -1,29 +1,34 @@
 # Terms of Service
 
-<!-- prelaunch -->
-> Last revised 2026-11-06 · Before launch — the effective date will be fixed when the app ships on the App Store.
-<!-- /prelaunch -->
-<!-- launch -->
-> Effective {{LAUNCH_DATE}} · Last revised 2026-11-06
-<!-- /launch -->
+> Effective 2026-12-04 · Last revised 2026-11-27
 >
 > This English text is provided for the reader's convenience. The [Korean version](/terms/) is the governing text.
 
+> **Notice of revision** — These terms take effect on December 4, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. The changes are below; none is unfavorable to you.
+>
+> **About the service** (section 1) — &ldquo;a minimal writing app built for Threads&rdquo; now reads &ldquo;a minimal writing app built for focus&rdquo;, and notes, drafts and exporting are described.
+>
+> **Ways your writing leaves the app** (section 3) — Besides spell checking and posting to Threads, sending to another app and saving to a file are now listed.
+>
+> **Posting to Threads** (section 5) — It now says that a long draft is split into several posts in one thread, and &ldquo;character count and copy&rdquo; now reads &ldquo;copy&rdquo;.
+>
+> **Feature names** (throughout) — To match the app, &ldquo;publishing&rdquo; now reads &ldquo;posting&rdquo;.
+
 ## 1. About the Service
 
-Rapt is a minimal writing app built for Threads. It is developed and operated by 카인드닷츠 (KIND_DOTS, the &ldquo;operator&rdquo;), and is not affiliated with Meta (which operates Threads) or with any other company or institution.
+Rapt is a minimal writing app built for focus. You jot thoughts down as notes, write drafts from them, and copy finished drafts or export them to Threads and elsewhere. It is developed and operated by 카인드닷츠 (KIND_DOTS, the &ldquo;operator&rdquo;), and is not affiliated with Meta (which operates Threads) or with any other company or institution.
 
 ## 2. Accounts
 
 Rapt does not create accounts of its own. No sign-up and no sign-in are required to use the app.
 
-Using the Threads publishing feature does require connecting your own Threads account (see section 5), but that is optional. Every writing feature works without connecting it.
+Posting to Threads does require connecting your own Threads account (see section 5), but that is optional. Every writing feature works without connecting it.
 
 ## 3. Ownership of Your Content
 
-You hold full copyright in everything you write in Rapt, including post bodies and threads. Rapt does not collect or read what you write, and claims no rights whatsoever in the content you create.
+You hold full copyright in everything you write in Rapt, including notes and drafts. Rapt does not collect or read what you write, and claims no rights whatsoever in the content you create.
 
-Your writing leaves your device and your own iCloud only when you run one of two features yourself: spell checking and Threads publishing. When you run a spell check, the text is sent to the checking service to the extent the check requires. The details are set out in the [Privacy Policy](/en/privacy/).
+Your writing leaves your device and your own iCloud only when you run one of these features yourself: spell checking, posting to Threads, sending to another app, or saving to a file. When you run a Korean spell check, the text is sent to the checking service to the extent the check requires. The details are set out in the [Privacy Policy](/en/privacy/).
 
 ## 4. Storage and Sync
 
@@ -31,13 +36,13 @@ What you write is stored locally on your device and synced, through your own App
 
 Rapt keeps no server that stores your writing, and the operator cannot access your writing, including what is in iCloud. Apple keeps and protects what is stored in iCloud. The relay server used for spell checking and for connecting a Threads account only forwards requests and does not store their content (see section 3 of the [Privacy Policy](/en/privacy/)).
 
-## 5. Publishing to Threads
+## 5. Posting to Threads
 
-You may connect a Threads account to Rapt and publish what you have written directly from the app. Connecting an account is optional; you may instead use only the character count and copy features and post from the Threads app yourself.
+You may connect a Threads account to Rapt and post what you have written directly from the app. A long draft is split at the places you confirm and posted as several posts in one thread. Connecting an account is optional; you may instead copy your writing and post from the Threads app yourself.
 
-When you publish, the selected writing is posted to your Threads account, and **publishing cannot be undone** — to remove a post you must delete it in Threads. You may disconnect the account from inside the app at any time.
+When you post, the selected writing is posted to your Threads account, and **posting cannot be undone** — to remove a post you must delete it in Threads. You may disconnect the account from inside the app at any time.
 
-Content posted to Threads is separately governed by the Threads (Meta) terms of service. Rapt is not affiliated with Meta or Threads, and is not responsible for publishing that fails or stops because of policy changes or outages in the Threads service.
+Content posted to Threads is separately governed by the Threads (Meta) terms of service. Rapt is not affiliated with Meta or Threads, and is not responsible for posting that fails or stops because of policy changes or outages in the Threads service.
 
 ## 6. Limitations and Disclaimer
 

@@ -1,8 +1,16 @@
 # Privacy Policy
 
-> Effective 2026-11-06 · Last revised 2026-11-06
+> Effective 2026-12-04 · Last revised 2026-11-27
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
+
+> **Notice of revision** — This policy takes effect on December 4, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. There are three changes, below. Earlier versions are available on request at support@rapt.kr.
+>
+> **What is recorded when you post to Threads** (section 3) — The Threads user ID of the posting account and a fingerprint of the text are stored with that draft on your device and in iCloud. The text as published is no longer stored.
+>
+> **Ways your writing leaves the app** (sections 2 and 3) — Copying, sending to another app and saving to a file are now listed. Each happens only when you run it, and none passes through the operator's servers.
+>
+> **Feature names** (throughout) — To match the app, &ldquo;publishing&rdquo; now reads &ldquo;posting&rdquo;. What it does is unchanged.
 
 카인드닷츠 (KIND_DOTS, the &ldquo;operator&rdquo;) runs the Rapt app and the website rapt.kr, and handles your personal information as set out below.
 
@@ -23,7 +31,7 @@ In the App Store privacy label, &ldquo;Identifiers › Device ID&rdquo; refers t
 
 ## 2. Storage of What You Write
 
-What you write in Rapt (post bodies, threads and so on) is stored on your device and **synced, through your own Apple iCloud account, to your other devices signed in to that same account.** Apple keeps and protects what is stored in iCloud, and Apple's privacy policy applies.
+Your notes and drafts in Rapt, and the information that goes with a draft (its status, where it splits when posted to Threads, its posting record and so on), are stored on your device and **synced, through your own Apple iCloud account, to your other devices signed in to that same account.** Apple keeps and protects what is stored in iCloud, and Apple's privacy policy applies.
 
 The operator has no server that stores your writing, and cannot access your writing, including what is in iCloud. Your writing leaves your devices and iCloud only when you yourself run one of the features in section 3.
 
@@ -33,9 +41,11 @@ The operator has no server that stores your writing, and cannot access your writ
 
 **Connecting a Threads account** — When you connect an account, the step that exchanges the authorization code Threads issues for an access token passes through the operator's relay server, so that the secret key this exchange requires never has to sit inside the app. The relay server only forwards the code and the token; it does not store them.
 
-**What Rapt receives from Threads** — When you connect an account, Rapt receives your Threads user ID, your username and an access token (valid for up to 60 days; the app renews it itself), and stores them only in this device's keychain. When you publish, the post ID, link, publishing time and the text as published are stored with that piece of writing on your device and in iCloud. Tapping &ldquo;Disconnect Account&rdquo; in the app deletes the keychain information; post IDs and links are deleted when you permanently delete that writing from the trash. [Data Deletion](/en/data-deletion/) sets out how.
+**What Rapt receives from Threads** — When you connect an account, Rapt receives your Threads user ID, your username and an access token (valid for up to 60 days; the app renews it itself), and stores them in this device's keychain. When you post a draft to Threads, Rapt adds a posting record to that draft and stores it with the draft on your device and in iCloud. The record holds the posting time, the post IDs and link, the Threads user ID of the posting account, and a fingerprint of the text. The fingerprint is a value used to tell whether the draft was edited after posting; the text cannot be recovered from it. The account ID is used so that posting that stopped partway can be continued only from the same account. Posting records are not sent to the operator. Tapping &ldquo;Disconnect Account&rdquo; in the app deletes the keychain information; posting records are deleted when you permanently delete that draft from the trash. Writing published with Rapt 1.0 keeps the text as published at that time until you first edit or spell-check it in Rapt 1.1; then that text is removed and only its fingerprint remains. [Data Deletion](/en/data-deletion/) sets out how.
 
-**Publishing to Threads** — When you publish, your writing is sent directly from the app to Threads (Meta) and posted to your account. This is a posting action you intended, and Threads (Meta) policy governs posted content. Publishing does not pass through the relay server.
+**Posting to Threads** — When you post, your draft is sent directly from the app to Threads (Meta) and posted to your account. A long draft is split at the places you confirm and posted as several posts in one thread. This is a posting action you intended, and Threads (Meta) policy governs posted content. Posting does not pass through the relay server.
+
+**Copying, sending to another app, saving to a file** — Your writing goes where you choose: the clipboard, another app or a file. This does not pass through the operator's servers, and the policies of the place you move it to apply there.
 
 ## 4. Outsourced Processing
 
@@ -55,7 +65,7 @@ When you run a spell check or connect a Threads account, the information below i
 - Items: the text you ask to check; the Threads authorization code, access token and user ID; your connecting IP address; the converted address value with word and request counts
 - When and how: sent over an encrypted network connection (HTTPS) each time you use one of these features
 - Purpose and retention: running the relay server and preventing abuse. Text, codes, tokens and IP addresses disappear as soon as they are processed; the converted value is kept only for the period in section 6
-- How to refuse, and the effect: if you do not use Korean spell checking or Threads account connection, nothing is transferred. Only those two features become unavailable; writing, copying, English spell checking and exporting all keep working.
+- How to refuse, and the effect: if you do not use Korean spell checking or Threads account connection, nothing is transferred. Only Korean spell checking and posting to Threads become unavailable; writing, copying, spell checking of text not in Korean, sending to another app and saving to a file all keep working.
 
 ## 6. Retention and Destruction
 
@@ -73,7 +83,7 @@ When you run a spell check or connect a Threads account, the information below i
 
 ## 8. Disclosure to Third Parties
 
-The operator does not provide or sell your personal information to third parties. The outsourcing in section 4 and the Threads publishing you run yourself are not third-party disclosure.
+The operator does not provide or sell your personal information to third parties. The outsourcing in section 4, and the posting to Threads and sending to other apps that you run yourself, are not third-party disclosure.
 
 **Requests from public authorities** — The operator does not keep users' writing or account information, so there is little to provide even if a law enforcement agency or another public authority requests user information. If such a request arrives, the operator first checks that it rests on a legal basis and follows the required procedure (such as a warrant). If it lacks a basis or appears unlawful, the operator declines it or challenges it through the procedures the law provides. When a request must be complied with, the operator provides only the minimum necessary within its scope, and keeps a record of the requesting authority, the request, its legal basis, and the operator's response.
 
