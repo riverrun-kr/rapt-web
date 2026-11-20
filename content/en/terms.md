@@ -1,10 +1,10 @@
 # Terms of Service
 
-> Effective 2026-12-04 · Last revised 2026-11-20
+> Effective 2026-11-21 · Last revised 2026-11-21
 >
 > This English text is provided for the reader's convenience. The [Korean version](/terms/) is the governing text.
 
-> **Notice of revision** — These terms take effect on December 4, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. The changes are below; none is unfavorable to you.
+> **Notice of revision** — These terms take effect on November 21, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. The changes are below; none is unfavorable to you.
 >
 > **About the service** (section 1) — &ldquo;a minimal writing app built for Threads&rdquo; now reads &ldquo;a minimal writing app built for focus&rdquo;, and notes, drafts and exporting are described.
 >

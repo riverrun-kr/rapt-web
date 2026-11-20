@@ -1,10 +1,10 @@
 # Privacy Policy
 
-> Effective 2026-12-04 · Last revised 2026-11-20
+> Effective 2026-11-21 · Last revised 2026-11-21
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
 
-> **Notice of revision** — This policy takes effect on December 4, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. There are three changes, below. Earlier versions are available on request at support@rapt.kr.
+> **Notice of revision** — This policy takes effect on November 21, 2026, when Rapt 1.1 is released. Until the day before, the version effective November 6, 2026 applies. There are three changes, below. Earlier versions are available on request at support@rapt.kr.
 >
 > **The record kept when you post to Threads** (section 3) — The Threads user ID of the posting account, where the piece was split, and a fingerprint are stored with that piece on your device and in iCloud. The text as published is no longer stored.
 >
