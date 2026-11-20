@@ -7,14 +7,14 @@
 }
 @font-face {
   font-family: "Rapt Label";
-  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=e1cbde89b3") format("woff2");
+  src: url("/assets/fonts/NanumMyeongjo-Bold-labels.woff2?v=d4c6f9854c") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Nanum Myeongjo";
-  src: url("/assets/fonts/NanumMyeongjo-Regular-site.woff2?v=fcc368acc6") format("woff2");
+  src: url("/assets/fonts/NanumMyeongjo-Regular-site.woff2?v=e4368c2056") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

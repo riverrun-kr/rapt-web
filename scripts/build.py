@@ -24,8 +24,8 @@ SITE = "https://rapt.kr"
 # 언어마다 (출시 전, 출시 날) 두 장이다. 출시 날 카드(2026-11-05 검토 D5)는 홍보 표지의 짜임에
 # 「iPhone · Mac · App Store」를 적은 JPEG라 LAUNCHED일 때만 고른다(og_meta). 대체 텍스트는 카드에
 # 적힌 글과 그림을 그대로 옮긴다 — 스크린리더와, 그림을 못 불러온 미리보기가 읽는다.
-OG_IMAGES = {"ko": ("og-paper-1200x630.png", "og-launch-1200x630.jpg"),
-             "en": ("og-paper-en-1200x630.png", "og-launch-en-1200x630.jpg")}
+OG_IMAGES = {"ko": ("og-paper-1200x630.png", "og-v11-1200x630.jpg"),
+             "en": ("og-paper-en-1200x630.png", "og-v11-en-1200x630.jpg")}
 OG_ALTS = {
     "ko": ("Rapt 워드마크와 「주변이 작아질수록 글이 커집니다.」, 옆에 Rapt의 읽기 화면",
            "Rapt 워드마크와 「주변이 작아질수록 글이 커집니다」, 아래에 iPhone · Mac · App Store, "
