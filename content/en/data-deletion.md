@@ -15,7 +15,7 @@ What follows is how to remove things yourself, from your own devices and account
 
 ## Your writing — deleting it in the app
 
-Deleting a piece of writing in the app moves it to the **trash**. Deleting it permanently from the trash removes it from both the device and iCloud, and it disappears on your other devices signed in to the same account. Its publishing record (post ID, link, the text as published) is deleted with it.
+Deleting a piece of writing in the app moves it to the **trash**. Deleting it permanently from the trash removes it from both the device and iCloud, and it disappears on your other devices signed in to the same account. Its posting record (post IDs, link, the posting account's Threads user ID, where it was split and a fingerprint, plus the text as posted for pieces posted with 1.0) is deleted with it.
 
 ## Removing everything left on your devices and in iCloud
 
@@ -29,15 +29,15 @@ Files you exported yourself (zip, Markdown, text) must be deleted separately fro
 
 ## Disconnecting Threads
 
-Tapping **Disconnect Account** in the app deletes the access token, Threads user ID and username stored on your device. This information lived only in your device's keychain from the start, and the operator has never held it.
+Tapping **Disconnect Account** in the app deletes the access token, Threads user ID and username stored on your device. The operator has never held this information. The posting record kept with each posted piece (including the posting account's Threads user ID) stays on your device and in iCloud with that piece, and is deleted when you permanently delete it from the trash.
 
 To revoke the permission on the Threads side as well, remove Rapt under **Settings → Account → Website permissions** in the Threads app.
 
-**Rapt cannot delete posts already published to Threads** — you must delete those in Threads directly.
+**Rapt cannot delete posts already on Threads** — you must delete those in Threads directly.
 
 ## The relay server used by spell checking and account connection
 
-Spell checking sends the text to check, and connecting a Threads account sends the authorization code Threads gives, to the relay server. Both happen only when you run them yourself, and the relay server does not store text, codes or tokens. Publishing requests do not go through the relay; they go straight from the app to Threads.
+Spell checking sends the text to check, and connecting a Threads account sends the authorization code Threads gives, to the relay server. Both happen only when you run them yourself, and the relay server does not store text, codes or tokens. Posting requests do not go through the relay; they go straight from the app to Threads.
 
 ## Error records at the spell-checking service
 
