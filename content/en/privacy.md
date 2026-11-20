@@ -1,6 +1,6 @@
 # Privacy Policy
 
-> Effective 2026-12-04 · Last revised 2026-11-27
+> Effective 2026-12-04 · Last revised 2026-11-20
 >
 > This English text is provided for the reader's convenience. The [Korean version](/privacy/) is the governing text.
 
