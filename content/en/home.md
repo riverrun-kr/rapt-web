@@ -18,14 +18,11 @@ OPENING: Focus
 Rapt is a minimal writing tool built for focus.
 It keeps features to a minimum so writers can concentrate on writing.
 
-While you write, the tools quietly leave the screen.
-When you're done, check grammar and structure, and listen to what you wrote.
-
 ## From Note to Draft
 
 CAPTION: From note to draft
 
-SHOT: en-memo | A note with the Write a Draft button below it
+SHOT: en-memo | A draft written from a note — the original note sits above the title, with the draft below
 
 Jot a thought down as a note. When it has ripened, Write a Draft turns it into a draft, and the note stays where it was.
 
