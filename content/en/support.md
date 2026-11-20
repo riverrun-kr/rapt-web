@@ -12,7 +12,7 @@ If you install Rapt before Rapt Pro — a one-time purchase — arrives, Rapt Pr
 - &ldquo;For good&rdquo; means for as long as I offer Rapt and Rapt Pro, and you can use it exactly as someone who bought Rapt Pro can.
 - If you still see a purchase screen, write to support@rapt.kr and I'll sort it out.
 
-Writing Notes and Drafts, and copying them out, stay free with or without Rapt Pro.
+Notes are free, however many you write, and drafts you've already written can always be opened, edited and exported, with or without Rapt Pro.
 
 <!-- /launch -->
 ## Get in touch
