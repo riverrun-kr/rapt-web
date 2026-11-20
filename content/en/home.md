@@ -3,7 +3,7 @@ LEDE: Give the sentence your whole attention.
 BADGE: Coming soon
 DOWNLOAD: Download on the App Store
 PLATFORMS: iPhone · Mac
-HERO_SHOT: en-writing | Writing mode — only the post being written stays sharp while the rest of the thread fades back
+HERO_SHOT: en-writing | Writing — only the paragraph being written stays sharp while the rest of the draft fades back
 HERO_LABEL: Built for focus
 STAGE_LABEL: Rapt screens
 QUOTE: When you write,
@@ -15,52 +15,52 @@ OPENING: Focus
 
 ## Focus
 
-Rapt is a writing tool built for focus.
-Rather than adding features,
-it leaves them out,
-keeping only what writing needs.
+Rapt is a minimal writing tool built for focus.
+It keeps features to a minimum so writers can concentrate on writing.
 
-While you write, the tools step back
-and only the post you're on stays sharp.
+While you write, the tools quietly leave the screen.
+When you're done, check grammar and structure, and listen to what you wrote.
 
-## Notes
+## From Note to Draft
 
-CAPTION: From note to writing
+CAPTION: From note to draft
 
-SHOT: en-memo | The note written first stays at the top, with the thread continuing below it
+SHOT: en-memo | A note with the Write a Draft button below it
 
-Catch a thought the moment it arrives. When it has ripened, it becomes a piece of writing, as it is.
+Jot a thought down as a note. When it has ripened, Write a Draft turns it into a draft, and the note stays where it was.
 
-Once it has, the note you started from stays above it, there whenever you want to look back.
+## Outline
 
-## Writing
+CAPTION: The whole flow at a glance
 
-CAPTION: Made for Threads
+SHOT: en-outline | Outline — the first sentence of each paragraph with a length bar, so the whole draft fits on one screen
 
-SHOT: en-overflow | A post past 500 characters — only the part that runs over is shaded pale red, and 593/500 is shown
-
-Write post by post, the way Threads reads. Past 500 characters nothing is cut for you; the app simply shows ==how far over you are==, quietly. The sentence is yours.
+Outline folds the draft into the first sentence of each paragraph, so you see the whole flow on one screen. Length bars show each paragraph's rhythm, and you can drag paragraphs to reorder them.
 
 ## Spelling
 
 CAPTION: Spelling, fixed in place
 
-SHOT: en-spellcheck | Spelling results — each fix shows the original and the suggestion, to apply one at a time or all at once with Apply All
+SHOT: en-spellcheck | Spelling results — each fix shows the original and the suggestion, to apply one at a time or all at once
 
-Check your spelling right where you finish writing, and accept the suggestions one at a time or all at once. English is checked on your device and never leaves it.
+Check spelling right where you finish writing, title included, and accept suggestions one at a time or all at once.
 
-## Publishing to Threads
+## Listen
 
-CAPTION: Straight to Threads
+Listen reads your draft aloud, so you can hear the sentences your eyes skipped over.
 
-SHOT: en-publish | Publish to Threads — all four posts are published, with an Open button below
+## Export
 
-Connect your Threads account and post what you wrote, exactly as you wrote it, straight from the app — no copying post by post, no putting them back in order.
+CAPTION: Anywhere it needs to go
+
+SHOT: en-export | Export — choose Copy, Post to Threads, Send to Another App or Save as File
+
+Copy a finished draft, send it to another app, or save it as a file. Connect your Threads account to post straight from the app: a draft over 500 characters is split where you choose and posted as one thread.
 
 ## iPhone and Mac
 
-Start a note on iPhone and carry on writing on your Mac. It all moves through your own iCloud, so there is no new account to create.
+Start a note on iPhone and finish the draft on your Mac. It all moves through your own iCloud, so there is no new account to create.
 
 ## Storage
 
-What you write is saved on your devices and in your iCloud. Unless you check Korean spelling or publish, none of it goes anywhere.
+What you write is stored on your devices and in your iCloud. It leaves only when you check Korean spelling, post to Threads, or send it somewhere yourself.
