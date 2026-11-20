@@ -42,7 +42,7 @@ The numbers may change depending on how the service is running.
 
 ## Exporting your writing to files
 
-I recommend keeping important writing in files too. On iPhone, open the menu at the top right of the list; on Mac, open the File menu; then choose **Export All**. You get one zip file with a Markdown file for each note and draft and a backup file for restoring. Later, choose that file with **Restore from Backup** and only the writing not already on this device goes back in. What is already there is left alone.
+I recommend keeping important writing in files too. On iPhone, open the menu at the top right of the list; on Mac, open the File menu; then choose **Export All**. You get one zip file with a Markdown file for each note and draft and a backup file for restoring. Later, choose that file with **Restore Backup** and only the writing not already on this device goes back in. What is already there is left alone.
 
 ## Posting from a different Threads account
 
