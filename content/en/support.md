@@ -12,7 +12,7 @@ If you install Rapt before Rapt Pro — a one-time purchase — arrives, Rapt Pr
 - &ldquo;For good&rdquo; means for as long as I offer Rapt and Rapt Pro, and you can use it exactly as someone who bought Rapt Pro can.
 - If you still see a purchase screen, write to support@rapt.kr and I'll sort it out.
 
-Writing Notes and Threads, and copying them out, stay free with or without Rapt Pro.
+Writing Notes and Drafts, and copying them out, stay free with or without Rapt Pro.
 
 <!-- /launch -->
 ## Get in touch
@@ -31,7 +31,7 @@ I usually reply within a few days. It is a one-person app, so an immediate respo
 
 ## When spell check stops
 
-Korean spell checking goes through the relay server to the checking service. English is checked on your device, so the limits below do not apply to it. Here is what to do, depending on the message you see.
+Korean spell checking goes through the relay server to the checking service. Writing that isn't in Korean is checked on your device, so the limits below do not apply to it. Here is what to do, depending on the message you see.
 
 - **&ldquo;Too many requests at the moment&rdquo;** — Many requests arrived in a short time. Try again in about a minute.
 - **&ldquo;You've used today's spell checks&rdquo;** — You have used the daily allowance (about 10,000 words) for your internet address. On shared Wi-Fi, as at an office or cafe, everyone on that address shares the allowance. It refills at midnight Korea time.
@@ -42,11 +42,11 @@ The numbers may change depending on how the service is running.
 
 ## Exporting your writing to files
 
-I recommend keeping important writing in files too. On iPhone, open the menu at the top right of the list; on Mac, open the File menu; then choose **Export All**. You get one zip file with a Markdown file for each piece and a backup file for restoring. Later, choose that file with **Restore from Backup** and only the writing not already on this device goes back in. What is already there is left alone.
+I recommend keeping important writing in files too. On iPhone, open the menu at the top right of the list; on Mac, open the File menu; then choose **Export All**. You get one zip file with a Markdown file for each note and draft and a backup file for restoring. Later, choose that file with **Restore from Backup** and only the writing not already on this device goes back in. What is already there is left alone.
 
 ## Posting from a different Threads account
 
-**Connect Account** continues with the Threads account already signed in to your browser. To post from another account, tap **Disconnect Account** on the publish screen, then tap **Use a Different Account**. It opens from an empty sign-in page.
+**Connect Account** continues with the Threads account already signed in to your browser. To post from another account, open the ⋯ menu on the **Post to Threads** screen (top right on iPhone, at the top on Mac) and choose **Use a Different Account**. It opens from an empty sign-in page.
 
 ## When your writing seems to be missing
 
@@ -62,5 +62,5 @@ Connecting signs you in to your Threads account directly. If the sign-in window 
 
 If you see a notice that the connection has expired, simply connect the account again. You can disconnect at any time from inside the app.
 
-Publishing cannot be undone — to remove a post already published, delete it in Threads directly.
+Posting cannot be undone — to remove a post already on Threads, delete it in Threads directly.
 

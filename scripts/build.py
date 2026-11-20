@@ -94,15 +94,16 @@ LANDINGS = [
     # 탭 제목은 무엇인지까지 말한다(2026-10-07, 앱 완성도 점검 21) — 「Rapt」뿐이라
     # 검색 결과·공유 카드(og:title이 같은 값)에서 무슨 페이지인지 알 수 없었다.
     {"slug": "", "lang": "ko", "source": "home.md", "alt": "en",
-     "title": "Rapt — Threads를 위한 글쓰기 앱",
+     "title": "Rapt — 글쓰기로의 몰입",
      # 리드와 같은 문장으로 맞춘다(2026-09-28). 예전 문장("떠오른 순간은…")이
      # 리드가 바뀐 뒤에도 여기와 링크 카드에만 남아, 공유된 카드와 페이지가
      # 다른 말을 하고 있었다.
      "description": "주변이 작아질수록 글이 커집니다. 오롯하게 문장에 몰입하세요. "
-                    "Threads에 최적화된 미니멀 글쓰기 앱, Rapt."},
+                    "몰입을 위한 미니멀 글쓰기 앱, Rapt."},
     {"slug": "en", "lang": "en", "source": "en/home.md", "alt": "",
-     "title": "Rapt — A writing app for Threads",
-     "description": "A minimal writing app built for Threads."},
+     "title": "Rapt — Focused Writing",
+     "description": "The less there is around it, the more the writing grows. "
+                    "A minimal writing app built for focus."},
 ]
 
 NOT_FOUND = {"lang": "ko", "title": "찾을 수 없는 페이지",
